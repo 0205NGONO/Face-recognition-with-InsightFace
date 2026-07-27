@@ -1,0 +1,150 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, Arial, sans-serif;
+  background: #fbfbfd;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+}
+
+.page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 460px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+.logo-icon { width: 140px; height: 120px; }
+.header-text h1 { font-size: 24px; font-weight: 700; color: #16181d; }
+
+.card {
+  background: #fff;
+  border: 1px solid #ececef;
+  border-radius: 14px;
+  box-shadow: 0 4px 24px rgba(20, 20, 43, 0.05);
+  width: 100%;
+  overflow: hidden;
+}
+.card .card-title{
+     text-align: center;
+}
+.card-body { padding: 32px 32px 24px; }
+
+/* --- Onglets : radios cachés + labels, sans JS --- */
+.tabs {
+  display: flex;
+  padding: 4px;
+  margin-bottom: 24px;
+}
+.tab {
+  flex: 1;
+  text-align: center;
+  padding: 10px 12px;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 10px;
+  text-decoration: none;
+  transition: background 0.15s ease, color 0.15s ease;
+  cursor: pointer;
+}
+.tab.active {
+  background: #eaf1ff;
+  color: #2563eb;
+  border: 1px solid #cfe0ff;
+}
+
+.field { margin-bottom: 20px; }
+.field label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: #2c2e33;
+  margin-bottom: 8px;
+}
+.field input {
+  width: 100%;
+  padding: 12px 14px;
+  font-size: 14px;
+  border: 1px solid #e2e4e9;
+  border-radius: 9px;
+}
+.field input:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+/* --- Mot de passe : masqué en CSS pur, sans JS --- */
+.password-wrap { position: relative; display: flex; align-items: center; }
+.password-field {
+  padding-right: 90px;
+  -webkit-text-security: disc;
+}
+.toggle-pw-checkbox { position: absolute; opacity: 0; pointer-events: none; }
+.toggle-eye {
+  position: absolute;
+  right: 14px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #2563eb;
+  cursor: pointer;
+  user-select: none;
+}
+.toggle-pw-checkbox:checked ~ .password-field { -webkit-text-security: none; }
+.toggle-pw-checkbox:checked ~ .toggle-eye::before { content: "Masquer"; }
+.toggle-pw-checkbox:not(:checked) ~ .toggle-eye::before { content: "Afficher"; }
+
+.btn-submit {
+  width: 100%;
+  padding: 13px;
+  background: #2563eb;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  border: none;
+  border-radius: 9px;
+  cursor: pointer;
+}
+.btn-submit:hover { background: #1d4fd0; }
+
+.footer {
+  border-top: 1px solid #eef0f3;
+  padding: 16px 32px;
+  text-align: center;
+}
+.footer p { font-size: 12.5px; color: #9aa0ab; }
+
+/* --- Bascule des onglets sans JS --- */
+.tab-radio {
+  display: none;
+}
+
+#formAdmin, #formEmploye {
+  display: none;
+}
+
+#tabAdmin:checked ~ #formAdmin {
+  display: block;
+}
+
+#tabEmploye:checked ~ #formEmploye {
+  display: block;
+}
+
+/* style actif sur le label correspondant à l'onglet coché */
+#tabAdmin:checked ~ .tabs label[for="tabAdmin"],
+#tabEmploye:checked ~ .tabs label[for="tabEmploye"] {
+  background: #eaf1ff;
+  color: #2563eb;
+  border: 1px solid #cfe0ff;
+}
