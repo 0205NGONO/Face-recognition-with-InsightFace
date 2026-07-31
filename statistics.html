@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html class="light" lang="fr">
+    <head>
+        <meta charset="utf-8">
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+        <title>Statistiques | Système de surveillance</title>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <div class="application">
+            <aside class="barre-laterale">
+                <div class="barre-laterale__en-tete">
+                    <h1 class="barre-laterale__titre">Système de surveillance</h1>
+                    <p class="barre-laterale__sous-titre">Admin</p>
+                </div>
+                <nav class="barre-laterale__navigation">
+                    <a class="lien-navigation" href="dashboard.html">
+                        <img class="lien-navigation__icone" src="icones/dashboard.svg">
+                        <span>Tableau de bord</span>
+                    </a>
+                    <a class="lien-navigation" href="#">
+                        <img class="lien-navigation__icone" src="icones/videocam.svg">
+                        <span>Vue en temps réel</span>
+                    </a>
+                    <a class="lien-navigation" href="unknowns.html">
+                        <img class="lien-navigation__icone" src="icones/inconnu.svg">
+                        <span>Personnes inconnues</span>
+                    </a>
+                    <a class="lien-navigation lien-navigation--actif" href="statistics.html">
+                        <img class="lien-navigation__icone" src="icones/graphique_à_barres.svg">
+                        <span>Statistiques</span>
+                    </a>
+                    <a class="lien-navigation" href="#">
+                        <img class="lien-navigation__icone" src="icones/personnes_connues.svg">
+                        <span>Inscription Employés</span>
+                    </a>
+                    <a class="lien-navigation" href="#">
+                        <img class="lien-navigation__icone" src="icones/personnes_connues.svg">
+                        <span>Personnes Connues</span>
+                    </a>
+                    <a class="lien-navigation" href="#">
+                        <img class="lien-navigation__icone" src="icones/detection.svg">
+                        <span>Détections Récentes</span>
+                    </a>
+                    <a class="lien-navigation" href="#">
+                        <img class="lien-navigation__icone" src="icones/dashboard.svg">
+                        <span>Paramètres</span>
+                    </a>
+                </nav>
+            </aside>
+
+            <main class="contenu-principal">
+                <header class="en-tete-principal">
+                    <div class="en-tete-principal__groupe">
+                        <span class="en-tete-principal__titre">Statistiques</span>
+                    </div>
+                    <div class="en-tete-principal__actions">
+                        <span class="badge-en-direct"><span class="indicateur-direct" style="background-color:var(--primary);"></span>EN DIRECT</span>
+                    </div>
+                </header>
+
+                <div class="tableau-de-bord">
+                    <div class="entete-page">
+                        <div class="entete-page__rangee">
+                            <div>
+                                <h2 class="entete-page__titre" style="margin-bottom:0.25rem;">Intelligence Opérationnelle</h2>
+                                <p class="entete-page__sous-titre">Débit biométrique et données de présence pour le 24 oct. 2023</p>
+                            </div>
+                            <div class="en-tete-principal__actions">
+                                <button class="bouton-filtre">Dernières 24 heures</button>
+                                <button class="bouton-export">Exporter le log</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tableau-de-bord__grille">
+                        <!-- Présence par heure -->
+                        <div class="carte">
+                            <div class="carte__entete">
+                                <span class="carte__titre">PRÉSENCE PAR HEURE</span>
+                                <span class="legende-graphique"><span class="legende-puce"></span>Pic de trafic</span>
+                            </div>
+                            <div class="graphique-barres">
+                                <div class="barre-colonne"><div class="barre-colonne__tige barre-colonne__tige--normale" style="height:30%;"></div><span class="barre-colonne__label">08:00</span></div>
+                                <div class="barre-colonne"><div class="barre-colonne__tige barre-colonne__tige--pic" style="height:70%;"></div><span class="barre-colonne__label" style="color:var(--primary);font-weight:700;">09:00</span></div>
+                                <div class="barre-colonne"><div class="barre-colonne__tige barre-colonne__tige--normale" style="height:55%;"></div><span class="barre-colonne__label">10:00</span></div>
+                                <div class="barre-colonne"><div class="barre-colonne__tige barre-colonne__tige--normale" style="height:48%;"></div><span class="barre-colonne__label">11:00</span></div>
+                                <div class="barre-colonne"><div class="barre-colonne__tige barre-colonne__tige--normale" style="height:38%;"></div><span class="barre-colonne__label">12:00</span></div>
+                                <div class="barre-colonne"><div class="barre-colonne__tige barre-colonne__tige--normale" style="height:85%;"></div><span class="barre-colonne__label">13:00</span></div>
+                                <div class="barre-colonne"><div class="barre-colonne__tige barre-colonne__tige--normale" style="height:65%;"></div><span class="barre-colonne__label">14:00</span></div>
+                                <div class="barre-colonne"><div class="barre-colonne__tige barre-colonne__tige--normale" style="height:45%;"></div><span class="barre-colonne__label">15:00</span></div>
+                                <div class="barre-colonne"><div class="barre-colonne__tige barre-colonne__tige--normale" style="height:95%;"></div><span class="barre-colonne__label">16:00</span></div>
+                                <div class="barre-colonne"><div class="barre-colonne__tige barre-colonne__tige--normale" style="height:25%;"></div><span class="barre-colonne__label">17:00</span></div>
+                            </div>
+                        </div>
+
+                        <!-- Présence quotidienne -->
+                        <div class="carte">
+                            <div class="carte__entete">
+                                <span class="carte__titre">PRÉSENCE QUOTIDIENNE</span>
+                            </div>
+                            <div class="stat-geante">
+                                <span class="stat-geante__valeur">94,2 %</span>
+                                <span class="stat-geante__label">de l'effectif cible</span>
+                            </div>
+                            <div class="barre-progression">
+                                <div class="barre-progression__entete"><span>Reconnus</span><strong>1 240</strong></div>
+                                <div class="barre-progression__piste"><div class="barre-progression__remplissage barre-progression__remplissage--primaire" style="width:94%;"></div></div>
+                            </div>
+                            <div class="barre-progression">
+                                <div class="barre-progression__entete"><span>Inconnus / signalés (confiance &lt; 80 %)</span><strong>82</strong></div>
+                                <div class="barre-progression__piste"><div class="barre-progression__remplissage barre-progression__remplissage--erreur" style="width:6%;"></div></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Statistiques individuelles -->
+                    <div class="tableau-detections" style="margin-top:0;">
+                        <div class="carte__entete" style="padding:1rem 1.5rem;margin-bottom:0;border-bottom:1px solid var(--outline-variant);">
+                            <span class="carte__titre">STATISTIQUES INDIVIDUELLES</span>
+                            <span style="font-size:12px;color:var(--on-surface-variant);">Total : 1 322 entrées</span>
+                        </div>
+                        <table class="table-detections">
+                            <thead>
+                                <tr>
+                                    <th>Nom de la personne</th>
+                                    <th>Rôle</th>
+                                    <th>Première détection</th>
+                                    <th>Dernière détection</th>
+                                    <th>Temps total</th>
+                                    <th class="th--droite">Statut</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <div class="personne-cellule">
+                                            <div class="avatar-personne"></div>
+                                            <span class="personne-cellule__nom">Marcus Vance</span>
+                                        </div>
+                                    </td>
+                                    <td>Ingénieur Senior</td>
+                                    <td><span class="table-detections__heure">08:42:15</span></td>
+                                    <td><span class="table-detections__heure">17:12:04</span></td>
+                                    <td><span class="table-detections__date">08h 29m</span></td>
+                                    <td class="td--droite"><span class="badge-statut badge-statut--reconnu">Reconnu</span></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="personne-cellule">
+                                            <div class="avatar-personne"></div>
+                                            <span class="personne-cellule__nom">Elena Rodriguez</span>
+                                        </div>
+                                    </td>
+                                    <td>Responsable des opérations</td>
+                                    <td><span class="table-detections__heure">09:05:11</span></td>
+                                    <td><span class="table-detections__heure">18:45:22</span></td>
+                                    <td><span class="table-detections__date">09h 40m</span></td>
+                                    <td class="td--droite"><span class="badge-statut badge-statut--reconnu">Reconnu</span></td>
+                                </tr>
+                                <tr class="ligne--signalee">
+                                    <td>
+                                        <div class="personne-cellule">
+                                            <div class="avatar-personne avatar-personne--signalee"></div>
+                                            <div>
+                                                <p class="personne-cellule__nom personne-cellule__nom--signalee">Inconnu #8821</p>
+                                                <p class="personne-cellule__confiance">Confiance : 64 %</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>Accès restreint</td>
+                                    <td><span class="table-detections__heure">11:15:33</span></td>
+                                    <td><span class="table-detections__heure">11:15:42</span></td>
+                                    <td><span class="table-detections__date">00h 00m</span></td>
+                                    <td class="td--droite"><span class="badge-statut badge-statut--signale">Signalé</span></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="personne-cellule">
+                                            <div class="avatar-personne"></div>
+                                            <span class="personne-cellule__nom">Arthur Cheng</span>
+                                        </div>
+                                    </td>
+                                    <td>Directeur de la sécurité</td>
+                                    <td><span class="table-detections__heure">07:55:00</span></td>
+                                    <td><span class="table-detections__heure">16:30:15</span></td>
+                                    <td><span class="table-detections__date">08h 35m</span></td>
+                                    <td class="td--droite"><span class="badge-statut badge-statut--reconnu">Reconnu</span></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="personne-cellule">
+                                            <div class="avatar-personne"></div>
+                                            <span class="personne-cellule__nom">Jordan Smith</span>
+                                        </div>
+                                    </td>
+                                    <td>Support informatique</td>
+                                    <td><span class="table-detections__heure">10:20:05</span></td>
+                                    <td><span class="table-detections__heure">18:05:40</span></td>
+                                    <td><span class="table-detections__date">07h 45m</span></td>
+                                    <td class="td--droite"><span class="badge-statut badge-statut--reconnu">Reconnu</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <footer class="pied-systeme">
+                    <div class="pied-systeme__gauche">
+                        <span><span class="indicateur-etat-point"></span>ÉTAT DU MOTEUR : OPTIMAL</span>
+                        <span>LATENCE BDD : 14 MS</span>
+                        <span>CHARGE CPU : 22 %</span>
+                    </div>
+                    <div>Système de surveillance</div>
+                </footer>
+            </main>
+        </div>
+    </body>
+</html>
