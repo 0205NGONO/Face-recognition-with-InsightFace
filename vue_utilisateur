@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html class="light" lang="fr">
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Vue Utilisateur - Flux en Temps Réel | SecureScan</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styleusers.css">
+</head>
+<body class="application">
+        <!-- Barre de Navigation Latérale (Tiroir de Navigation) -->
+        <!-- Règle : Correspond à "Tableau de bord", "Flux en Temps Réel", "Paramètres" selon la demande d'options limitées -->
+        <aside class="barre-laterale">
+        <div class="barre-laterale__en-tete">
+        <h1 class="barre-laterale__titre">Systeme de surveillance</h1>
+        <p class="barre-laterale__sous-titre">Vue Utilisateur</p>
+        </div>
+        <nav class="barre-laterale__navigation">
+        <!-- Onglet Actif : Flux en Temps Réel -->
+        <a class="lien-navigation lien-navigation--actif" href="#">
+        <img class="lien-navigation__icone" src="icones/videocam.svg">
+        <span>Real-time Stream</span>
+        </a>
+        </nav>
+        <div class="barre-laterale__profil">
+        <div class="profil-utilisateur">
+        <div class="profil-utilisateur__avatar">
+        <img class="profil-utilisateur__avatar-image" data-alt="A professional studio headshot of a security operations center technician, wearing a modern uniform, neutral background, soft corporate lighting, high resolution photography style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDuGR_loMFtNgyQCAYzogseSI6thvaAqrbJX5oshsTte_pT5E6iDi9VZC-FuGdZv3i63P8LjPhlkDuSAC2lCyaeTm2Tgfm0GpbDiLmTIYjp1jhfL-QRjl8zYu-KHE_SzFzd6bmhK93mFZ8XX5vrGwOOypTlinpA0FJnFDtx3CnVWdia_SFoDLKI_JTf0dnC0n7zX0JT_ssOTM9MPLb-Aqu5HGlu4XBK-DEfb-XFPr-Xt9-UArSwAbI">
+        </div>
+        <div>
+        <p class="profil-utilisateur__nom">AKABA</p>
+        <p class="profil-utilisateur__statut">En Ligne</p>
+        </div>
+        </div>
+        </div>
+        </aside>
+        <!-- Zone de Contenu Principal -->
+        <main class="contenu-principal">
+        <!-- Barre de Navigation Supérieure -->
+        <header class="en-tete-principal">
+        <div class="en-tete-principal__groupe">
+        <h2 class="en-tete-principal__titre">Vue Utilisateur - Flux en Temps Réel</h2>
+        </div>
+        </header>
+        <!-- Contenu Dynamique -->
+        <div class="zone-contenu">
+        <!-- Gauche : Flux Vidéo Principal (Style Grille Bento pour point focal) -->
+        <div class="panneau-flux">
+        <div class="lecteur-video">
+        <!-- Espace réservé pour le Flux Vidéo en Temps Réel -->
+        <img class="lecteur-video__image" data-alt="A high-definition wide-angle security camera view of a modern corporate lobby with marble floors and glass partitions. The lighting is bright and clinical. In the frame, several professional people are walking, with digital UI overlays of green and red boxes tracking their faces for identification." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCVvS2v44B21n-U5EjlyqsdBwxSmTnL1rKPp25BXz1ye2inM4lqKVbGBmv-KBfs4qb8eEw7EG7-yRflOg_gtS-KYWQR3Js45CMLfhAyQk5mlBmPbW4MY_Fq5W-iDxJ09LgDshqtV-fP68fBojotsG-acIQW6rW0LIMv6biJb-E44YZeFi_Q48V9PGqAX53BkrcdvoO4cWXIEsugNXdzQn8H2xWSTWzRspOgMM32ADwnZd4QnFTZ1u4">
+        
+ 
+        <!-- Superposition des Contrôles Vidéo -->
+        <div class="lecteur-video__superposition">
+        <div class="lecteur-video__info-direct">
+        <span class="indicateur-direct"></span>
+        <span class="indicateur-direct__texte">Live Feed: Entrée Principale</span>
+        </div>
+        </div>
+        </div>
+        <!-- Modules d'Information Secondaires -->
+        <div class="cartes-stats">
+        <div class="carte-stat">
+        <p class="carte-stat__label">ETAT DU SYSTÈME</p>
+        <div class="carte-stat__valeur-wrapper">
+        <img class="carte-stat__icone" src="icones/checkcircle.svg">
+        <span class="carte-stat__valeur">Opérationnel</span>
+        </div>
+        <p class="carte-stat__pied">Dernière vérification: il y a 2 min</p>
+        </div>
+        <div class="carte-stat">
+        <p class="carte-stat__label">DÉTECTIONS/MIN</p>
+        <div class="carte-stat__valeur-wrapper">
+        <img class="carte-stat__icone" src="icones/analytics.svg">
+        <span class="carte-stat__valeur">42.5</span>
+        </div>
+        <p class="carte-stat__pied">Tendance: +5% vs Heure Préc.</p>
+        </div>
+        </div>
+        </div>
+        <!-- Droite : Barre Latérale des Dernières Détections -->
+        <aside class="barre-detections">
+        <div class="barre-detections__en-tete">
+        <h3 class="barre-detections__titre">DERNIÈRES DÉTECTIONS</h3>
+        <img class="barre-detections__icone-filtre" src="icones/filter_list.svg">
+        </div>
+        <div class="barre-detections__liste">
+        <!-- Carte de Détection : Inconnu -->
+        <div class="carte-detection carte-detection--inconnu">
+        <div class="carte-detection__contenu">
+        <div class="carte-detection__image">
+        <img class="carte-detection__image-img" data-alt="A grainy, high-contrast close-up security camera crop of a suspicious person's face wearing a dark hoodie. The image has a red digital overlay indicating 'Unknown' status, with digital noise and scan lines consistent with a biometric scanning interface." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAA9xdhvr0ULiDPUBFG_VDEaj8voZdP9pbgXJLL1U9GVgyl_7v7HaslEXIhp7KF0YfxzKlrKMtO5nu23S9LoHi-E9aIEzlZVc66GLrf0DML_OBGQxG3D4oDpmjUbI7Rd--w40EsFo9ipywtJlaD-dz9G0LKeXVjKdqfJQdYfgqRO2S16uy1c2JaiEl23uThY8hKp0kHY8pp0g09Mct2UabBAT3Kzo0-lkNucsS7xoRPqzUugBEtRAk">
+        </div>
+        <div class="carte-detection__details">
+        <span class="badge-statut badge-statut--inconnu">Inconnu</span>
+        <p class="carte-detection__nom">Alerte Détection</p>
+        <p class="carte-detection__horodatage">14:52:10 • Cam 08</p>
+        <p class="carte-detection__confiance">Confiance: 0.07%</p></div>
+        </div>
+        </div>
+        <!-- Carte de Détection : Reconnu -->
+        <div class="carte-detection">
+        <div class="carte-detection__contenu">
+        <div class="carte-detection__image">
+        <img class="carte-detection__image-img" data-alt="A clear security camera crop of a female employee in business attire smiling slightly. The image has a subtle green digital frame around the face, with high clarity and balanced lighting, showing professional office environment in the background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCDqrHRc8PhTQdMSFF_KHXu_OrRUUtnAOk6HvwZunc-xBxXFlLSGppWY_6tydJwAg5eLdQ_DyyfPGN8AjvE2yd0k8KC4jZxuA525mv0_QmDLDOGnT8bJV6gQSZS-msndfpEJb-HpiHboHR0rOFnxAZFpgjKo0BbzVky7bUkLfPznob1c5zVzqWdd32yN5X70siiQzuog0-VgUp-RyGVkiItgbYqvWFdGcszQwDCnWWiIsKrhirji7g">
+        </div>
+        <div class="carte-detection__details">
+        <span class="badge-statut badge-statut--reconnu">Reconnu</span>
+        <p class="carte-detection__nom">Sophie Martin</p>
+        <p class="carte-detection__horodatage">14:50:44 • Cam 01</p>
+        <p class="carte-detection__confiance">Confiance: 99.4%</p>
+        </div>
+        </div>
+        </div>
+        <!-- Carte de Détection : Reconnu -->
+        <div class="carte-detection">
+        <div class="carte-detection__contenu">
+        <div class="carte-detection__image">
+        <img class="carte-detection__image-img" data-alt="A portrait-style security crop of a male staff member wearing a blue polo shirt. The lighting is overhead and slightly harsh, creating sharp shadows. A digital green box frame is overlaid on the face, signifying a positive match in the system." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCw3VjT4WhaPOygrl2Oc2EpJwzc9VgFRwUNfgsTZibdP0fGm9QbTIRZuhaNdPDx_RiKAoNdcy6IpWV0q7BwLrwDK5HynFoQS6Bpecut_IfPRULYQfjxG2fhfMBgaQmy7qJunkHkZJ_pgXDgnOwDGk1Gn8wtUZOJrqGHmhdT834M-3jsT0sStPZ1VlhqZpP2IAXkEBoI_MW6F10-f-32dFt9BD3O6qz6RKct8SWP1_Y1P-Ct57h1aWk">
+        </div>
+        <div class="carte-detection__details">
+        <span class="badge-statut badge-statut--reconnu">Reconnu</span>
+        <p class="carte-detection__nom">Thomas Roux</p>
+        <p class="carte-detection__horodatage">14:48:12 • Cam 03</p>
+        <p class="carte-detection__confiance">Confiance: 97.8%</p>
+        </div>
+        </div>
+        </div>
+        <!-- Carte de Détection : Reconnu -->
+        <div class="carte-detection">
+        <div class="carte-detection__contenu">
+        <div class="carte-detection__image">
+        <img class="carte-detection__image-img" data-alt="A high-angle security camera view of an older man in a grey suit walking through a turnstile. The image is crisp with clinical white lighting, and a green tracking box is locked onto the subject's face for biometric identity verification." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCeQK2iCEls1BHN1z64jh6zS1FsJtsiydpmQzOA6ttRFAjUdhT0m6TINjzkP1wAtje53nyPkbDkf3GCHHKnt2IPIFjtU0ZXUxzcNfBdgabcVLPBtnhJqSp04eN6f9GuptdWXyyREiAXR2_oZhyLCI_no-kZ12K_xiz09KoOTj4-JtkThhIfZ8RsKn1XEPM3h6VKRU-OT40Z6hD_C_prdKTsRFcLEzfplxUCqPZtgJsk4OB2OtgZJX8">
+        </div>
+        <div class="carte-detection__details">
+        <span class="badge-statut badge-statut--reconnu">Reconnu</span>
+        <p class="carte-detection__nom">Marc Lefebvre</p>
+        <p class="carte-detection__horodatage">14:45:01 • Cam 01</p>
+        <p class="carte-detection__confiance">Confiance: 96.1%</p>
+        </div>
+        </div>
+        </div>
+        <!-- Carte de Détection : Inconnu -->
+        <div class="carte-detection carte-detection--inconnu">
+            <div class="carte-detection__contenu">
+                <div class="carte-detection__image">
+                    <img class="carte-detection__image-img" data-alt="A grainy, high-contrast close-up security camera crop of a suspicious person's face wearing a dark hoodie. The image has a red digital overlay indicating 'Unknown' status, with digital noise and scan lines consistent with a biometric scanning interface." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAA9xdhvr0ULiDPUBFG_VDEaj8voZdP9pbgXJLL1U9GVgyl_7v7HaslEXIhp7KF0YfxzKlrKMtO5nu23S9LoHi-E9aIEzlZVc66GLrf0DML_OBGQxG3D4oDpmjUbI7Rd--w40EsFo9ipywtJlaD-dz9G0LKeXVjKdqfJQdYfgqRO2S16uy1c2JaiEl23uThY8hKp0kHY8pp0g09Mct2UabBAT3Kzo0-lkNucsS7xoRPqzUugBEtRAk">
+                </div>
+                <div class="carte-detection__details">
+                    <span class="badge-statut badge-statut--inconnu">Inconnu</span>
+                    <p class="carte-detection__nom">Alerte Détection</p>
+                    <p class="carte-detection__horodatage">14:40:10 • Cam 08</p>
+                    <p class="carte-detection__confiance">Confiance: 0.04%</p>
+                </div>
+            </div>
+        </div>
+        </div>
+        <div class="barre-detections__pied">
+            <button class="bouton-voir-log"> VOIR TOUT LE LOG </button>
+        </div>
+        </aside>
+        </div>
+        </main>
+    </body>
+ 
+</html>
+ 
