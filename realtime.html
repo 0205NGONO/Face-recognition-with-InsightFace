@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html class="light" lang="fr">
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Vue en Temps Réel | Système de surveillance</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body class="application">
+        <!-- Barre de Navigation Latérale (identique aux autres pages admin) -->
+        <aside class="barre-laterale">
+        <div class="barre-laterale__en-tete">
+        <h1 class="barre-laterale__titre">Système de surveillance</h1>
+        <p class="barre-laterale__sous-titre">Admin</p>
+        </div>
+        <nav class="barre-laterale__navigation">
+        <a class="lien-navigation" href="dashboard.html">
+        <img class="lien-navigation__icone" src="icones/dashboard.svg">
+        <span>Tableau de bord</span>
+        </a>
+        <a class="lien-navigation lien-navigation--actif" href="realtime.html">
+        <img class="lien-navigation__icone" src="icones/videocam.svg">
+        <span>Vue en temps réel</span>
+        </a>
+        <a class="lien-navigation" href="unknowns.html">
+        <img class="lien-navigation__icone" src="icones/inconnu.svg">
+        <span>Personnes inconnues</span>
+        </a>
+        <a class="lien-navigation" href="statistics.html">
+        <img class="lien-navigation__icone" src="icones/graphique_à_barres.svg">
+        <span>Statistiques</span>
+        </a>
+        <a class="lien-navigation" href="#">
+        <img class="lien-navigation__icone" src="icones/personnes_connues.svg">
+        <span>Inscription Employés</span>
+        </a>
+        <a class="lien-navigation" href="#">
+        <img class="lien-navigation__icone" src="icones/personnes_connues.svg">
+        <span>Personnes Connues</span>
+        </a>
+        <a class="lien-navigation" href="#">
+        <img class="lien-navigation__icone" src="icones/detection.svg">
+        <span>Détections Récentes</span>
+        </a>
+        <a class="lien-navigation" href="#">
+        <img class="lien-navigation__icone" src="icones/dashboard.svg">
+        <span>Paramètres</span>
+        </a>
+        </nav>
+        </aside>
+        <!-- Zone de Contenu Principal -->
+        <main class="contenu-principal">
+        <!-- Barre de Navigation Supérieure -->
+        <header class="en-tete-principal">
+        <div class="en-tete-principal__groupe">
+        <h2 class="en-tete-principal__titre">Vue en Temps Réel</h2>
+        </div>
+        </header>
+        <!-- Contenu Dynamique -->
+        <div class="zone-contenu">
+        <!-- Gauche : Flux Vidéo Principal -->
+        <div class="panneau-flux">
+        <div class="lecteur-video">
+        <div class="lecteur-video__image lecteur-video--vide">Aperçu du flux en direct</div>
+
+        <!-- Superposition des Contrôles Vidéo -->
+        <div class="lecteur-video__superposition" style="opacity:1;">
+        <div class="lecteur-video__info-direct">
+        <span class="indicateur-direct"></span>
+        <span class="indicateur-direct__texte">Live Feed: Entrée Principale</span>
+        </div>
+        </div>
+        </div>
+        <!-- Modules d'Information Secondaires -->
+        <div class="cartes-stats">
+        <div class="carte-stat">
+        <p class="carte-stat__label">ETAT DU SYSTÈME</p>
+        <div class="carte-stat__valeur-wrapper">
+        <img class="carte-stat__icone" src="icones/checkcircle.svg">
+        <span class="carte-stat__valeur">Opérationnel</span>
+        </div>
+        <p class="carte-stat__pied">Dernière vérification: il y a 2 min</p>
+        </div>
+        <div class="carte-stat">
+        <p class="carte-stat__label">DÉTECTIONS/MIN</p>
+        <div class="carte-stat__valeur-wrapper">
+        <img class="carte-stat__icone" src="icones/analytics.svg">
+        <span class="carte-stat__valeur">42.5</span>
+        </div>
+        <p class="carte-stat__pied">Tendance: +5% vs Heure Préc.</p>
+        </div>
+        <!-- Latence du flux : réservé à la vue administrateur -->
+        <div class="carte-stat">
+        <p class="carte-stat__label">LATENCE DU FLUX</p>
+        <div class="carte-stat__valeur-wrapper">
+        <img class="carte-stat__icone" src="icones/analytics.svg">
+        <span class="carte-stat__valeur">184 ms</span>
+        </div>
+        <p class="carte-stat__pied">Stable depuis 10 min</p>
+        </div>
+        </div>
+        </div>
+        <!-- Droite : Barre Latérale des Dernières Détections -->
+        <aside class="barre-detections">
+        <div class="barre-detections__en-tete">
+        <h3 class="barre-detections__titre">DERNIÈRES DÉTECTIONS</h3>
+        <img class="barre-detections__icone-filtre" src="icones/filter_list.svg">
+        </div>
+        <div class="barre-detections__liste">
+        <div class="carte-detection carte-detection--inconnu">
+        <div class="carte-detection__contenu">
+        <div class="carte-detection__image"></div>
+        <div class="carte-detection__details">
+        <span class="badge-statut badge-statut--inconnu">Inconnu</span>
+        <p class="carte-detection__nom">Alerte Détection</p>
+        <p class="carte-detection__horodatage">14:52:10 • Cam 08</p>
+        <p class="carte-detection__confiance">Confiance: 0.07%</p></div>
+        </div>
+        </div>
+        <div class="carte-detection">
+        <div class="carte-detection__contenu">
+        <div class="carte-detection__image"></div>
+        <div class="carte-detection__details">
+        <span class="badge-statut badge-statut--reconnu">Reconnu</span>
+        <p class="carte-detection__nom">Sophie Martin</p>
+        <p class="carte-detection__horodatage">14:50:44 • Cam 01</p>
+        <p class="carte-detection__confiance">Confiance: 99.4%</p>
+        </div>
+        </div>
+        </div>
+        <div class="carte-detection">
+        <div class="carte-detection__contenu">
+        <div class="carte-detection__image"></div>
+        <div class="carte-detection__details">
+        <span class="badge-statut badge-statut--reconnu">Reconnu</span>
+        <p class="carte-detection__nom">Thomas Roux</p>
+        <p class="carte-detection__horodatage">14:48:12 • Cam 03</p>
+        <p class="carte-detection__confiance">Confiance: 97.8%</p>
+        </div>
+        </div>
+        </div>
+        <div class="carte-detection">
+        <div class="carte-detection__contenu">
+        <div class="carte-detection__image"></div>
+        <div class="carte-detection__details">
+        <span class="badge-statut badge-statut--reconnu">Reconnu</span>
+        <p class="carte-detection__nom">Marc Lefebvre</p>
+        <p class="carte-detection__horodatage">14:45:01 • Cam 01</p>
+        <p class="carte-detection__confiance">Confiance: 96.1%</p>
+        </div>
+        </div>
+        </div>
+        <div class="carte-detection carte-detection--inconnu">
+            <div class="carte-detection__contenu">
+                <div class="carte-detection__image"></div>
+                <div class="carte-detection__details">
+                    <span class="badge-statut badge-statut--inconnu">Inconnu</span>
+                    <p class="carte-detection__nom">Alerte Détection</p>
+                    <p class="carte-detection__horodatage">14:40:10 • Cam 08</p>
+                    <p class="carte-detection__confiance">Confiance: 0.04%</p>
+                </div>
+            </div>
+        </div>
+        </div>
+        <div class="barre-detections__pied">
+            <a class="bouton-voir-log" href="#">VOIR TOUT LE LOG</a>
+        </div>
+        </aside>
+        </div>
+        </main>
+    </body>
+
+</html>
