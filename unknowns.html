@@ -7,16 +7,15 @@
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="style.css">
     </head>
-    <body>
+    <body class="application">
         <!-- Structure générale -->
-        <div class="application">
-            <!-- Barre de Navigation Latérale -->
-            <aside class="barre-laterale">
-                <div class="barre-laterale__en-tete">
-                    <h1 class="barre-laterale__titre">Système de surveillance</h1>
-                    <p class="barre-laterale__sous-titre"> Admin</p>
-                </div>
-                <nav class="barre-laterale__navigation">
+        <!-- Barre de Navigation Latérale -->
+        <aside class="barre-laterale">
+            <div class="barre-laterale__en-tete">
+                <h1 class="barre-laterale__titre">Système de surveillance</h1>
+                <p class="barre-laterale__sous-titre">Admin</p>
+            </div>
+            <nav class="barre-laterale__navigation">
                 <a class="lien-navigation" href="dashboard.html">
                     <img class="lien-navigation__icone" src="icones/dashboard.svg">
                     <span>Tableau de bord</span>
@@ -49,139 +48,139 @@
                     <img class="lien-navigation__icone" src="icones/dashboard.svg">
                     <span>Paramètres</span>
                 </a>
-                </nav>
-            </aside>
-            <!-- Contenu Principal -->
-            <main class="contenu-principal">
-                <!-- Barre de Navigation Supérieure -->
-                <header class="en-tete-principal">
-                    <div class="en-tete-principal__groupe">
-                    <span class="en-tete-principal__titre">Personnes inconnues</span>
-                    </div>
-                </header>
-                <!-- Tableau de Bord -->
-                <div class="tableau-de-bord">
-                    <!-- En-tête de Page -->
-                    <div class="entete-page">
-                        <div>
-                            <h2 class="entete-page__titre">Gestion des Personnes Inconnues</h2>
-                            <!-- Barre de Filtres -->
-                            <div class="barre-filtres">
-                                <div class="filtre">
-                                    <label class="filtre__label">Plage horaire</label>
-                                    <select class="filtre__select">
-                                        <option>Dernières 24 Heures</option>
-                                        <option>Derniers 7 Jours</option>
-                                    </select>
-                                </div>
-                                <div class="filtre">
-                                    <label class="filtre__label">Camera</label>
-                                    <select class="filtre__select">
-                                        <option>Toutes les entrées</option>
-                                        <option>Camera principale</option>
-                                        <option>Serveur</option>
-                                    </select>
-                                </div>
+            </nav>
+        </aside>
+
+        <!-- Contenu Principal -->
+        <main class="contenu-principal">
+            <!-- Barre de Navigation Supérieure -->
+            <header class="en-tete-principal">
+                <div class="en-tete-principal__groupe">
+                <span class="en-tete-principal__titre">Personnes inconnues</span>
+                </div>
+            </header>
+            <!-- Tableau de Bord -->
+            <div class="tableau-de-bord">
+                <!-- En-tête de Page -->
+                <div class="entete-page">
+                    <div>
+                        <h2 class="entete-page__titre">Gestion des Personnes Inconnues</h2>
+                        <!-- Barre de Filtres -->
+                        <div class="barre-filtres">
+                            <div class="filtre">
+                                <label class="filtre__label">Plage horaire</label>
+                                <select class="filtre__select">
+                                    <option>Dernières 24 Heures</option>
+                                    <option>Derniers 7 Jours</option>
+                                </select>
                             </div>
-                                <!-- Tableau des Personnes Inconnues -->
-                            <div class="tableau-detections">
-                                <table class="table-detections">
-                                    <thead>
-                                        <tr>
-                                            <th>Dernières détections</th>
-                                            <th>Date et Heure </th>
-                                            <th>Camera ID</th>
-                                            <th class="th--droite">Niveau de confiance</th>
-                                            <th class="th--droite">Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <!-- Ligne 1 -->
-                                        <tr>
-                                                <td>
-                                                    <div class="apercu-detection">
-                                                    <div class="cadre-hud cadre-hud--haut-gauche"></div>
-                                                    <div class="cadre-hud cadre-hud--haut-droit"></div>
-                                                    <div class="cadre-hud cadre-hud--bas-gauche"></div>
-                                                    <div class="cadre-hud cadre-hud--bas-droit"></div>
-                                                    <img class="apercu-detection__image" data-alt="High-resolution biometric face crop of an unknown male person captured in clinical surveillance lighting, neutral expression, focus on facial features, digital grid pattern subtle background, professional security interface aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDTiNbIYZx-2clhgqi-mJkIxmYvo_wT3nt0lTJGxxwMEYnQzd55my4DrNwGspW68UPpDAqQw8AXSoJ7ZRQ-sGpNmsHbEi44F6PnumuIkvR5Jdm73hZdvc24UZBPzFqLncAQZ-HT5uq83Gp292tt_1tMCJcLNbIfh09klYonQP5BtBcUIMhilEXqtEbxr56KxcwA3rjtYQvKU4_RH9aBe8aEcWJQphypYiaF22QxFaZ2C9TMepAzyVg">
-                                                </div>
-                                                </td>
-                                                <td>
-                                                    <span class="table-detections__date">2023-10-24</span>
-                                                    <span class="table-detections__heure">14:22:05.122</span>
-                                                </td>
-                                                <td>
-                                                    <span class="badge-camera">CAM-04</span>
-                                                </td>
-                                                    <td class="td--droite">
-                                                    <span class="table-detections__confiance">0.08%</span>
-                                                </td>
-                                                    <td class="td--droite">
-                                                    <a class="bouton-identifier" href="#modale-identification">Identifier</a>
-                                                </td>
-                                        </tr>
-                                        <!-- Ligne 2 -->
-                                        <tr>
+                            <div class="filtre">
+                                <label class="filtre__label">Camera</label>
+                                <select class="filtre__select">
+                                    <option>Toutes les entrées</option>
+                                    <option>Camera principale</option>
+                                    <option>Serveur</option>
+                                </select>
+                            </div>
+                        </div>
+                            <!-- Tableau des Personnes Inconnues -->
+                        <div class="tableau-detections">
+                            <table class="table-detections">
+                                <thead>
+                                    <tr>
+                                        <th>Dernières détections</th>
+                                        <th>Date et Heure </th>
+                                        <th>Camera ID</th>
+                                        <th class="th--droite">Niveau de confiance</th>
+                                        <th class="th--droite">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Ligne 1 -->
+                                    <tr>
                                             <td>
                                                 <div class="apercu-detection">
                                                 <div class="cadre-hud cadre-hud--haut-gauche"></div>
                                                 <div class="cadre-hud cadre-hud--haut-droit"></div>
                                                 <div class="cadre-hud cadre-hud--bas-gauche"></div>
                                                 <div class="cadre-hud cadre-hud--bas-droit"></div>
-                                                <img class="apercu-detection__image" data-alt="Detailed security camera capture of a female face, unknown identity, focused gaze, illuminated by cold fluorescent office lighting, high contrast, minimalist surveillance aesthetic with sharp edges." src="https://lh3.googleusercontent.com/aida-public/AB6AXuByINIWbgi0UJOKMPVirEvN0UfbLLSloWvJRYxnrJM2VJXk3sWvcZWf7xKHDJUR2RD8EFWuI0TDM2WgIGOQjcIUFXrVRsPF1LYTVEzqh3sWvIRW9MtaoQKxQJ7Y6ekON6wZMRyQmflD6CY-mEwXQypuc2F31aY0RFCY0QTbNnCyfkMuuMFjlrtB3uT0iM6hqWn2zzQsQOOhxD1cW5GQbisYUFurACLJFeMsr7vf3RYZDFGvI9E__zM">
-                                                </div>
+                                                <img class="apercu-detection__image" data-alt="High-resolution biometric face crop of an unknown male person captured in clinical surveillance lighting, neutral expression, focus on facial features, digital grid pattern subtle background, professional security interface aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDTiNbIYZx-2clhgqi-mJkIxmYvo_wT3nt0lTJGxxwMEYnQzd55my4DrNwGspW68UPpDAqQw8AXSoJ7ZRQ-sGpNmsHbEi44F6PnumuIkvR5Jdm73hZdvc24UZBPzFqLncAQZ-HT5uq83Gp292tt_1tMCJcLNbIfh09klYonQP5BtBcUIMhilEXqtEbxr56KxcwA3rjtYQvKU4_RH9aBe8aEcWJQphypYiaF22QxFaZ2C9TMepAzyVg">
+                                            </div>
                                             </td>
                                             <td>
                                                 <span class="table-detections__date">2023-10-24</span>
-                                                <span class="table-detections__heure">13:45:12.880</span>
+                                                <span class="table-detections__heure">14:22:05.122</span>
                                             </td>
                                             <td>
-                                                <span class="badge-camera">CAM-01</span>
-                                            </td>
-                                            <td class="td--droite">
-                                                <span class="table-detections__confiance">0.35%</span>
-                                            </td>
-                                            <td class="td--droite">
-                                                <a class="bouton-identifier" href="#modale-identification">Identifier</a>
-                                            </td>
-                                        </tr>
-                                        <!-- Ligne 3 -->
-                                        <tr>
-                                            <td>
-                                                <div class="apercu-detection">
-                                                    <div class="cadre-hud cadre-hud--haut-gauche"></div>
-                                                    <div class="cadre-hud cadre-hud--haut-droit"></div>
-                                                    <div class="cadre-hud cadre-hud--bas-gauche"></div>
-                                                    <div class="cadre-hud cadre-hud--bas-droit"></div>
-                                                    <img class="apercu-detection__image" data-alt="Grainy but clear security footage frame showing a person in profile, unidentified, captured at night under artificial LED illumination, tech-focused interface framing, biometric surveillance style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCk4WiFNdCnzEkRbeWeTcw_SshYXxYJ9CR-hLbZ5fB2bEFFSs7dGSsvUfCsppFpwAEYmj7dPyX1H8NmZdz0BcYEjUzEglTuhUZqVFyq-CuTrsKyl8BmhuDwSPOD0p_vCyMbZ4en48cXWpzrcxV7AynQ8AINMEuoqE5zvkUMYYW-SnVGyfzCZ-LfAoFPw22wtQLriGQP0MMsy4EzVmVm2ILiUxvqcAeEZiiZCqIHMWk90aNCpwryxPc">
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <span class="table-detections__date">2023-10-24</span>
-                                                <span class="table-detections__heure">13:10:44.003</span>
-                                            </td>
-                                            <td>
-                                                <span class="badge-camera">CAM-09</span>
+                                                <span class="badge-camera">CAM-04</span>
                                             </td>
                                                 <td class="td--droite">
-                                                <span class="table-detections__confiance">0.72%</span>
+                                                <span class="table-detections__confiance">0.08%</span>
                                             </td>
-                                            <td class="td--droite">
+                                                <td class="td--droite">
                                                 <a class="bouton-identifier" href="#modale-identification">Identifier</a>
                                             </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                <!-- Pied de Pagination -->
-                                <div class="tableau-detections__pied">
-                                </div>
+                                    </tr>
+                                    <!-- Ligne 2 -->
+                                    <tr>
+                                        <td>
+                                            <div class="apercu-detection">
+                                            <div class="cadre-hud cadre-hud--haut-gauche"></div>
+                                            <div class="cadre-hud cadre-hud--haut-droit"></div>
+                                            <div class="cadre-hud cadre-hud--bas-gauche"></div>
+                                            <div class="cadre-hud cadre-hud--bas-droit"></div>
+                                            <img class="apercu-detection__image" data-alt="Detailed security camera capture of a female face, unknown identity, focused gaze, illuminated by cold fluorescent office lighting, high contrast, minimalist surveillance aesthetic with sharp edges." src="https://lh3.googleusercontent.com/aida-public/AB6AXuByINIWbgi0UJOKMPVirEvN0UfbLLSloWvJRYxnrJM2VJXk3sWvcZWf7xKHDJUR2RD8EFWuI0TDM2WgIGOQjcIUFXrVRsPF1LYTVEzqh3sWvIRW9MtaoQKxQJ7Y6ekON6wZMRyQmflD6CY-mEwXQypuc2F31aY0RFCY0QTbNnCyfkMuuMFjlrtB3uT0iM6hqWn2zzQsQOOhxD1cW5GQbisYUFurACLJFeMsr7vf3RYZDFGvI9E__zM">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <span class="table-detections__date">2023-10-24</span>
+                                            <span class="table-detections__heure">13:45:12.880</span>
+                                        </td>
+                                        <td>
+                                            <span class="badge-camera">CAM-01</span>
+                                        </td>
+                                        <td class="td--droite">
+                                            <span class="table-detections__confiance">0.35%</span>
+                                        </td>
+                                        <td class="td--droite">
+                                            <a class="bouton-identifier" href="#modale-identification">Identifier</a>
+                                        </td>
+                                    </tr>
+                                    <!-- Ligne 3 -->
+                                    <tr>
+                                        <td>
+                                            <div class="apercu-detection">
+                                                <div class="cadre-hud cadre-hud--haut-gauche"></div>
+                                                <div class="cadre-hud cadre-hud--haut-droit"></div>
+                                                <div class="cadre-hud cadre-hud--bas-gauche"></div>
+                                                <div class="cadre-hud cadre-hud--bas-droit"></div>
+                                                <img class="apercu-detection__image" data-alt="Grainy but clear security footage frame showing a person in profile, unidentified, captured at night under artificial LED illumination, tech-focused interface framing, biometric surveillance style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCk4WiFNdCnzEkRbeWeTcw_SshYXxYJ9CR-hLbZ5fB2bEFFSs7dGSsvUfCsppFpwAEYmj7dPyX1H8NmZdz0BcYEjUzEglTuhUZqVFyq-CuTrsKyl8BmhuDwSPOD0p_vCyMbZ4en48cXWpzrcxV7AynQ8AINMEuoqE5zvkUMYYW-SnVGyfzCZ-LfAoFPw22wtQLriGQP0MMsy4EzVmVm2ILiUxvqcAeEZiiZCqIHMWk90aNCpwryxPc">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <span class="table-detections__date">2023-10-24</span>
+                                            <span class="table-detections__heure">13:10:44.003</span>
+                                        </td>
+                                        <td>
+                                            <span class="badge-camera">CAM-09</span>
+                                        </td>
+                                            <td class="td--droite">
+                                            <span class="table-detections__confiance">0.72%</span>
+                                        </td>
+                                        <td class="td--droite">
+                                            <a class="bouton-identifier" href="#modale-identification">Identifier</a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <!-- Pied de Pagination -->
+                            <div class="tableau-detections__pied">
                             </div>
                         </div>
                     </div>
                 </div>
-            </main>
-        </div>
+            </div>
+        </main>
         <!-- Modale d'Identification (ouverte via l'ancre #modale-identification, fermée en revenant à #) -->
         <div class="modale-identification" id="modale-identification">
             <div class="modale-identification__panneau">

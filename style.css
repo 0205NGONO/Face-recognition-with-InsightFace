@@ -1,6 +1,6 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
-body {
+.corps-connexion {
   font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, Arial, sans-serif;
   background: #fbfbfd;
   min-height: 100vh;
@@ -875,6 +875,11 @@ a {
   align-items: flex-end;
 }
 
+.entete-page > div {
+  flex: 1 1 0%;
+  min-width: 0;
+}
+
 .entete-page__titre {
   font-size: 24px;
   line-height: 32px;
@@ -1649,4 +1654,86 @@ a {
   background-color: var(--green-800);
   display: inline-block;
   margin-right: 0.35rem;
+}
+
+/* ============ Responsive ============ */
+
+@media (max-width: 1024px) {
+  /* Sidebar réduite à une piste d'icônes */
+  .barre-laterale {
+    width: 4.5rem;
+  }
+
+  .barre-laterale__en-tete .barre-laterale__titre,
+  .barre-laterale__en-tete .barre-laterale__sous-titre,
+  .lien-navigation span,
+  .profil-utilisateur__nom,
+  .profil-utilisateur__statut {
+    display: none;
+  }
+
+  .barre-laterale__en-tete {
+    text-align: center;
+  }
+
+  .lien-navigation {
+    justify-content: center;
+  }
+
+  .profil-utilisateur {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 900px) {
+  /* La zone de contenu (flux vidéo + détections) s'empile */
+  .zone-contenu {
+    flex-direction: column;
+    overflow-y: auto;
+  }
+
+  .barre-detections {
+    width: 100%;
+    border-left: none;
+    border-top: 1px solid var(--outline-variant);
+  }
+
+  /* Les grilles du tableau de bord passent en une colonne */
+  .tableau-de-bord__grille,
+  .rangee-cartes,
+  .grille-stats-principales,
+  .grille-stats-secondaires {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  /* En-tête de page et filtres s'empilent proprement */
+  .entete-page,
+  .entete-page__rangee {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--stack-md);
+  }
+
+  .barre-filtres {
+    flex-wrap: wrap;
+  }
+
+  .en-tete-principal__actions {
+    flex-wrap: wrap;
+  }
+
+  /* Le tableau défile horizontalement plutôt que d'être tronqué */
+  .tableau-detections {
+    overflow-x: auto;
+  }
+
+  .table-detections {
+    min-width: 640px;
+  }
+
+  .carte-stat {
+    width: 100%;
+  }
 }
