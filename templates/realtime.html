@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html class="light" lang="fr">
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Vue en Temps Réel | Système de surveillance</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="application">
+    <!-- Barre de Navigation Latérale (uniformisée sur toutes les pages admin) -->
+    <aside class="barre-laterale">
+        <div class="barre-laterale__en-tete">
+            <h1 class="barre-laterale__titre">Système de surveillance</h1>
+            <p class="barre-laterale__sous-titre">Enterprise Admin</p>
+        </div>
+        <nav class="barre-laterale__navigation">
+            <ul class="barre-laterale__liste">
+                <li>
+                    <a class="lien-navigation" href="{{ url_for('login') }}">
+                        <img class="lien-navigation__icone" src="{{ url_for('static', filename='icones images/home.png') }}">
+                        <span>Accueil</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="lien-navigation lien-navigation--actif" href="{{ url_for('realtime') }}">
+                        <img class="lien-navigation__icone" src="{{ url_for('static', filename='icones images/videocam.png') }}">
+                        <span>Vue en temps réel</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="lien-navigation" href="{{ url_for('unknowns') }}">
+                        <img class="lien-navigation__icone" src="{{ url_for('static', filename='icones images/inconnu.png') }}">
+                        <span>Inconnus</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="lien-navigation" href="{{ url_for('personnes_connues') }}">
+                        <img class="lien-navigation__icone" src="{{ url_for('static', filename='icones images/group.png') }}">
+                        <span>Personnes connues</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="lien-navigation" href="{{ url_for('detections') }}">
+                        <img class="lien-navigation__icone" src="{{ url_for('static', filename='icones images/detection.png') }}">
+                        <span>Détections</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="lien-navigation" href="{{ url_for('dashboard') }}">
+                        <img class="lien-navigation__icone" src="{{ url_for('static', filename='icones images/dashboard.png') }}">
+                        <span>Tableau de bord</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="lien-navigation" href="{{ url_for('statistics') }}">
+                        <img class="lien-navigation__icone" src="{{ url_for('static', filename='icones images/bar_chart.png') }}">
+                        <span>Statistiques</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="lien-navigation" href="#">
+                        <img class="lien-navigation__icone" src="{{ url_for('static', filename='icones images/settings.png') }}">
+                        <span>Paramètres</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <div class="barre-laterale__profil">
+            <div class="profil-utilisateur">
+                <div class="profil-utilisateur__avatar">A</div>
+                <div>
+                    <p class="profil-utilisateur__nom">Admin Profile</p>
+                    <p class="profil-utilisateur__email">admin@systemedesurveillance</p>
+                </div>
+            </div>
+        </div>
+    </aside>
+    <div class="contenu-principal">
+        <main class="contenu-tableau-de-bord">
+            <div class="entete-contenu">
+                <div>
+                    <h2 class="entete-contenu__titre">Vue en Temps Réel</h2>
+                </div>
+
+            </div>
+
+<div class="zone-contenu">
+
+    <div class="panneau-flux">
+        <div class="lecteur-video">
+            <img class="lecteur-video__image" src="{{ url_for('video_feed', nom_camera='CAM-01') }}">
+
+            <div class="lecteur-video__superposition" style="opacity:1;">
+                <div class="lecteur-video__info-direct">
+                    <span class="indicateur-direct"></span>
+                    <span class="indicateur-direct__texte">Live Feed: Entrée Principale</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="cartes-stats">
+            <div class="carte-stat">
+                <p class="carte-stat__label">ETAT DU SYSTÈME</p>
+                <div class="carte-stat__valeur-wrapper">
+                    <img class="carte-stat__icone" src="{{ url_for('static', filename='icones/checkcircle.svg') }}">
+                    <span class="carte-stat__valeur">Opérationnel</span>
+                </div>
+                <p class="carte-stat__pied">Dernière vérification: il y a 2 min</p>
+            </div>
+            <div class="carte-stat">
+                <p class="carte-stat__label">DÉTECTIONS/MIN</p>
+                <div class="carte-stat__valeur-wrapper">
+                    <img class="carte-stat__icone" src="{{ url_for('static', filename='icones/analytics.svg') }}">
+                    <span class="carte-stat__valeur">42.5</span>
+                </div>
+                <p class="carte-stat__pied">Tendance: +5% vs Heure Préc.</p>
+            </div>
+            <div class="carte-stat">
+                <p class="carte-stat__label">LATENCE DU FLUX</p>
+                <div class="carte-stat__valeur-wrapper">
+                    <img class="carte-stat__icone" src="{{ url_for('static', filename='icones/analytics.svg') }}">
+                    <span class="carte-stat__valeur">184 ms</span>
+                </div>
+                <p class="carte-stat__pied">Stable depuis 10 min</p>
+            </div>
+        </div>
+    </div>
+
+    <aside class="barre-detections">
+        <div class="barre-detections__en-tete">
+            <h3 class="barre-detections__titre">DERNIÈRES DÉTECTIONS</h3>
+            <img class="barre-detections__icone-filtre" src="{{ url_for('static', filename='icones/filter_list.svg') }}">
+        </div>
+
+        <div class="barre-detections__liste">
+
+            {% for l in dernieres %}
+            <div class="carte-detection{% if l.statut == 'REFUSE' %} carte-detection--inconnu{% endif %}">
+                <div class="carte-detection__contenu">
+                    <div class="carte-detection__image"></div>
+                    <div class="carte-detection__details">
+                        {% if l.statut == 'SUCCES' %}
+                        <span class="badge-statut badge-statut--reconnu">Reconnu</span>
+                        {% else %}
+                        <span class="badge-statut badge-statut--inconnu">Inconnu</span>
+                        {% endif %}
+                        <p class="carte-detection__nom">{{ l.nom }}</p>
+                        <p class="carte-detection__horodatage">{{ l.heure }} • {{ l.camera }}</p>
+                        <p class="carte-detection__confiance">Confiance: {{ (l.score_detection * 100) | round(2) }}%</p>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <p style="padding:1rem;color:var(--on-surface-variant);font-size:13px;">Aucune détection pour le moment.</p>
+            {% endfor %}
+
+        </div>
+
+        <div class="barre-detections__pied">
+            <a class="bouton-voir-log" href="{{ url_for('unknowns') }}">VOIR TOUT LE LOG</a>
+        </div>
+    </aside>
+
+</div>
+        </main>
+    </div>
+</div>
+</body>
+</html>

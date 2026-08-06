@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html class="light" lang="fr">
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Personnes connues | Système de surveillance</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="application">
+    <!-- Barre de Navigation Latérale (uniformisée sur toutes les pages admin) -->
+    <aside class="barre-laterale">
+        <div class="barre-laterale__en-tete">
+            <h1 class="barre-laterale__titre">Système de surveillance</h1>
+            <p class="barre-laterale__sous-titre">Enterprise Admin</p>
+        </div>
+        <nav class="barre-laterale__navigation">
+            <ul class="barre-laterale__liste">
+                <li>
+                    <a class="lien-navigation" href="{{ url_for('login') }}">
+                        <img class="lien-navigation__icone" src="{{ url_for('static', filename='icones images/home.png') }}">
+                        <span>Accueil</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="lien-navigation" href="{{ url_for('realtime') }}">
+                        <img class="lien-navigation__icone" src="{{ url_for('static', filename='icones images/videocam.png') }}">
+                        <span>Vue en temps réel</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="lien-navigation" href="{{ url_for('unknowns') }}">
+                        <img class="lien-navigation__icone" src="{{ url_for('static', filename='icones images/inconnu.png') }}">
+                        <span>Inconnus</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="lien-navigation lien-navigation--actif" href="{{ url_for('personnes_connues') }}">
+                        <img class="lien-navigation__icone" src="{{ url_for('static', filename='icones images/group.png') }}">
+                        <span>Personnes connues</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="lien-navigation" href="{{ url_for('detections') }}">
+                        <img class="lien-navigation__icone" src="{{ url_for('static', filename='icones images/detection.png') }}">
+                        <span>Détections</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="lien-navigation" href="{{ url_for('dashboard') }}">
+                        <img class="lien-navigation__icone" src="{{ url_for('static', filename='icones images/dashboard.png') }}">
+                        <span>Tableau de bord</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="lien-navigation" href="{{ url_for('statistics') }}">
+                        <img class="lien-navigation__icone" src="{{ url_for('static', filename='icones images/bar_chart.png') }}">
+                        <span>Statistiques</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="lien-navigation" href="#">
+                        <img class="lien-navigation__icone" src="{{ url_for('static', filename='icones images/settings.png') }}">
+                        <span>Paramètres</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <div class="barre-laterale__profil">
+            <div class="profil-utilisateur">
+                <div class="profil-utilisateur__avatar">A</div>
+                <div>
+                    <p class="profil-utilisateur__nom">Admin Profile</p>
+                    <p class="profil-utilisateur__email">admin@systemedesurveillance</p>
+                </div>
+            </div>
+        </div>
+    </aside>
+    <div class="contenu-principal">
+        <main class="contenu-tableau-de-bord">
+            <div class="entete-contenu">
+                <div>
+                    <h2 class="entete-contenu__titre">Gestion des Personnes Connues</h2>
+                </div>
+            </div>
+
+            <div class="tableau-personnes">
+                <table class="table-personnes">
+                    <thead>
+                        <tr>
+                            <th>Visage/Nom</th>
+                            <th>Rôle</th>
+                            <th>Département</th>
+                            <th>Date et Heure</th>
+                            <th>Statut</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for p in personnes %}
+                        <tr>
+                            <td>
+                                <div class="profil-employe">
+                                    <a class="profil-employe__avatar-wrapper" href="#hud-scan">
+                                        {% if p.photo %}
+                                        <img class="profil-employe__avatar" src="{{ url_for('static', filename='photos/' + p.photo) }}">
+                                        {% else %}
+                                        <div class="profil-employe__avatar profil-employe__avatar--initiale">{{ p.nom[0]|upper }}</div>
+                                        {% endif %}
+                                        <span class="profil-employe__statut-point"></span>
+                                    </a>
+                                    <span class="profil-employe__nom">{{ p.nom }}</span>
+                                </div>
+                            </td>
+                            <td class="table-personnes__role">{{ p.poste or "—" }}</td>
+                            <td class="table-personnes__departement">{{ p.departement or "—" }}</td>
+                            <td class="table-personnes__date">{{ p.date_ajout or "—" }}</td>
+                            <td>
+                                {% if p.statut == "Inactif" %}
+                                <span class="badge-statut badge-statut--inactif">Inactif</span>
+                                {% else %}
+                                <span class="badge-statut badge-statut--actif">Actif</span>
+                                {% endif %}
+                            </td>
+                            <td class="td--droite">
+                                <div class="actions-ligne">
+                                    <button class="bouton-supprimer" aria-label="Supprimer" type="button">
+                                        <img class="lien-navigation__icone" src="{{ url_for('static', filename='icones images/delete.png') }}">
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="6" style="text-align: center; color: var(--on-surface-variant); padding: var(--stack-lg);">
+                                Aucune personne enregistrée pour l'instant.
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="pied-pagination">
+                <p class="pied-pagination__texte">Affichage de {{ personnes|length }} employé(s)</p>
+            </div>
+
+            <!-- Effet HUD au clic sur un avatar (CSS pur, via :target) -->
+            <div class="hud-scan" id="hud-scan">
+                <div class="hud-scan__cadre">
+                    <div class="hud-scan__coin hud-scan__coin--haut-gauche"></div>
+                    <div class="hud-scan__coin hud-scan__coin--haut-droit"></div>
+                    <div class="hud-scan__coin hud-scan__coin--bas-gauche"></div>
+                    <div class="hud-scan__coin hud-scan__coin--bas-droit"></div>
+                    <div class="hud-scan__lueur"></div>
+                    <div class="hud-scan__etiquette">Scanning Active Profile</div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+</body>
+</html>

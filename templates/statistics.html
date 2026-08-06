@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html class="light" lang="fr">
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Statistiques | Système de surveillance</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="application">
+    <!-- Barre de Navigation Latérale (uniformisée sur toutes les pages admin) -->
+    <aside class="barre-laterale">
+        <div class="barre-laterale__en-tete">
+            <h1 class="barre-laterale__titre">Système de surveillance</h1>
+            <p class="barre-laterale__sous-titre">Enterprise Admin</p>
+        </div>
+        <nav class="barre-laterale__navigation">
+            <ul class="barre-laterale__liste">
+                <li>
+                    <a class="lien-navigation" href="{{ url_for('login') }}">
+                        <img class="lien-navigation__icone" src="{{ url_for('static', filename='icones images/home.png') }}">
+                        <span>Accueil</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="lien-navigation" href="{{ url_for('realtime') }}">
+                        <img class="lien-navigation__icone" src="{{ url_for('static', filename='icones images/videocam.png') }}">
+                        <span>Vue en temps réel</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="lien-navigation" href="{{ url_for('unknowns') }}">
+                        <img class="lien-navigation__icone" src="{{ url_for('static', filename='icones images/inconnu.png') }}">
+                        <span>Inconnus</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="lien-navigation" href="{{ url_for('personnes_connues') }}">
+                        <img class="lien-navigation__icone" src="{{ url_for('static', filename='icones images/group.png') }}">
+                        <span>Personnes connues</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="lien-navigation" href="{{ url_for('detections') }}">
+                        <img class="lien-navigation__icone" src="{{ url_for('static', filename='icones images/detection.png') }}">
+                        <span>Détections</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="lien-navigation" href="{{ url_for('dashboard') }}">
+                        <img class="lien-navigation__icone" src="{{ url_for('static', filename='icones images/dashboard.png') }}">
+                        <span>Tableau de bord</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="lien-navigation lien-navigation--actif" href="{{ url_for('statistics') }}">
+                        <img class="lien-navigation__icone" src="{{ url_for('static', filename='icones images/bar_chart.png') }}">
+                        <span>Statistiques</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="lien-navigation" href="#">
+                        <img class="lien-navigation__icone" src="{{ url_for('static', filename='icones images/settings.png') }}">
+                        <span>Paramètres</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <div class="barre-laterale__profil">
+            <div class="profil-utilisateur">
+                <div class="profil-utilisateur__avatar">A</div>
+                <div>
+                    <p class="profil-utilisateur__nom">Admin Profile</p>
+                    <p class="profil-utilisateur__email">admin@systemedesurveillance</p>
+                </div>
+            </div>
+        </div>
+    </aside>
+    <div class="contenu-principal">
+        <main class="contenu-tableau-de-bord">
+            <div class="entete-contenu">
+                <div>
+                    <h2 class="entete-contenu__titre">Statistiques</h2>
+                </div>
+<div class="en-tete-principal__actions">
+    <span class="badge-en-direct"><span class="indicateur-direct" style="background-color:var(--primary);"></span>EN DIRECT</span>
+</div>
+            </div>
+
+<div class="tableau-de-bord">
+    <div class="entete-page">
+        <div class="entete-page__rangee">
+            <div>
+                <h2 class="entete-page__titre" style="margin-bottom:0.25rem;">Intelligence Opérationnelle</h2>
+                <p class="entete-page__sous-titre">Débit biométrique et données de présence pour le {{ stats.date }}</p>
+            </div>
+            <div class="en-tete-principal__actions">
+                <button class="bouton-filtre">Dernières 24 heures</button>
+                <button class="bouton-export">Exporter le log</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="tableau-de-bord__grille">
+        <div class="carte">
+            <div class="carte__entete">
+                <span class="carte__titre">PRÉSENCE PAR HEURE</span>
+                <span class="legende-graphique"><span class="legende-puce"></span>Pic de trafic</span>
+            </div>
+            <div class="graphique-barres">
+                {% set max_heure = stats.presence_par_heure|max %}
+                {% for compte in stats.presence_par_heure %}
+                {% if loop.index0 % 2 == 0 %}
+                <div class="barre-colonne">
+                    <div class="barre-colonne__tige{% if compte == max_heure and max_heure > 0 %} barre-colonne__tige--pic{% else %} barre-colonne__tige--normale{% endif %}" style="height:{{ (compte / max_heure * 100) if max_heure else 0 }}%;"></div>
+                    <span class="barre-colonne__label">{{ '%02d'|format(loop.index0) }}:00</span>
+                </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="carte">
+            <div class="carte__entete">
+                <span class="carte__titre">PRÉSENCE QUOTIDIENNE</span>
+            </div>
+            <div class="stat-geante">
+                <span class="stat-geante__valeur">{{ stats.taux_reconnaissance }} %</span>
+                <span class="stat-geante__label">de taux de reconnaissance</span>
+            </div>
+            <div class="barre-progression">
+                <div class="barre-progression__entete"><span>Reconnus</span><strong>{{ stats.connus }}</strong></div>
+                <div class="barre-progression__piste"><div class="barre-progression__remplissage barre-progression__remplissage--primaire" style="width:{{ (stats.connus / stats.total * 100) if stats.total else 0 }}%;"></div></div>
+            </div>
+            <div class="barre-progression">
+                <div class="barre-progression__entete"><span>Inconnus</span><strong>{{ stats.inconnus }}</strong></div>
+                <div class="barre-progression__piste"><div class="barre-progression__remplissage barre-progression__remplissage--erreur" style="width:{{ (stats.inconnus / stats.total * 100) if stats.total else 0 }}%;"></div></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="tableau-detections" style="margin-top:0;">
+        <div class="carte__entete" style="padding:1rem 1.5rem;margin-bottom:0;border-bottom:1px solid var(--outline-variant);">
+            <span class="carte__titre">STATISTIQUES INDIVIDUELLES</span>
+            <span style="font-size:12px;color:var(--on-surface-variant);">Total : {{ stats.total }} entrées</span>
+        </div>
+        <table class="table-detections">
+            <thead>
+                <tr>
+                    <th>Nom de la personne</th>
+                    <th>Poste</th>
+                    <th>Département</th>
+                    <th>Première détection</th>
+                    <th>Dernière détection</th>
+                    <th class="th--droite">Détections</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for p in stats.personnes %}
+                <tr>
+                    <td>
+                        <div class="personne-cellule">
+                            <div class="avatar-personne"></div>
+                            <span class="personne-cellule__nom">{{ p.nom }}</span>
+                        </div>
+                    </td>
+                    <td>{{ p.poste or '—' }}</td>
+                    <td>{{ p.departement or '—' }}</td>
+                    <td><span class="table-detections__heure">{{ p.premiere }}</span></td>
+                    <td><span class="table-detections__heure">{{ p.derniere }}</span></td>
+                    <td class="td--droite">{{ p.detections }}</td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="6" style="text-align:center;color:var(--on-surface-variant);">Aucune détection connue aujourd'hui.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<footer class="pied-systeme">
+    <div class="pied-systeme__gauche">
+        <span><span class="indicateur-etat-point"></span>ÉTAT DU MOTEUR : OPTIMAL</span>
+        <span>LATENCE BDD : 14 MS</span>
+        <span>CHARGE CPU : 22 %</span>
+    </div>
+    <div>Système de surveillance</div>
+</footer>
+        </main>
+    </div>
+</div>
+</body>
+</html>

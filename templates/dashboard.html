@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html class="light" lang="fr">
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Tableau de bord | Système de surveillance</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="application">
+    <!-- Barre de Navigation Latérale (uniformisée sur toutes les pages admin) -->
+    <aside class="barre-laterale">
+        <div class="barre-laterale__en-tete">
+            <h1 class="barre-laterale__titre">Système de surveillance</h1>
+            <p class="barre-laterale__sous-titre">Enterprise Admin</p>
+        </div>
+        <nav class="barre-laterale__navigation">
+            <ul class="barre-laterale__liste">
+                <li>
+                    <a class="lien-navigation" href="{{ url_for('login') }}">
+                        <img class="lien-navigation__icone" src="{{ url_for('static', filename='icones images/home.png') }}">
+                        <span>Accueil</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="lien-navigation" href="{{ url_for('realtime') }}">
+                        <img class="lien-navigation__icone" src="{{ url_for('static', filename='icones images/videocam.png') }}">
+                        <span>Vue en temps réel</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="lien-navigation" href="{{ url_for('unknowns') }}">
+                        <img class="lien-navigation__icone" src="{{ url_for('static', filename='icones images/inconnu.png') }}">
+                        <span>Inconnus</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="lien-navigation" href="{{ url_for('personnes_connues') }}">
+                        <img class="lien-navigation__icone" src="{{ url_for('static', filename='icones images/group.png') }}">
+                        <span>Personnes connues</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="lien-navigation" href="{{ url_for('detections') }}">
+                        <img class="lien-navigation__icone" src="{{ url_for('static', filename='icones images/detection.png') }}">
+                        <span>Détections</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="lien-navigation lien-navigation--actif" href="{{ url_for('dashboard') }}">
+                        <img class="lien-navigation__icone" src="{{ url_for('static', filename='icones images/dashboard.png') }}">
+                        <span>Tableau de bord</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="lien-navigation" href="{{ url_for('statistics') }}">
+                        <img class="lien-navigation__icone" src="{{ url_for('static', filename='icones images/bar_chart.png') }}">
+                        <span>Statistiques</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="lien-navigation" href="#">
+                        <img class="lien-navigation__icone" src="{{ url_for('static', filename='icones images/settings.png') }}">
+                        <span>Paramètres</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <div class="barre-laterale__profil">
+            <div class="profil-utilisateur">
+                <div class="profil-utilisateur__avatar">A</div>
+                <div>
+                    <p class="profil-utilisateur__nom">Admin Profile</p>
+                    <p class="profil-utilisateur__email">admin@systemedesurveillance</p>
+                </div>
+            </div>
+        </div>
+    </aside>
+    <div class="contenu-principal">
+        <main class="contenu-tableau-de-bord">
+            <div class="entete-contenu">
+                <div>
+                    <h2 class="entete-contenu__titre">Tableau de bord</h2>
+                </div>
+
+            </div>
+
+<div class="tableau-de-bord">
+    <div class="entete-page">
+        <div>
+            <h2 class="entete-page__titre">Aperçu du système de reconnaissance faciale</h2>
+        </div>
+    </div>
+
+    <div class="tableau-de-bord__grille">
+        <!-- Colonne gauche : flux vidéo + statistiques -->
+        <div>
+            <div class="lecteur-video">
+                <img class="lecteur-video__image" src="{{ url_for('video_feed', nom_camera='CAM-01') }}">
+                <div class="lecteur-video__superposition" style="opacity:1;">
+                    <div class="lecteur-video__info-direct">
+                        <span class="indicateur-direct"></span>
+                        <span class="indicateur-direct__texte">Flux vidéo en direct</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grille-stats-principales" style="margin-top:0.75rem;">
+                <div class="carte-stat">
+                    <p class="carte-stat__label">DÉTECTIONS AUJOURD'HUI</p>
+                    <div class="carte-stat__valeur-wrapper">
+                        <img class="carte-stat__icone" src="{{ url_for('static', filename='icones/analytics.svg') }}">
+                        <span class="carte-stat__valeur">{{ stats.total }}</span>
+                    </div>
+                </div>
+                <div class="carte-stat">
+                    <p class="carte-stat__label">PERSONNES CONNUES</p>
+                    <div class="carte-stat__valeur-wrapper">
+                        <img class="carte-stat__icone" src="{{ url_for('static', filename='icones/personnes_connues.svg') }}">
+                        <span class="carte-stat__valeur">{{ stats.connus }}</span>
+                    </div>
+                </div>
+                <div class="carte-stat">
+                    <p class="carte-stat__label">PERSONNES INCONNUES</p>
+                    <div class="carte-stat__valeur-wrapper">
+                        <img class="carte-stat__icone" src="{{ url_for('static', filename='icones/inconnu.svg') }}">
+                        <span class="carte-stat__valeur">{{ stats.inconnus }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grille-stats-secondaires">
+                <div class="carte-stat">
+                    <p class="carte-stat__label">PREMIÈRE DÉTECTION AUJOURD'HUI</p>
+                    <div class="carte-stat__valeur-wrapper">
+                        <img class="carte-stat__icone" src="{{ url_for('static', filename='icones/detection.svg') }}">
+                        <span class="carte-stat__valeur">{{ stats.premiere_detection or '—' }}</span>
+                    </div>
+                </div>
+                <div class="carte-stat">
+                    <p class="carte-stat__label">DERNIÈRE DÉTECTION AUJOURD'HUI</p>
+                    <div class="carte-stat__valeur-wrapper">
+                        <img class="carte-stat__icone" src="{{ url_for('static', filename='icones/detection.svg') }}">
+                        <span class="carte-stat__valeur">{{ stats.derniere_detection or '—' }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Colonne droite : dernières détections -->
+        <div class="carte">
+            <div class="carte__entete">
+                <span class="carte__titre">DERNIÈRES DÉTECTIONS</span>
+                <a class="carte__lien" href="{{ url_for('unknowns') }}">Tout voir</a>
+            </div>
+            <div class="liste-detections-compacte">
+                {% for l in stats.dernieres %}
+                <div class="carte-detection{% if l.statut == 'REFUSE' %} carte-detection--inconnu{% endif %}">
+                    <div class="carte-detection__contenu">
+                        <div class="carte-detection__image"></div>
+                        <div class="carte-detection__details">
+                            {% if l.statut == 'SUCCES' %}
+                            <span class="badge-statut badge-statut--reconnu">Reconnu</span>
+                            {% else %}
+                            <span class="badge-statut badge-statut--inconnu">Inconnu</span>
+                            {% endif %}
+                            <p class="carte-detection__nom">{{ l.nom }}</p>
+                            <p class="carte-detection__horodatage">{{ l.heure }}</p>
+                        </div>
+                    </div>
+                </div>
+                {% else %}
+                <p style="padding:1rem;color:var(--on-surface-variant);font-size:13px;">Aucune détection aujourd'hui.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Graphiques : pas encore de données backend pour ces 3 graphiques (historique par jour,
+         par heure, par personne au niveau du dashboard) — valeurs d'exemple conservées en attendant -->
+    <div class="rangee-cartes">
+        <div class="carte">
+            <div class="carte__entete">
+                <span class="carte__titre">DÉTECTIONS PAR JOUR (CETTE SEMAINE)</span>
+            </div>
+            <div class="graphique-barres">
+                <div class="barre-colonne"><span class="barre-colonne__valeur">120</span><div class="barre-colonne__tige" style="height:60%;"></div><span class="barre-colonne__label">Lun</span></div>
+                <div class="barre-colonne"><span class="barre-colonne__valeur">132</span><div class="barre-colonne__tige" style="height:66%;"></div><span class="barre-colonne__label">Mar</span></div>
+                <div class="barre-colonne"><span class="barre-colonne__valeur">145</span><div class="barre-colonne__tige" style="height:72%;"></div><span class="barre-colonne__label">Mer</span></div>
+                <div class="barre-colonne"><span class="barre-colonne__valeur">160</span><div class="barre-colonne__tige" style="height:80%;"></div><span class="barre-colonne__label">Jeu</span></div>
+                <div class="barre-colonne"><span class="barre-colonne__valeur">148</span><div class="barre-colonne__tige" style="height:74%;"></div><span class="barre-colonne__label">Ven</span></div>
+                <div class="barre-colonne"><span class="barre-colonne__valeur">128</span><div class="barre-colonne__tige" style="height:64%;"></div><span class="barre-colonne__label">Sam</span></div>
+                <div class="barre-colonne"><span class="barre-colonne__valeur">0</span><div class="barre-colonne__tige" style="height:1%;"></div><span class="barre-colonne__label">Dim</span></div>
+            </div>
+        </div>
+
+        <div class="carte">
+            <div class="carte__entete">
+                <span class="carte__titre">DÉTECTIONS PAR HEURE (AUJOURD'HUI)</span>
+            </div>
+            <svg class="graphique-courbe" viewBox="0 0 320 160" preserveAspectRatio="none">
+                <polyline class="graphique-courbe__ligne" points="10,150 60,140 110,40 160,55 210,70 260,120 310,155" />
+                <circle class="graphique-courbe__point" cx="110" cy="40" r="3"></circle>
+                <text class="graphique-courbe__valeur" x="98" y="32">32</text>
+                <circle class="graphique-courbe__point" cx="160" cy="55" r="3"></circle>
+                <text class="graphique-courbe__valeur" x="150" y="47">28</text>
+            </svg>
+        </div>
+
+        <div class="carte">
+            <div class="carte__entete">
+                <span class="carte__titre">DÉTECTIONS PAR PERSONNE (AUJOURD'HUI)</span>
+            </div>
+            <div class="liste-barres-horizontales">
+                <div class="barre-horizontale"><span class="barre-horizontale__nom">Amit Verma</span><div class="barre-horizontale__piste"><div class="barre-horizontale__remplissage" style="width:31%;"></div></div><span class="barre-horizontale__valeur">5</span></div>
+                <div class="barre-horizontale"><span class="barre-horizontale__nom">Rahul Sharma</span><div class="barre-horizontale__piste"><div class="barre-horizontale__remplissage" style="width:25%;"></div></div><span class="barre-horizontale__valeur">4</span></div>
+                <div class="barre-horizontale"><span class="barre-horizontale__nom">Priya Singh</span><div class="barre-horizontale__piste"><div class="barre-horizontale__remplissage" style="width:25%;"></div></div><span class="barre-horizontale__valeur">4</span></div>
+                <div class="barre-horizontale"><span class="barre-horizontale__nom">Neha Patel</span><div class="barre-horizontale__piste"><div class="barre-horizontale__remplissage" style="width:19%;"></div></div><span class="barre-horizontale__valeur">3</span></div>
+                <div class="barre-horizontale"><span class="barre-horizontale__nom">Vikram Joshi</span><div class="barre-horizontale__piste"><div class="barre-horizontale__remplissage" style="width:19%;"></div></div><span class="barre-horizontale__valeur">3</span></div>
+                <div class="barre-horizontale"><span class="barre-horizontale__nom">Autres</span><div class="barre-horizontale__piste"><div class="barre-horizontale__remplissage" style="width:100%;"></div></div><span class="barre-horizontale__valeur">16</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Résumé + état du système -->
+    <div class="rangee-cartes">
+        <div class="carte">
+            <div class="carte__entete"><span class="carte__titre">RÉSUMÉ</span></div>
+            <div class="liste-resume">
+                <div class="item-resume">
+                    <div class="item-resume__icone"><img class="carte-stat__icone" src="{{ url_for('static', filename='icones/personnes_connues.svg') }}"></div>
+                    <div><p class="item-resume__valeur">{{ stats.connus }}</p><p class="item-resume__label">Connus aujourd'hui</p></div>
+                </div>
+                <div class="item-resume">
+                    <div class="item-resume__icone"><img class="carte-stat__icone" src="{{ url_for('static', filename='icones/inconnu.svg') }}"></div>
+                    <div><p class="item-resume__valeur">{{ stats.inconnus }}</p><p class="item-resume__label">Inconnus aujourd'hui</p></div>
+                </div>
+                <div class="item-resume">
+                    <div class="item-resume__icone"><img class="carte-stat__icone" src="{{ url_for('static', filename='icones/checkcircle.svg') }}"></div>
+                    <div><p class="item-resume__valeur">{{ stats.total }}</p><p class="item-resume__label">Total détections</p></div>
+                </div>
+                <div class="item-resume">
+                    <div class="item-resume__icone"><img class="carte-stat__icone" src="{{ url_for('static', filename='icones/analytics.svg') }}"></div>
+                    <div><p class="item-resume__valeur">{{ ((stats.connus / stats.total * 100) | round(1)) if stats.total else 0 }} %</p><p class="item-resume__label">Taux de reconnaissance</p></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- État du système : pas encore remonté depuis le backend, valeurs d'exemple -->
+        <div class="carte">
+            <div class="carte__entete"><span class="carte__titre">ÉTAT DU SYSTÈME</span></div>
+            <div class="liste-resume">
+                <div class="item-resume">
+                    <div class="item-resume__icone"><img class="carte-stat__icone" src="{{ url_for('static', filename='icones/videocam.svg') }}"></div>
+                    <div><p class="item-resume__valeur">4 / 4</p><p class="item-resume__label">Caméras en ligne</p></div>
+                </div>
+                <div class="item-resume">
+                    <div class="item-resume__icone"><img class="carte-stat__icone" src="{{ url_for('static', filename='icones/checkcircle.svg') }}"></div>
+                    <div><p class="item-resume__valeur">1,2 To / 2 To</p><p class="item-resume__label">Stockage</p></div>
+                </div>
+                <div class="item-resume">
+                    <div class="item-resume__icone"><img class="carte-stat__icone" src="{{ url_for('static', filename='icones/analytics.svg') }}"></div>
+                    <div><p class="item-resume__valeur">45 %</p><p class="item-resume__label">Utilisation CPU</p></div>
+                </div>
+                <div class="item-resume">
+                    <div class="item-resume__icone"><img class="carte-stat__icone" src="{{ url_for('static', filename='icones/analytics.svg') }}"></div>
+                    <div><p class="item-resume__valeur">62 %</p><p class="item-resume__label">Utilisation mémoire</p></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+        </main>
+    </div>
+</div>
+</body>
+</html>
