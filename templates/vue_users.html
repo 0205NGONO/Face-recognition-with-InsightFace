@@ -51,12 +51,9 @@
                                 <span class="indicateur-direct"></span>
                                 <span class="indicateur-direct__texte">{{ nom_cam }}</span>
                             </div>
-                            <a class="bouton-plein-ecran" href="#cam-{{ nom_cam }}--plein-ecran" aria-label="Plein écran">⛶</a>
+                            <a class="bouton-plein-ecran" href="#cam-{{ nom_cam }}" aria-label="Plein écran">⛶</a>
+                            <a class="bouton-plein-ecran bouton-fermer-plein-ecran" href="#" aria-label="Quitter le plein écran">✕</a>
                         </div>
-                    </div>
-                    <div class="plein-ecran" id="cam-{{ nom_cam }}--plein-ecran">
-                        <a class="plein-ecran__fermer" href="#" aria-label="Quitter le plein écran">✕</a>
-                        <img class="plein-ecran__image" src="{{ url_for('video_feed', nom_camera=nom_cam) }}">
                     </div>
                     {% else %}
                     <p style="color: var(--on-surface-variant);">Aucune caméra disponible pour le moment.</p>
