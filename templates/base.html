@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html{% block html_attrs %} class="light"{% endblock %} lang="fr">
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>{% block title %}Système de surveillance{% endblock %}</title>
+{% block head_extra %}<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">{% endblock %}
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body{% block body_attrs %}{% endblock %}>
+{%- block body %}{% endblock -%}
+</body>
+</html>

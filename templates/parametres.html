@@ -1,0 +1,76 @@
+{% extends 'layout.html' %}
+{% block page_id %}parametres{% endblock %}
+{% block page_title %}Paramètres{% endblock %}
+{% block entete_titre %}Paramètres{% endblock %}
+{% block content %}
+            <div class="grille-parametres">
+
+                <!-- Changer le mot de passe -->
+                <section class="carte-parametre">
+                    <h3 class="carte-parametre__titre">Changer le mot de passe</h3>
+                    <form action="{{ url_for('parametres_mot_de_passe') }}" method="post" class="formulaire-parametre">
+                        <div class="field">
+                            <label for="ancien_mdp">Mot de passe actuel</label>
+                            <input type="password" id="ancien_mdp" name="ancien_mdp" required>
+                        </div>
+                        <div class="field">
+                            <label for="nouveau_mdp">Nouveau mot de passe</label>
+                            <input type="password" id="nouveau_mdp" name="nouveau_mdp" required minlength="8">
+                        </div>
+                        <div class="field">
+                            <label for="confirmation_mdp">Confirmer le nouveau mot de passe</label>
+                            <input type="password" id="confirmation_mdp" name="confirmation_mdp" required minlength="8">
+                        </div>
+                        <button type="submit" class="btn-submit">Mettre à jour le mot de passe</button>
+                        {% if erreur_mdp %}
+                        <p class="error-msg">{{ erreur_mdp }}</p>
+                        {% endif %}
+                        {% if succes_mdp %}
+                        <p class="succes-msg">{{ succes_mdp }}</p>
+                        {% endif %}
+                    </form>
+                </section>
+
+                <!-- Gestion des caméras -->
+                <section class="carte-parametre">
+                    <h3 class="carte-parametre__titre">Ajouter une caméra</h3>
+                    <form action="{{ url_for('parametres_ajouter_camera') }}" method="post" class="formulaire-parametre">
+                        <div class="field">
+                            <label for="nom_camera">Nom de la caméra</label>
+                            <input type="text" id="nom_camera" name="nom_camera" placeholder="Ex : CAM-03" required>
+                        </div>
+                        <div class="field">
+                            <label for="source_camera">Source (index webcam ou URL du flux)</label>
+                            <input type="text" id="source_camera" name="source_camera" placeholder="Ex : 0 ou http://192.168.1.42:4747/video" required>
+                        </div>
+                        <button type="submit" class="btn-submit">Ajouter la caméra</button>
+                        {% if erreur_camera %}
+                        <p class="error-msg">{{ erreur_camera }}</p>
+                        {% endif %}
+                    </form>
+                </section>
+
+                <!-- Liste des caméras existantes -->
+                <section class="carte-parametre carte-parametre--pleine-largeur">
+                    <h3 class="carte-parametre__titre">Caméras configurées</h3>
+                    <div class="liste-cameras">
+                        {% for nom_cam, source in cameras.items() %}
+                        <div class="ligne-camera">
+                            <div>
+                                <p class="ligne-camera__nom">{{ nom_cam }}</p>
+                                <p class="ligne-camera__source">{{ source }}</p>
+                            </div>
+                            <form action="{{ url_for('parametres_supprimer_camera', nom_camera=nom_cam) }}" method="post">
+                                <button class="bouton-supprimer" type="submit" aria-label="Supprimer {{ nom_cam }}">
+                                    <img class="lien-navigation__icone" src="{{ url_for('static', filename='icones images/delete.png') }}">
+                                </button>
+                            </form>
+                        </div>
+                        {% else %}
+                        <p style="color: var(--on-surface-variant); font-size: 13px;">Aucune caméra configurée.</p>
+                        {% endfor %}
+                    </div>
+                </section>
+
+            </div>
+{% endblock %}

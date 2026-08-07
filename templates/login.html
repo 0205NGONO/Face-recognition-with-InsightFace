@@ -1,12 +1,9 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Système de surveillance - Connexion</title>
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body class="corps-connexion">
+{% extends 'base.html' %}
+{% block html_attrs %}{% endblock %}
+{% block title %}Système de surveillance - Connexion{% endblock %}
+{% block head_extra %}{% endblock %}
+{% block body_attrs %} class="corps-connexion"{% endblock %}
+{% block body -%}
 
 <main class="page">
 
@@ -62,5 +59,4 @@
 
 </main>
 
-</body>
-</html>
+{% endblock %}

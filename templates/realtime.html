@@ -1,103 +1,30 @@
-<!DOCTYPE html>
-<html class="light" lang="fr">
-<head>
-<meta charset="utf-8">
-<meta content="width=device-width, initial-scale=1.0" name="viewport">
-<title>Vue en Temps Réel | Système de surveillance</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body>
-<div class="application">
-    <!-- Barre de Navigation Latérale (uniformisée sur toutes les pages admin) -->
-    <aside class="barre-laterale">
-        <div class="barre-laterale__en-tete">
-            <h1 class="barre-laterale__titre">Système de surveillance</h1>
-            <p class="barre-laterale__sous-titre">Enterprise Admin</p>
-        </div>
-        <nav class="barre-laterale__navigation">
-            <ul class="barre-laterale__liste">
-                <li>
-                    <a class="lien-navigation" href="{{ url_for('login') }}">
-                        <img class="lien-navigation__icone" src="{{ url_for('static', filename='icones images/home.png') }}">
-                        <span>Accueil</span>
-                    </a>
-                </li>
-                <li>
-                    <a class="lien-navigation lien-navigation--actif" href="{{ url_for('realtime') }}">
-                        <img class="lien-navigation__icone" src="{{ url_for('static', filename='icones images/videocam.png') }}">
-                        <span>Vue en temps réel</span>
-                    </a>
-                </li>
-                <li>
-                    <a class="lien-navigation" href="{{ url_for('unknowns') }}">
-                        <img class="lien-navigation__icone" src="{{ url_for('static', filename='icones images/inconnu.png') }}">
-                        <span>Inconnus</span>
-                    </a>
-                </li>
-                <li>
-                    <a class="lien-navigation" href="{{ url_for('personnes_connues') }}">
-                        <img class="lien-navigation__icone" src="{{ url_for('static', filename='icones images/group.png') }}">
-                        <span>Personnes connues</span>
-                    </a>
-                </li>
-                <li>
-                    <a class="lien-navigation" href="{{ url_for('detections') }}">
-                        <img class="lien-navigation__icone" src="{{ url_for('static', filename='icones images/detection.png') }}">
-                        <span>Détections</span>
-                    </a>
-                </li>
-                <li>
-                    <a class="lien-navigation" href="{{ url_for('dashboard') }}">
-                        <img class="lien-navigation__icone" src="{{ url_for('static', filename='icones images/dashboard.png') }}">
-                        <span>Tableau de bord</span>
-                    </a>
-                </li>
-                <li>
-                    <a class="lien-navigation" href="{{ url_for('statistics') }}">
-                        <img class="lien-navigation__icone" src="{{ url_for('static', filename='icones images/bar_chart.png') }}">
-                        <span>Statistiques</span>
-                    </a>
-                </li>
-                <li>
-                    <a class="lien-navigation" href="#">
-                        <img class="lien-navigation__icone" src="{{ url_for('static', filename='icones images/settings.png') }}">
-                        <span>Paramètres</span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
-        <div class="barre-laterale__profil">
-            <div class="profil-utilisateur">
-                <div class="profil-utilisateur__avatar">A</div>
-                <div>
-                    <p class="profil-utilisateur__nom">Admin Profile</p>
-                    <p class="profil-utilisateur__email">admin@systemedesurveillance</p>
-                </div>
-            </div>
-        </div>
-    </aside>
-    <div class="contenu-principal">
-        <main class="contenu-tableau-de-bord">
-            <div class="entete-contenu">
-                <div>
-                    <h2 class="entete-contenu__titre">Vue en Temps Réel</h2>
-                </div>
-
-            </div>
-
+{% extends 'layout.html' %}
+{% block page_id %}realtime{% endblock %}
+{% block page_title %}Vue en Temps Réel{% endblock %}
+{% block entete_titre %}Vue en Temps Réel{% endblock %}
+{% block content %}
 <div class="zone-contenu">
 
     <div class="panneau-flux">
-        <div class="lecteur-video">
-            <img class="lecteur-video__image" src="{{ url_for('video_feed', nom_camera='CAM-01') }}">
-
-            <div class="lecteur-video__superposition" style="opacity:1;">
-                <div class="lecteur-video__info-direct">
-                    <span class="indicateur-direct"></span>
-                    <span class="indicateur-direct__texte">Live Feed: Entrée Principale</span>
+        <div class="grille-cameras">
+            {% for nom_cam, source in cameras.items() %}
+            <div class="lecteur-video" id="cam-{{ nom_cam }}">
+                <img class="lecteur-video__image" src="{{ url_for('video_feed', nom_camera=nom_cam) }}">
+                <div class="lecteur-video__superposition">
+                    <div class="lecteur-video__info-direct">
+                        <span class="indicateur-direct"></span>
+                        <span class="indicateur-direct__texte">{{ nom_cam }}</span>
+                    </div>
+                    <a class="bouton-plein-ecran" href="#cam-{{ nom_cam }}--plein-ecran" aria-label="Plein écran">⛶</a>
                 </div>
             </div>
+            <div class="plein-ecran" id="cam-{{ nom_cam }}--plein-ecran">
+                <a class="plein-ecran__fermer" href="#" aria-label="Quitter le plein écran">✕</a>
+                <img class="plein-ecran__image" src="{{ url_for('video_feed', nom_camera=nom_cam) }}">
+            </div>
+            {% else %}
+            <p style="color: var(--on-surface-variant);">Aucune caméra configurée. Ajoutez-en une dans Paramètres.</p>
+            {% endfor %}
         </div>
 
         <div class="cartes-stats">
@@ -164,8 +91,4 @@
     </aside>
 
 </div>
-        </main>
-    </div>
-</div>
-</body>
-</html>
+{% endblock %}

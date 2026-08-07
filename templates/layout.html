@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% block title %}{% block page_title %}{% endblock %} | Système de surveillance{% endblock %}
+{% block body -%}
+<div class="application">
+    <!-- Barre de Navigation Latérale (uniformisée sur toutes les pages admin) -->
+    <aside class="barre-laterale">
+        <div class="barre-laterale__en-tete">
+            <h1 class="barre-laterale__titre">Système de surveillance</h1>
+            <p class="barre-laterale__sous-titre">Enterprise Admin</p>
+        </div>
+        <nav class="barre-laterale__navigation">
+            {%- set page_actif = self.page_id() %}
+            <ul class="barre-laterale__liste">
+                <li>
+                    <a class="lien-navigation{% if page_actif == 'accueil' %} lien-navigation--actif{% endif %}" href="{{ url_for('login') }}">
+                        <img class="lien-navigation__icone" src="{{ url_for('static', filename='icones images/home.png') }}">
+                        <span>Accueil</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="lien-navigation{% if page_actif == 'realtime' %} lien-navigation--actif{% endif %}" href="{{ url_for('realtime') }}">
+                        <img class="lien-navigation__icone" src="{{ url_for('static', filename='icones images/videocam.png') }}">
+                        <span>Vue en temps réel</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="lien-navigation{% if page_actif == 'unknowns' %} lien-navigation--actif{% endif %}" href="{{ url_for('unknowns') }}">
+                        <img class="lien-navigation__icone" src="{{ url_for('static', filename='icones images/inconnu.png') }}">
+                        <span>Inconnus</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="lien-navigation{% if page_actif == 'personnes_connues' %} lien-navigation--actif{% endif %}" href="{{ url_for('personnes_connues') }}">
+                        <img class="lien-navigation__icone" src="{{ url_for('static', filename='icones images/group.png') }}">
+                        <span>Personnes connues</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="lien-navigation{% if page_actif == 'detections' %} lien-navigation--actif{% endif %}" href="{{ url_for('detections') }}">
+                        <img class="lien-navigation__icone" src="{{ url_for('static', filename='icones images/detection.png') }}">
+                        <span>Détections</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="lien-navigation{% if page_actif == 'dashboard' %} lien-navigation--actif{% endif %}" href="{{ url_for('dashboard') }}">
+                        <img class="lien-navigation__icone" src="{{ url_for('static', filename='icones images/dashboard.png') }}">
+                        <span>Tableau de bord</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="lien-navigation{% if page_actif == 'statistics' %} lien-navigation--actif{% endif %}" href="{{ url_for('statistics') }}">
+                        <img class="lien-navigation__icone" src="{{ url_for('static', filename='icones images/bar_chart.png') }}">
+                        <span>Statistiques</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="lien-navigation{% if page_actif == 'parametres' %} lien-navigation--actif{% endif %}" href="{{ url_for('parametres') }}">
+                        <img class="lien-navigation__icone" src="{{ url_for('static', filename='icones images/settings.png') }}">
+                        <span>Paramètres</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <div class="barre-laterale__profil">
+            <div class="profil-utilisateur">
+                <div class="profil-utilisateur__avatar">A</div>
+                <div>
+                    <p class="profil-utilisateur__nom">Admin Profile</p>
+                    <p class="profil-utilisateur__email">admin@systemedesurveillance</p>
+                </div>
+            </div>
+        </div>
+    </aside>
+    <div class="contenu-principal">
+        <main class="contenu-tableau-de-bord">
+            <div class="entete-contenu">
+                <div>
+                    <h2 class="entete-contenu__titre">{% block entete_titre %}{% endblock %}</h2>
+                </div>
+                {%- block entete_actions %}{% endblock -%}
+            </div>
+
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+</div>
+{%- endblock %}
+{# Ce block est déclaré ici uniquement pour que self.page_id() ne plante pas
+   si une page oublie de le définir ; chaque page enfant le redéfinit. #}
+{% block page_id %}{% endblock %}

@@ -1,0 +1,124 @@
+{% extends 'base.html' %}
+{% block title %}Vue Utilisateur - Flux en Temps Réel | Système de surveillance{% endblock %}
+{% block body_attrs %} class="application"{% endblock %}
+{% block body -%}
+
+    <aside class="barre-laterale">
+        <div class="barre-laterale__en-tete">
+            <h1 class="barre-laterale__titre">Système de surveillance</h1>
+            <p class="barre-laterale__sous-titre">Vue Utilisateur</p>
+        </div>
+
+        <nav class="barre-laterale__navigation">
+            <a class="lien-navigation lien-navigation--actif" href="{{ url_for('vue_users') }}">
+                <img class="lien-navigation__icone" src="{{ url_for('static', filename='icones/videocam.svg') }}">
+                <span>Vue en temps réel</span>
+            </a>
+        </nav>
+
+        <div class="barre-laterale__profil">
+            <div class="profil-utilisateur">
+                <div class="profil-utilisateur__avatar">
+                    <img class="profil-utilisateur__avatar-image"
+                         data-alt="A professional studio headshot of a security operations center technician, wearing a modern uniform, neutral background, soft corporate lighting, high resolution photography style."
+                         src="https://lh3.googleusercontent.com/aida-public/AB6AXuDuGR_loMFtNgyQCAYzogseSI6thvaAqrbJX5oshsTte_pT5E6iDi9VZC-FuGdZv3i63P8LjPhlkDuSAC2lCyaeTm2Tgfm0GpbDiLmTIYjp1jhfL-QRjl8zYu-KHE_SzFzd6bmhK93mFZ8XX5vrGwOOypTlinpA0FJnFDtx3CnVWdia_SFoDLKI_JTf0dnC0n7zX0JT_ssOTM9MPLb-Aqu5HGlu4XBK-DEfb-XFPr-Xt9-UArSwAbI">
+                </div>
+                <div>
+                    <p class="profil-utilisateur__nom">AKABA</p>
+                    <p class="profil-utilisateur__statut">En Ligne</p>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <main class="contenu-principal">
+
+        <header class="en-tete-principal">
+            <div class="en-tete-principal__groupe">
+                <h2 class="en-tete-principal__titre">Vue Utilisateur - Flux en Temps Réel</h2>
+            </div>
+        </header>
+
+        <div class="zone-contenu">
+
+            <div class="panneau-flux">
+                <div class="grille-cameras">
+                    {% for nom_cam, source in cameras.items() %}
+                    <div class="lecteur-video" id="cam-{{ nom_cam }}">
+                        <img class="lecteur-video__image" src="{{ url_for('video_feed', nom_camera=nom_cam) }}">
+                        <div class="lecteur-video__superposition">
+                            <div class="lecteur-video__info-direct">
+                                <span class="indicateur-direct"></span>
+                                <span class="indicateur-direct__texte">{{ nom_cam }}</span>
+                            </div>
+                            <a class="bouton-plein-ecran" href="#cam-{{ nom_cam }}--plein-ecran" aria-label="Plein écran">⛶</a>
+                        </div>
+                    </div>
+                    <div class="plein-ecran" id="cam-{{ nom_cam }}--plein-ecran">
+                        <a class="plein-ecran__fermer" href="#" aria-label="Quitter le plein écran">✕</a>
+                        <img class="plein-ecran__image" src="{{ url_for('video_feed', nom_camera=nom_cam) }}">
+                    </div>
+                    {% else %}
+                    <p style="color: var(--on-surface-variant);">Aucune caméra disponible pour le moment.</p>
+                    {% endfor %}
+                </div>
+
+                <div class="cartes-stats">
+                    <div class="carte-stat">
+                        <p class="carte-stat__label">ETAT DU SYSTÈME</p>
+                        <div class="carte-stat__valeur-wrapper">
+                            <img class="carte-stat__icone" src="{{ url_for('static', filename='icones/checkcircle.svg') }}">
+                            <span class="carte-stat__valeur">Opérationnel</span>
+                        </div>
+                        <p class="carte-stat__pied">Dernière vérification: il y a 2 min</p>
+                    </div>
+                    <div class="carte-stat">
+                        <p class="carte-stat__label">DÉTECTIONS/MIN</p>
+                        <div class="carte-stat__valeur-wrapper">
+                            <img class="carte-stat__icone" src="{{ url_for('static', filename='icones/analytics.svg') }}">
+                            <span class="carte-stat__valeur">42.5</span>
+                        </div>
+                        <p class="carte-stat__pied">Tendance: +5% vs Heure Préc.</p>
+                    </div>
+                </div>
+            </div>
+
+            <aside class="barre-detections">
+                <div class="barre-detections__en-tete">
+                    <h3 class="barre-detections__titre">DERNIÈRES DÉTECTIONS</h3>
+                    <img class="barre-detections__icone-filtre" src="{{ url_for('static', filename='icones/filter_list.svg') }}">
+                </div>
+
+                <div class="barre-detections__liste">
+
+                {% for l in dernieres %}
+                <div class="carte-detection{% if l.statut == 'REFUSE' %} carte-detection--inconnu{% endif %}">
+                    <div class="carte-detection__contenu">
+                        <div class="carte-detection__image"></div>
+                        <div class="carte-detection__details">
+                            {% if l.statut == 'SUCCES' %}
+                            <span class="badge-statut badge-statut--reconnu">Reconnu</span>
+                            {% else %}
+                            <span class="badge-statut badge-statut--inconnu">Inconnu</span>
+                            {% endif %}
+                            <p class="carte-detection__nom">{{ l.nom }}</p>
+                            <p class="carte-detection__horodatage">{{ l.heure }} • {{ l.camera }}</p>
+                            <p class="carte-detection__confiance">Confiance: {{ (l.score_detection * 100) | round(2) }}%</p>
+                        </div>
+                    </div>
+                </div>
+                {% else %}
+                <p style="padding:1rem;color:var(--on-surface-variant);font-size:13px;">Aucune détection pour le moment.</p>
+                {% endfor %}
+
+                </div>
+
+                <div class="barre-detections__pied">
+                    <a class="bouton-voir-log" href="{{ url_for('login') }}">VOIR TOUT LE LOG</a>
+                </div>
+            </aside>
+
+        </div>
+    </main>
+
+{%- endblock %}
