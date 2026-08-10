@@ -1,9 +1,12 @@
-{% extends 'base.html' %}
-{% block html_attrs %}{% endblock %}
-{% block title %}Système de surveillance - Connexion{% endblock %}
-{% block head_extra %}{% endblock %}
-{% block body_attrs %} class="corps-connexion"{% endblock %}
-{% block body -%}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Système de surveillance - Connexion</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="corps-connexion">
 
 <main class="page">
 
@@ -27,10 +30,10 @@
       </div>
 
       <!-- Formulaire Administrateur : email + mot de passe -->
-      <form id="formAdmin" class="role-form" action="{{ url_for('realtime') }}" method="get">
+      <form id="formAdmin" class="role-form" action="{{ url_for('login_admin') }}" method="post">
         <div class="field">
-          <label for="email">Adresse e-mail</label>
-          <input type="email" id="email" name="email" placeholder="exemple@entreprise.com" required>
+          <label for="nomAdmin">Nom</label>
+          <input type="text" id="nomAdmin" name="nom" placeholder="Nom de l'administrateur" required>
         </div>
 
         <div class="field">
@@ -39,16 +42,24 @@
         </div>
 
         <button type="submit" class="btn-submit">Se connecter</button>
+
+        {% if erreur_admin %}
+        <p class="error-msg">{{ erreur_admin }}</p>
+        {% endif %}
       </form>
 
       <!-- Formulaire Employé : nom complet seul -->
-      <form id="formEmploye" class="role-form" action="{{ url_for('vue_users') }}" method="get">
+      <form id="formEmploye" class="role-form" action="{{ url_for('login_employe') }}" method="post">
         <div class="field">
           <label for="name">Nom complet</label>
           <input type="text" id="name" name="name" placeholder="Entrez votre nom" required>
         </div>
 
         <button type="submit" class="btn-submit">Se connecter</button>
+
+        {% if erreur_employe %}
+        <p class="error-msg">{{ erreur_employe }}</p>
+        {% endif %}
       </form>
     </div>
 
@@ -59,4 +70,5 @@
 
 </main>
 
-{% endblock %}
+</body>
+</html>

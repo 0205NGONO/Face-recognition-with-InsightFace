@@ -3,7 +3,7 @@
 {% block page_title %}Statistiques{% endblock %}
 {% block entete_titre %}Statistiques{% endblock %}
 {% block entete_actions -%}
-<div class="en-tete-principal__actions">
+<div class="ligne-flex">
     <span class="badge-en-direct"><span class="indicateur-direct" style="background-color:var(--primary);"></span>EN DIRECT</span>
 </div>
 {%- endblock %}
@@ -15,7 +15,7 @@
                 <h2 class="entete-page__titre" style="margin-bottom:0.25rem;">Intelligence Opérationnelle</h2>
                 <p class="entete-page__sous-titre">Débit biométrique et données de présence pour le {{ stats.date }}</p>
             </div>
-            <div class="en-tete-principal__actions">
+            <div class="ligne-flex">
                 <button class="bouton-filtre">Dernières 24 heures</button>
                 <button class="bouton-export">Exporter le log</button>
             </div>
@@ -33,7 +33,7 @@
                 {% for compte in stats.presence_par_heure %}
                 {% if loop.index0 % 2 == 0 %}
                 <div class="barre-colonne">
-                    <div class="barre-colonne__tige{% if compte == max_heure and max_heure > 0 %} barre-colonne__tige--pic{% else %} barre-colonne__tige--normale{% endif %}" style="height:{{ (compte / max_heure * 100) if max_heure else 0 }}%;"></div>
+                    <div class="barre-colonne__tige{% if compte == max_heure and max_heure > 0 %} fond-primaire{% else %} barre-colonne__tige--normale{% endif %}" style="height:{{ (compte / max_heure * 100) if max_heure else 0 }}%;"></div>
                     <span class="barre-colonne__label">{{ '%02d'|format(loop.index0) }}:00</span>
                 </div>
                 {% endif %}
@@ -51,7 +51,7 @@
             </div>
             <div class="barre-progression">
                 <div class="barre-progression__entete"><span>Reconnus</span><strong>{{ stats.connus }}</strong></div>
-                <div class="barre-progression__piste"><div class="barre-progression__remplissage barre-progression__remplissage--primaire" style="width:{{ (stats.connus / stats.total * 100) if stats.total else 0 }}%;"></div></div>
+                <div class="barre-progression__piste"><div class="barre-progression__remplissage fond-primaire" style="width:{{ (stats.connus / stats.total * 100) if stats.total else 0 }}%;"></div></div>
             </div>
             <div class="barre-progression">
                 <div class="barre-progression__entete"><span>Inconnus</span><strong>{{ stats.inconnus }}</strong></div>
@@ -80,7 +80,7 @@
                 {% for p in stats.personnes %}
                 <tr>
                     <td>
-                        <div class="personne-cellule">
+                        <div class="ligne-flex">
                             <div class="avatar-personne"></div>
                             <span class="personne-cellule__nom">{{ p.nom }}</span>
                         </div>

@@ -5,22 +5,22 @@
 {% block content %}
             <aside class="barre-detections barre-detections--pleine-page">
                 <div class="barre-detections__en-tete">
-                    <h3 class="barre-detections__titre">DERNIÈRES DÉTECTIONS</h3>
-                    <img class="barre-detections__icone-filtre" src="{{ url_for('static', filename='icones images/filter_list.png') }}">
+                    <h3 class="libelle-discret">DERNIÈRES DÉTECTIONS</h3>
+                    <img class="icone-24" src="{{ url_for('static', filename='icones images/filter_list.png') }}">
                 </div>
                 <div class="barre-detections__liste">
                 {% for l in dernieres %}
                 <div class="carte-detection {% if l.statut == 'REFUSE' %}carte-detection--inconnu{% endif %}">
                     <div class="carte-detection__contenu">
                         <div class="carte-detection__image">
-                            {% if l.image %}<img class="carte-detection__image-img" src="{{ url_for('static', filename='captures/' + l.image) }}">{% endif %}
+                            {% if l.image %}<img class="image-couverture" src="{{ url_for('static', filename='captures/' + l.image) }}">{% endif %}
                         </div>
                         <div class="carte-detection__details">
                             {% if l.statut == 'REFUSE' %}
                             <span class="badge-statut badge-statut--inconnu">Inconnu</span>
                             <p class="carte-detection__nom">Alerte Détection</p>
                             {% else %}
-                            <span class="badge-statut badge-statut--reconnu">Reconnu</span>
+                            <span class="badge-statut badge-vert">Reconnu</span>
                             <p class="carte-detection__nom">{{ l.nom }}</p>
                             {% endif %}
                             <p class="carte-detection__horodatage">{{ l.heure }}</p>

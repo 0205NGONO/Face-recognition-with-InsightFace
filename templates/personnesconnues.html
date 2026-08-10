@@ -19,7 +19,7 @@
                         {% for p in personnes %}
                         <tr>
                             <td>
-                                <div class="profil-employe">
+                                <div class="ligne-flex-sm">
                                     <a class="profil-employe__avatar-wrapper" href="#hud-scan">
                                         {% if p.photo %}
                                         <img class="profil-employe__avatar" src="{{ url_for('static', filename='photos/' + p.photo) }}">
@@ -31,20 +31,20 @@
                                     <span class="profil-employe__nom">{{ p.nom }}</span>
                                 </div>
                             </td>
-                            <td class="table-personnes__role">{{ p.poste or "—" }}</td>
+                            <td class="table-personnes__role">{{ p.role or "—" }}</td>
                             <td class="table-personnes__departement">{{ p.departement or "—" }}</td>
                             <td class="table-personnes__date">{{ p.date_ajout or "—" }}</td>
                             <td>
                                 {% if p.statut == "Inactif" %}
                                 <span class="badge-statut badge-statut--inactif">Inactif</span>
                                 {% else %}
-                                <span class="badge-statut badge-statut--actif">Actif</span>
+                                <span class="badge-statut badge-vert">Actif</span>
                                 {% endif %}
                             </td>
                             <td class="td--droite">
                                 <div class="actions-ligne">
                                     <button class="bouton-supprimer" aria-label="Supprimer" type="button">
-                                        <img class="lien-navigation__icone" src="{{ url_for('static', filename='icones images/delete.png') }}">
+                                        <img class="icone-24" src="{{ url_for('static', filename='icones images/delete.png') }}">
                                     </button>
                                 </div>
                             </td>

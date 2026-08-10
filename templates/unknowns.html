@@ -12,14 +12,14 @@
             <!-- Barre de Filtres -->
             <div class="barre-filtres">
                 <div class="filtre">
-                    <label class="filtre__label">Plage horaire</label>
+                    <label class="libelle-champ">Plage horaire</label>
                     <select class="filtre__select">
                         <option>Dernières 24 Heures</option>
                         <option>Derniers 7 Jours</option>
                     </select>
                 </div>
                 <div class="filtre">
-                    <label class="filtre__label">Camera</label>
+                    <label class="libelle-champ">Camera</label>
                     <select class="filtre__select">
                         <option>Toutes les entrées</option>
                         <option>Camera principale</option>
@@ -49,7 +49,7 @@
                                     <div class="cadre-hud cadre-hud--haut-droit"></div>
                                     <div class="cadre-hud cadre-hud--bas-gauche"></div>
                                     <div class="cadre-hud cadre-hud--bas-droit"></div>
-                                    <img class="apercu-detection__image" src="{{ url_for('static', filename='inconnus/' + inconnu.image) }}">
+                                    <img class="image-couverture" src="{{ url_for('static', filename='inconnus/' + inconnu.image) }}">
                                 </div>
                             </td>
                             <td>
@@ -93,23 +93,23 @@
             <input type="hidden" name="detection_id" value="{{ inconnu.id }}">
             <div class="apercu-sujet">
                 <div class="apercu-sujet__image-wrapper">
-                    <img class="apercu-sujet__image" src="{{ url_for('static', filename='inconnus/' + inconnu.image) }}">
+                    <img class="image-couverture" src="{{ url_for('static', filename='inconnus/' + inconnu.image) }}">
                 </div>
                 <div>
-                    <p class="apercu-sujet__label">Référence de détection</p>
+                    <p class="libelle-champ">Référence de détection</p>
                     <p class="apercu-sujet__reference">{{ inconnu.id }}</p>
                     <p class="apercu-sujet__confiance">Niveau de confiance: {{ (inconnu.score * 100) | round(2) }}%</p>
                 </div>
             </div>
-            <div class="champ-formulaire">
+            <div class="colonne-flex-sm">
                 <label class="champ-formulaire__label">Nom complet</label>
                 <input class="champ-formulaire__input" name="nom" placeholder="Entrer le nom complet" required type="text">
             </div>
-            <div class="champ-formulaire">
+            <div class="colonne-flex-sm">
                 <label class="champ-formulaire__label">Poste / ID </label>
                 <input class="champ-formulaire__input" name="poste" placeholder="Entrer le poste ou l'identifiant de l'employé" type="text">
             </div>
-            <div class="champ-formulaire">
+            <div class="colonne-flex-sm">
                 <label class="champ-formulaire__label">Departement</label>
                 <input class="champ-formulaire__input" name="departement" placeholder="Entrer le departement de l'employé" type="text">
             </div>

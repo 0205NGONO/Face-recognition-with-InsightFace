@@ -53,7 +53,7 @@
                 <!-- Liste des caméras existantes -->
                 <section class="carte-parametre carte-parametre--pleine-largeur">
                     <h3 class="carte-parametre__titre">Caméras configurées</h3>
-                    <div class="liste-cameras">
+                    <div class="colonne-flex-sm">
                         {% for nom_cam, source in cameras.items() %}
                         <div class="ligne-camera">
                             <div>
@@ -62,7 +62,7 @@
                             </div>
                             <form action="{{ url_for('parametres_supprimer_camera', nom_camera=nom_cam) }}" method="post">
                                 <button class="bouton-supprimer" type="submit" aria-label="Supprimer {{ nom_cam }}">
-                                    <img class="lien-navigation__icone" src="{{ url_for('static', filename='icones images/delete.png') }}">
+                                    <img class="icone-24" src="{{ url_for('static', filename='icones images/delete.png') }}">
                                 </button>
                             </form>
                         </div>

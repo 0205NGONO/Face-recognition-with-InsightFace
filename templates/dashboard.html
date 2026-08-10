@@ -16,7 +16,7 @@
             <div class="lecteur-video">
                 <img class="lecteur-video__image" src="{{ url_for('video_feed', nom_camera='CAM-01') }}">
                 <div class="lecteur-video__superposition" style="opacity:1;">
-                    <div class="lecteur-video__info-direct">
+                    <div class="ligne-flex-sm">
                         <span class="indicateur-direct"></span>
                         <span class="indicateur-direct__texte">Flux vidéo en direct</span>
                     </div>
@@ -26,22 +26,22 @@
             <div class="grille-stats-principales" style="margin-top:0.75rem;">
                 <div class="carte-stat">
                     <p class="carte-stat__label">DÉTECTIONS AUJOURD'HUI</p>
-                    <div class="carte-stat__valeur-wrapper">
-                        <img class="carte-stat__icone" src="{{ url_for('static', filename='icones/analytics.svg') }}">
+                    <div class="ligne-flex-sm">
+                        <img class="icone-24" src="{{ url_for('static', filename='icones/analytics.svg') }}">
                         <span class="carte-stat__valeur">{{ stats.total }}</span>
                     </div>
                 </div>
                 <div class="carte-stat">
                     <p class="carte-stat__label">PERSONNES CONNUES</p>
-                    <div class="carte-stat__valeur-wrapper">
-                        <img class="carte-stat__icone" src="{{ url_for('static', filename='icones/personnes_connues.svg') }}">
+                    <div class="ligne-flex-sm">
+                        <img class="icone-24" src="{{ url_for('static', filename='icones/personnes_connues.svg') }}">
                         <span class="carte-stat__valeur">{{ stats.connus }}</span>
                     </div>
                 </div>
                 <div class="carte-stat">
                     <p class="carte-stat__label">PERSONNES INCONNUES</p>
-                    <div class="carte-stat__valeur-wrapper">
-                        <img class="carte-stat__icone" src="{{ url_for('static', filename='icones/inconnu.svg') }}">
+                    <div class="ligne-flex-sm">
+                        <img class="icone-24" src="{{ url_for('static', filename='icones/inconnu.svg') }}">
                         <span class="carte-stat__valeur">{{ stats.inconnus }}</span>
                     </div>
                 </div>
@@ -50,15 +50,15 @@
             <div class="grille-stats-secondaires">
                 <div class="carte-stat">
                     <p class="carte-stat__label">PREMIÈRE DÉTECTION AUJOURD'HUI</p>
-                    <div class="carte-stat__valeur-wrapper">
-                        <img class="carte-stat__icone" src="{{ url_for('static', filename='icones/detection.svg') }}">
+                    <div class="ligne-flex-sm">
+                        <img class="icone-24" src="{{ url_for('static', filename='icones/detection.svg') }}">
                         <span class="carte-stat__valeur">{{ stats.premiere_detection or '—' }}</span>
                     </div>
                 </div>
                 <div class="carte-stat">
                     <p class="carte-stat__label">DERNIÈRE DÉTECTION AUJOURD'HUI</p>
-                    <div class="carte-stat__valeur-wrapper">
-                        <img class="carte-stat__icone" src="{{ url_for('static', filename='icones/detection.svg') }}">
+                    <div class="ligne-flex-sm">
+                        <img class="icone-24" src="{{ url_for('static', filename='icones/detection.svg') }}">
                         <span class="carte-stat__valeur">{{ stats.derniere_detection or '—' }}</span>
                     </div>
                 </div>
@@ -78,7 +78,7 @@
                         <div class="carte-detection__image"></div>
                         <div class="carte-detection__details">
                             {% if l.statut == 'SUCCES' %}
-                            <span class="badge-statut badge-statut--reconnu">Reconnu</span>
+                            <span class="badge-statut badge-vert">Reconnu</span>
                             {% else %}
                             <span class="badge-statut badge-statut--inconnu">Inconnu</span>
                             {% endif %}
@@ -146,19 +146,19 @@
             <div class="carte__entete"><span class="carte__titre">RÉSUMÉ</span></div>
             <div class="liste-resume">
                 <div class="item-resume">
-                    <div class="item-resume__icone"><img class="carte-stat__icone" src="{{ url_for('static', filename='icones/personnes_connues.svg') }}"></div>
+                    <div class="item-resume__icone"><img class="icone-24" src="{{ url_for('static', filename='icones/personnes_connues.svg') }}"></div>
                     <div><p class="item-resume__valeur">{{ stats.connus }}</p><p class="item-resume__label">Connus aujourd'hui</p></div>
                 </div>
                 <div class="item-resume">
-                    <div class="item-resume__icone"><img class="carte-stat__icone" src="{{ url_for('static', filename='icones/inconnu.svg') }}"></div>
+                    <div class="item-resume__icone"><img class="icone-24" src="{{ url_for('static', filename='icones/inconnu.svg') }}"></div>
                     <div><p class="item-resume__valeur">{{ stats.inconnus }}</p><p class="item-resume__label">Inconnus aujourd'hui</p></div>
                 </div>
                 <div class="item-resume">
-                    <div class="item-resume__icone"><img class="carte-stat__icone" src="{{ url_for('static', filename='icones/checkcircle.svg') }}"></div>
+                    <div class="item-resume__icone"><img class="icone-24" src="{{ url_for('static', filename='icones/checkcircle.svg') }}"></div>
                     <div><p class="item-resume__valeur">{{ stats.total }}</p><p class="item-resume__label">Total détections</p></div>
                 </div>
                 <div class="item-resume">
-                    <div class="item-resume__icone"><img class="carte-stat__icone" src="{{ url_for('static', filename='icones/analytics.svg') }}"></div>
+                    <div class="item-resume__icone"><img class="icone-24" src="{{ url_for('static', filename='icones/analytics.svg') }}"></div>
                     <div><p class="item-resume__valeur">{{ ((stats.connus / stats.total * 100) | round(1)) if stats.total else 0 }} %</p><p class="item-resume__label">Taux de reconnaissance</p></div>
                 </div>
             </div>
@@ -169,19 +169,19 @@
             <div class="carte__entete"><span class="carte__titre">ÉTAT DU SYSTÈME</span></div>
             <div class="liste-resume">
                 <div class="item-resume">
-                    <div class="item-resume__icone"><img class="carte-stat__icone" src="{{ url_for('static', filename='icones/videocam.svg') }}"></div>
+                    <div class="item-resume__icone"><img class="icone-24" src="{{ url_for('static', filename='icones/videocam.svg') }}"></div>
                     <div><p class="item-resume__valeur">4 / 4</p><p class="item-resume__label">Caméras en ligne</p></div>
                 </div>
                 <div class="item-resume">
-                    <div class="item-resume__icone"><img class="carte-stat__icone" src="{{ url_for('static', filename='icones/checkcircle.svg') }}"></div>
+                    <div class="item-resume__icone"><img class="icone-24" src="{{ url_for('static', filename='icones/checkcircle.svg') }}"></div>
                     <div><p class="item-resume__valeur">1,2 To / 2 To</p><p class="item-resume__label">Stockage</p></div>
                 </div>
                 <div class="item-resume">
-                    <div class="item-resume__icone"><img class="carte-stat__icone" src="{{ url_for('static', filename='icones/analytics.svg') }}"></div>
+                    <div class="item-resume__icone"><img class="icone-24" src="{{ url_for('static', filename='icones/analytics.svg') }}"></div>
                     <div><p class="item-resume__valeur">45 %</p><p class="item-resume__label">Utilisation CPU</p></div>
                 </div>
                 <div class="item-resume">
-                    <div class="item-resume__icone"><img class="carte-stat__icone" src="{{ url_for('static', filename='icones/analytics.svg') }}"></div>
+                    <div class="item-resume__icone"><img class="icone-24" src="{{ url_for('static', filename='icones/analytics.svg') }}"></div>
                     <div><p class="item-resume__valeur">62 %</p><p class="item-resume__label">Utilisation mémoire</p></div>
                 </div>
             </div>
