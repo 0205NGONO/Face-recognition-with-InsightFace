@@ -44,13 +44,13 @@
                         {% for inconnu in inconnus %}
                         <tr>
                             <td>
-                                <div class="apercu-detection">
+                                <a class="apercu-detection" href="#img-{{ inconnu.id }}">
                                     <div class="cadre-hud cadre-hud--haut-gauche"></div>
                                     <div class="cadre-hud cadre-hud--haut-droit"></div>
                                     <div class="cadre-hud cadre-hud--bas-gauche"></div>
                                     <div class="cadre-hud cadre-hud--bas-droit"></div>
                                     <img class="image-couverture" src="{{ url_for('static', filename='inconnus/' + inconnu.image) }}">
-                                </div>
+                                </a>
                             </td>
                             <td>
                                 <span class="table-detections__date">{{ inconnu.date.strftime('%Y-%m-%d') }}</span>
@@ -119,6 +119,14 @@
             </div>
         </form>
     </div>
+</div>
+{% endfor %}
+
+<!-- Une image en entier par inconnu, ouverte/fermée en CSS pur avec :target -->
+{% for inconnu in inconnus %}
+<div class="plein-ecran" id="img-{{ inconnu.id }}">
+    <img class="plein-ecran__image" src="{{ url_for('static', filename='inconnus/' + inconnu.image) }}">
+    <a class="plein-ecran__fermer" href="#" aria-label="Fermer">✕</a>
 </div>
 {% endfor %}
 {% endblock %}

@@ -96,7 +96,9 @@
                     <div class="carte-detection__contenu">
                         <div class="carte-detection__image">
                             {% if l.image %}
-                            <img class="carte-detection__image-img" src="{{ url_for('static', filename=('inconnus/' if l.statut == 'REFUSE' else 'succes/') + l.image) }}">
+                            <a class="lien-couverture" href="#img-{{ l.id }}">
+                                <img class="image-couverture" src="{{ url_for('static', filename=('inconnus/' if l.statut == 'REFUSE' else 'succes/') + l.image) }}">
+                            </a>
                             {% endif %}
                         </div>
                         <div class="carte-detection__details">
@@ -119,6 +121,16 @@
             </aside>
         </main>
     </div>
+
+    <!-- Une image en entier par détection, ouverte/fermée en CSS pur avec :target -->
+    {% for l in dernieres %}
+    {% if l.image %}
+    <div class="plein-ecran" id="img-{{ l.id }}">
+        <img class="plein-ecran__image" src="{{ url_for('static', filename=('inconnus/' if l.statut == 'REFUSE' else 'succes/') + l.image) }}">
+        <a class="plein-ecran__fermer" href="#" aria-label="Fermer">✕</a>
+    </div>
+    {% endif %}
+    {% endfor %}
 </div>
 </body>
 </html>
