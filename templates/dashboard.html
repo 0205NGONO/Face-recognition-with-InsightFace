@@ -75,7 +75,11 @@
                 {% for l in stats.dernieres %}
                 <div class="carte-detection{% if l.statut == 'REFUSE' %} carte-detection--inconnu{% endif %}">
                     <div class="carte-detection__contenu">
-                        <div class="carte-detection__image"></div>
+                        <div class="carte-detection__image">
+                            {% if l.image %}
+                            <img class="carte-detection__image-img" src="{{ url_for('static', filename=('inconnus/' if l.statut == 'REFUSE' else 'succes/') + l.image) }}">
+                            {% endif %}
+                        </div>
                         <div class="carte-detection__details">
                             {% if l.statut == 'SUCCES' %}
                             <span class="badge-statut badge-vert">Reconnu</span>
