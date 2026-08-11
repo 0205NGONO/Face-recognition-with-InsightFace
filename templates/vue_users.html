@@ -11,20 +11,20 @@
 
         <nav class="barre-laterale__navigation">
             <a class="lien-navigation lien-navigation--actif" href="{{ url_for('vue_users') }}">
-                <img class="icone-24" src="{{ url_for('static', filename='icones/videocam.svg') }}">
+                <img class="lien-navigation__icone" src="{{ url_for('static', filename='icones/videocam.svg') }}">
                 <span>Vue en temps réel</span>
             </a>
         </nav>
 
         <div class="barre-laterale__profil">
-            <div class="ligne-flex-sm">
+            <div class="profil-utilisateur">
                 <div class="profil-utilisateur__avatar">
-                    <img class="image-couverture"
+                    <img class="profil-utilisateur__avatar-image"
                          data-alt="A professional studio headshot of a security operations center technician, wearing a modern uniform, neutral background, soft corporate lighting, high resolution photography style."
                          src="https://lh3.googleusercontent.com/aida-public/AB6AXuDuGR_loMFtNgyQCAYzogseSI6thvaAqrbJX5oshsTte_pT5E6iDi9VZC-FuGdZv3i63P8LjPhlkDuSAC2lCyaeTm2Tgfm0GpbDiLmTIYjp1jhfL-QRjl8zYu-KHE_SzFzd6bmhK93mFZ8XX5vrGwOOypTlinpA0FJnFDtx3CnVWdia_SFoDLKI_JTf0dnC0n7zX0JT_ssOTM9MPLb-Aqu5HGlu4XBK-DEfb-XFPr-Xt9-UArSwAbI">
                 </div>
                 <div>
-                    <p class="libelle-discret">AKABA</p>
+                    <p class="profil-utilisateur__nom">AKABA</p>
                     <p class="profil-utilisateur__statut">En Ligne</p>
                 </div>
             </div>
@@ -47,16 +47,13 @@
                     <div class="lecteur-video" id="cam-{{ nom_cam }}">
                         <img class="lecteur-video__image" src="{{ url_for('video_feed', nom_camera=nom_cam) }}">
                         <div class="lecteur-video__superposition">
-                            <div class="ligne-flex-sm">
+                            <div class="lecteur-video__info-direct">
                                 <span class="indicateur-direct"></span>
                                 <span class="indicateur-direct__texte">{{ nom_cam }}</span>
                             </div>
-                            <a class="bouton-plein-ecran" href="#cam-{{ nom_cam }}--plein-ecran" aria-label="Plein écran">⛶</a>
+                            <a class="bouton-plein-ecran" href="#cam-{{ nom_cam }}" aria-label="Plein écran">⛶</a>
+                            <a class="bouton-plein-ecran bouton-fermer-plein-ecran" href="#" aria-label="Quitter le plein écran">✕</a>
                         </div>
-                    </div>
-                    <div class="plein-ecran" id="cam-{{ nom_cam }}--plein-ecran">
-                        <a class="plein-ecran__fermer" href="#" aria-label="Quitter le plein écran">✕</a>
-                        <img class="plein-ecran__image" src="{{ url_for('video_feed', nom_camera=nom_cam) }}">
                     </div>
                     {% else %}
                     <p style="color: var(--on-surface-variant);">Aucune caméra disponible pour le moment.</p>
@@ -66,27 +63,27 @@
                 <div class="cartes-stats">
                     <div class="carte-stat">
                         <p class="carte-stat__label">ETAT DU SYSTÈME</p>
-                        <div class="ligne-flex-sm">
-                            <img class="icone-24" src="{{ url_for('static', filename='icones/checkcircle.svg') }}">
-                            <span class="carte-stat__valeur">Opérationnel</span>
+                        <div class="carte-stat__valeur-wrapper">
+                            <img class="carte-stat__icone" src="{{ url_for('static', filename='icones/checkcircle.svg') }}">
+                            <span class="carte-stat__valeur">{{ stats_systeme.etat }}</span>
                         </div>
-                        <p class="carte-stat__pied">Dernière vérification: il y a 2 min</p>
+                        <p class="carte-stat__pied">Dernière vérification : à l'instant</p>
                     </div>
                     <div class="carte-stat">
                         <p class="carte-stat__label">DÉTECTIONS/MIN</p>
-                        <div class="ligne-flex-sm">
-                            <img class="icone-24" src="{{ url_for('static', filename='icones/analytics.svg') }}">
-                            <span class="carte-stat__valeur">42.5</span>
+                        <div class="carte-stat__valeur-wrapper">
+                            <img class="carte-stat__icone" src="{{ url_for('static', filename='icones/analytics.svg') }}">
+                            <span class="carte-stat__valeur">{{ stats_systeme.detections_par_min }}</span>
                         </div>
-                        <p class="carte-stat__pied">Tendance: +5% vs Heure Préc.</p>
+                        <p class="carte-stat__pied">Sur les 60 dernières secondes</p>
                     </div>
                 </div>
             </div>
 
             <aside class="barre-detections">
                 <div class="barre-detections__en-tete">
-                    <h3 class="libelle-discret">DERNIÈRES DÉTECTIONS</h3>
-                    <img class="icone-24" src="{{ url_for('static', filename='icones/filter_list.svg') }}">
+                    <h3 class="barre-detections__titre">DERNIÈRES DÉTECTIONS</h3>
+                    <img class="barre-detections__icone-filtre" src="{{ url_for('static', filename='icones/filter_list.svg') }}">
                 </div>
 
                 <div class="barre-detections__liste">
@@ -97,7 +94,7 @@
                         <div class="carte-detection__image"></div>
                         <div class="carte-detection__details">
                             {% if l.statut == 'SUCCES' %}
-                            <span class="badge-statut badge-vert">Reconnu</span>
+                            <span class="badge-statut badge-statut--reconnu">Reconnu</span>
                             {% else %}
                             <span class="badge-statut badge-statut--inconnu">Inconnu</span>
                             {% endif %}
