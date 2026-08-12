@@ -1,136 +1,77 @@
-<!DOCTYPE html>
-<html class="light" lang="fr">
-<head>
-<meta charset="utf-8">
-<meta content="width=device-width, initial-scale=1.0" name="viewport">
-<title>Détections récentes | Système de surveillance</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body>
-<div class="application">
-    <!-- Barre de Navigation Latérale (uniformisée sur toutes les pages admin) -->
-    <aside class="barre-laterale">
-        <div class="barre-laterale__en-tete">
-            <h1 class="barre-laterale__titre">Système de surveillance</h1>
-            <p class="barre-laterale__sous-titre">Enterprise Admin</p>
-        </div>
-        <nav class="barre-laterale__navigation">
-            <ul class="barre-laterale__liste">
-                <li>
-                    <a class="lien-navigation" href="{{ url_for('login') }}">
-                        <img class="lien-navigation__icone" src="{{ url_for('static', filename='icones images/home.png') }}">
-                        <span>Accueil</span>
-                    </a>
-                </li>
-                <li>
-                    <a class="lien-navigation" href="{{ url_for('realtime') }}">
-                        <img class="lien-navigation__icone" src="{{ url_for('static', filename='icones images/videocam.png') }}">
-                        <span>Vue en temps réel</span>
-                    </a>
-                </li>
-                <li>
-                    <a class="lien-navigation" href="{{ url_for('unknowns') }}">
-                        <img class="lien-navigation__icone" src="{{ url_for('static', filename='icones images/inconnu.png') }}">
-                        <span>Inconnus</span>
-                    </a>
-                </li>
-                <li>
-                    <a class="lien-navigation" href="{{ url_for('personnes_connues') }}">
-                        <img class="lien-navigation__icone" src="{{ url_for('static', filename='icones images/group.png') }}">
-                        <span>Personnes connues</span>
-                    </a>
-                </li>
-                <li>
-                    <a class="lien-navigation lien-navigation--actif" href="{{ url_for('detections') }}">
-                        <img class="lien-navigation__icone" src="{{ url_for('static', filename='icones images/detection.png') }}">
-                        <span>Détections</span>
-                    </a>
-                </li>
-                <li>
-                    <a class="lien-navigation" href="{{ url_for('dashboard') }}">
-                        <img class="lien-navigation__icone" src="{{ url_for('static', filename='icones images/dashboard.png') }}">
-                        <span>Tableau de bord</span>
-                    </a>
-                </li>
-                <li>
-                    <a class="lien-navigation" href="{{ url_for('statistics') }}">
-                        <img class="lien-navigation__icone" src="{{ url_for('static', filename='icones images/bar_chart.png') }}">
-                        <span>Statistiques</span>
-                    </a>
-                </li>
-                <li>
-                    <a class="lien-navigation" href="{{ url_for('parametres') }}">
-                        <img class="lien-navigation__icone" src="{{ url_for('static', filename='icones images/settings.png') }}">
-                        <span>Paramètres</span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
-        <div class="barre-laterale__profil">
-            <div class="profil-utilisateur">
-                <div class="profil-utilisateur__avatar">A</div>
-                <div>
-                    <p class="profil-utilisateur__nom">Admin Profile</p>
-                    <p class="profil-utilisateur__email">admin@systemedesurveillance</p>
-                </div>
+{% extends 'layout.html' %}
+{% block page_id %}detections{% endblock %}
+{% block page_title %}Détections récentes{% endblock %}
+{% block entete_titre %}Détections récentes{% endblock %}
+{% block content %}
+<div class="tableau-de-bord">
+    <div class="entete-page">
+        <div>
+            <h2 class="entete-page__titre">Journal des Détections</h2>
+
+            <!-- Tableau des détections, même structure que la page "Inconnus" -->
+            <div class="tableau-detections">
+                <table class="table-detections">
+                    <thead>
+                        <tr>
+                            <th>Dernières détections</th>
+                            <th>Date et Heure</th>
+                            <th>Camera ID</th>
+                            <th class="th--droite">Niveau de confiance</th>
+                            <th class="th--droite">Statut</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for l in dernieres %}
+                        <tr>
+                            <td>
+                                <a class="apercu-detection" href="#img-{{ l.id }}">
+                                    <div class="cadre-hud cadre-hud--haut-gauche"></div>
+                                    <div class="cadre-hud cadre-hud--haut-droit"></div>
+                                    <div class="cadre-hud cadre-hud--bas-gauche"></div>
+                                    <div class="cadre-hud cadre-hud--bas-droit"></div>
+                                    {% if l.image %}
+                                    <img class="image-couverture" src="{{ url_for('static', filename=('inconnus/' if l.statut == 'REFUSE' else 'succes/') + l.image) }}">
+                                    {% endif %}
+                                </a>
+                            </td>
+                            <td>
+                                <span class="table-detections__date">{{ l.date }}</span>
+                                <span class="table-detections__heure">{{ l.heure }}</span>
+                            </td>
+                            <td>
+                                <span class="badge-camera">{{ l.camera }}</span>
+                            </td>
+                            <td class="td--droite">
+                                <span class="table-detections__confiance">{{ (l.score_detection * 100) | round(2) }}%</span>
+                            </td>
+                            <td class="td--droite">
+                                {% if l.statut == 'REFUSE' %}
+                                <span class="badge-statut badge-statut--inconnu">Inconnu</span>
+                                {% else %}
+                                <span class="badge-statut badge-statut--reconnu">{{ l.nom }}</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="5" style="text-align:center;color:var(--on-surface-variant);">Aucune détection aujourd'hui.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <div class="tableau-detections__pied"></div>
             </div>
         </div>
-    </aside>
-    <div class="contenu-principal">
-        <main class="contenu-tableau-de-bord">
-            <div class="entete-contenu">
-                <div>
-                    <h2 class="entete-contenu__titre">Détections récentes</h2>
-                </div>
-            </div>
-
-            <aside class="barre-detections barre-detections--pleine-page">
-                <div class="barre-detections__en-tete">
-                    <h3 class="barre-detections__titre">DERNIÈRES DÉTECTIONS</h3>
-                    <img class="barre-detections__icone-filtre" src="{{ url_for('static', filename='icones images/filter_list.png') }}">
-                </div>
-                <div class="barre-detections__liste">
-                {% for l in dernieres %}
-                <div class="carte-detection {% if l.statut == 'REFUSE' %}carte-detection--inconnu{% endif %}">
-                    <div class="carte-detection__contenu">
-                        <div class="carte-detection__image">
-                            {% if l.image %}
-                            <a class="lien-couverture" href="#img-{{ l.id }}">
-                                <img class="image-couverture" src="{{ url_for('static', filename=('inconnus/' if l.statut == 'REFUSE' else 'succes/') + l.image) }}">
-                            </a>
-                            {% endif %}
-                        </div>
-                        <div class="carte-detection__details">
-                            {% if l.statut == 'REFUSE' %}
-                            <span class="badge-statut badge-statut--inconnu">Inconnu</span>
-                            <p class="carte-detection__nom">Alerte Détection</p>
-                            {% else %}
-                            <span class="badge-statut badge-statut--reconnu">Reconnu</span>
-                            <p class="carte-detection__nom">{{ l.nom }}</p>
-                            {% endif %}
-                            <p class="carte-detection__horodatage">{{ l.heure }}</p>
-                            <p class="carte-detection__confiance">Confiance: {{ "%.1f"|format(l.score_detection * 100) }}%</p>
-                        </div>
-                    </div>
-                </div>
-                {% else %}
-                <p style="padding: var(--stack-md); color: var(--on-surface-variant);">Aucune détection aujourd'hui.</p>
-                {% endfor %}
-                </div>
-            </aside>
-        </main>
     </div>
-
-    <!-- Une image en entier par détection, ouverte/fermée en CSS pur avec :target -->
-    {% for l in dernieres %}
-    {% if l.image %}
-    <div class="plein-ecran" id="img-{{ l.id }}">
-        <img class="plein-ecran__image" src="{{ url_for('static', filename=('inconnus/' if l.statut == 'REFUSE' else 'succes/') + l.image) }}">
-        <a class="plein-ecran__fermer" href="#" aria-label="Fermer">✕</a>
-    </div>
-    {% endif %}
-    {% endfor %}
 </div>
-</body>
-</html>
+
+<!-- Une image en entier par détection, ouverte/fermée en CSS pur avec :target -->
+{% for l in dernieres %}
+{% if l.image %}
+<div class="plein-ecran" id="img-{{ l.id }}">
+    <img class="plein-ecran__image" src="{{ url_for('static', filename=('inconnus/' if l.statut == 'REFUSE' else 'succes/') + l.image) }}">
+    <a class="plein-ecran__fermer" href="#" aria-label="Fermer">✕</a>
+</div>
+{% endif %}
+{% endfor %}
+{% endblock %}

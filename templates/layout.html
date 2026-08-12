@@ -63,10 +63,10 @@
         </nav>
         <div class="barre-laterale__profil">
             <div class="ligne-flex-sm">
-                <div class="profil-utilisateur__avatar">A</div>
+                <div class="profil-utilisateur__avatar">{{ (session.get('nom') or 'A')[0]|upper }}</div>
                 <div>
-                    <p class="libelle-discret">Admin Profile</p>
-                    <p class="profil-utilisateur__email">admin@systemedesurveillance</p>
+                    <p class="libelle-discret">{{ session.get('nom') or 'Admin' }}</p>
+                    <p class="profil-utilisateur__email">Administrateur</p>
                 </div>
             </div>
         </div>

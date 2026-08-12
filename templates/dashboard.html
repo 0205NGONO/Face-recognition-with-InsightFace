@@ -34,7 +34,7 @@
                 <div class="carte-stat">
                     <p class="carte-stat__label">PERSONNES CONNUES</p>
                     <div class="ligne-flex-sm">
-                        <img class="icone-24" src="{{ url_for('static', filename='icones images/personnes_connues.png') }}">
+                        <img class="icone-24" src="{{ url_for('static', filename='icones images/group.png') }}">
                         <span class="carte-stat__valeur">{{ stats.connus }}</span>
                     </div>
                 </div>
@@ -77,7 +77,9 @@
                     <div class="carte-detection__contenu">
                         <div class="carte-detection__image">
                             {% if l.image %}
-                            <img class="carte-detection__image-img" src="{{ url_for('static', filename=('inconnus/' if l.statut == 'REFUSE' else 'succes/') + l.image) }}">
+                            <a class="lien-couverture" href="#img-{{ l.id }}">
+                                <img class="carte-detection__image-img" src="{{ url_for('static', filename=('inconnus/' if l.statut == 'REFUSE' else 'succes/') + l.image) }}">
+                            </a>
                             {% endif %}
                         </div>
                         <div class="carte-detection__details">
@@ -98,21 +100,32 @@
         </div>
     </div>
 
+    <!-- Une image en entier par détection, ouverte/fermée en CSS pur avec :target -->
+    {% for l in stats.dernieres %}
+    {% if l.image %}
+    <div class="plein-ecran" id="img-{{ l.id }}">
+        <img class="plein-ecran__image" src="{{ url_for('static', filename=('inconnus/' if l.statut == 'REFUSE' else 'succes/') + l.image) }}">
+        <a class="plein-ecran__fermer" href="#" aria-label="Fermer">✕</a>
+    </div>
+    {% endif %}
+    {% endfor %}
+
     <!-- Graphiques : pas encore de données backend pour ces 3 graphiques (historique par jour,
          par heure, par personne au niveau du dashboard) — valeurs d'exemple conservées en attendant -->
     <div class="rangee-cartes">
         <div class="carte">
             <div class="carte__entete">
-                <span class="carte__titre">DÉTECTIONS PAR JOUR (CETTE SEMAINE)</span>
+                <span class="carte__titre">DÉTECTIONS PAR JOUR (7 DERNIERS JOURS)</span>
             </div>
             <div class="graphique-barres">
-                <div class="barre-colonne"><span class="barre-colonne__valeur">120</span><div class="barre-colonne__tige" style="height:60%;"></div><span class="barre-colonne__label">Lun</span></div>
-                <div class="barre-colonne"><span class="barre-colonne__valeur">132</span><div class="barre-colonne__tige" style="height:66%;"></div><span class="barre-colonne__label">Mar</span></div>
-                <div class="barre-colonne"><span class="barre-colonne__valeur">145</span><div class="barre-colonne__tige" style="height:72%;"></div><span class="barre-colonne__label">Mer</span></div>
-                <div class="barre-colonne"><span class="barre-colonne__valeur">160</span><div class="barre-colonne__tige" style="height:80%;"></div><span class="barre-colonne__label">Jeu</span></div>
-                <div class="barre-colonne"><span class="barre-colonne__valeur">148</span><div class="barre-colonne__tige" style="height:74%;"></div><span class="barre-colonne__label">Ven</span></div>
-                <div class="barre-colonne"><span class="barre-colonne__valeur">128</span><div class="barre-colonne__tige" style="height:64%;"></div><span class="barre-colonne__label">Sam</span></div>
-                <div class="barre-colonne"><span class="barre-colonne__valeur">0</span><div class="barre-colonne__tige" style="height:1%;"></div><span class="barre-colonne__label">Dim</span></div>
+                {% set max_jour = (detections_semaine|map(attribute='total')|list)|max %}
+                {% for j in detections_semaine %}
+                <div class="barre-colonne">
+                    <span class="barre-colonne__valeur">{{ j.total }}</span>
+                    <div class="barre-colonne__tige{% if j.total == max_jour and max_jour > 0 %} fond-primaire{% endif %}" style="height:{{ (j.total / max_jour * 100) if max_jour else 1 }}%;"></div>
+                    <span class="barre-colonne__label">{{ j.label }}</span>
+                </div>
+                {% endfor %}
             </div>
         </div>
 
@@ -120,13 +133,18 @@
             <div class="carte__entete">
                 <span class="carte__titre">DÉTECTIONS PAR HEURE (AUJOURD'HUI)</span>
             </div>
-            <svg class="graphique-courbe" viewBox="0 0 320 160" preserveAspectRatio="none">
-                <polyline class="graphique-courbe__ligne" points="10,150 60,140 110,40 160,55 210,70 260,120 310,155" />
-                <circle class="graphique-courbe__point" cx="110" cy="40" r="3"></circle>
-                <text class="graphique-courbe__valeur" x="98" y="32">32</text>
-                <circle class="graphique-courbe__point" cx="160" cy="55" r="3"></circle>
-                <text class="graphique-courbe__valeur" x="150" y="47">28</text>
-            </svg>
+            <div class="graphique-barres">
+                {% set max_heure = presence_par_heure|max %}
+                {% for compte in presence_par_heure %}
+                {% if loop.index0 % 3 == 0 %}
+                <div class="barre-colonne">
+                    <span class="barre-colonne__valeur">{{ compte }}</span>
+                    <div class="barre-colonne__tige{% if compte == max_heure and max_heure > 0 %} fond-primaire{% endif %}" style="height:{{ (compte / max_heure * 100) if max_heure else 1 }}%;"></div>
+                    <span class="barre-colonne__label">{{ '%02d'|format(loop.index0) }}h</span>
+                </div>
+                {% endif %}
+                {% endfor %}
+            </div>
         </div>
 
         <div class="carte">
@@ -134,12 +152,17 @@
                 <span class="carte__titre">DÉTECTIONS PAR PERSONNE (AUJOURD'HUI)</span>
             </div>
             <div class="liste-barres-horizontales">
-                <div class="barre-horizontale"><span class="barre-horizontale__nom">Amit Verma</span><div class="barre-horizontale__piste"><div class="barre-horizontale__remplissage" style="width:31%;"></div></div><span class="barre-horizontale__valeur">5</span></div>
-                <div class="barre-horizontale"><span class="barre-horizontale__nom">Rahul Sharma</span><div class="barre-horizontale__piste"><div class="barre-horizontale__remplissage" style="width:25%;"></div></div><span class="barre-horizontale__valeur">4</span></div>
-                <div class="barre-horizontale"><span class="barre-horizontale__nom">Priya Singh</span><div class="barre-horizontale__piste"><div class="barre-horizontale__remplissage" style="width:25%;"></div></div><span class="barre-horizontale__valeur">4</span></div>
-                <div class="barre-horizontale"><span class="barre-horizontale__nom">Neha Patel</span><div class="barre-horizontale__piste"><div class="barre-horizontale__remplissage" style="width:19%;"></div></div><span class="barre-horizontale__valeur">3</span></div>
-                <div class="barre-horizontale"><span class="barre-horizontale__nom">Vikram Joshi</span><div class="barre-horizontale__piste"><div class="barre-horizontale__remplissage" style="width:19%;"></div></div><span class="barre-horizontale__valeur">3</span></div>
-                <div class="barre-horizontale"><span class="barre-horizontale__nom">Autres</span><div class="barre-horizontale__piste"><div class="barre-horizontale__remplissage" style="width:100%;"></div></div><span class="barre-horizontale__valeur">16</span></div>
+                {% set max_personne = (personnes[:5]|map(attribute='detections')|list)|max if personnes else 0 %}
+                {% for p in personnes[:5] %}
+                <div class="barre-horizontale"><span class="barre-horizontale__nom">{{ p.nom }}</span><div class="barre-horizontale__piste"><div class="barre-horizontale__remplissage" style="width:{{ (p.detections / max_personne * 100) if max_personne else 0 }}%;"></div></div><span class="barre-horizontale__valeur">{{ p.detections }}</span></div>
+                {% endfor %}
+                {% if personnes|length > 5 %}
+                {% set total_autres = personnes[5:]|sum(attribute='detections') %}
+                <div class="barre-horizontale"><span class="barre-horizontale__nom">Autres</span><div class="barre-horizontale__piste"><div class="barre-horizontale__remplissage" style="width:{{ (total_autres / max_personne * 100) if max_personne else 0 }}%;"></div></div><span class="barre-horizontale__valeur">{{ total_autres }}</span></div>
+                {% endif %}
+                {% if not personnes %}
+                <p style="padding:1rem;color:var(--on-surface-variant);font-size:13px;">Aucune détection connue aujourd'hui.</p>
+                {% endif %}
             </div>
         </div>
     </div>
@@ -150,7 +173,7 @@
             <div class="carte__entete"><span class="carte__titre">RÉSUMÉ</span></div>
             <div class="liste-resume">
                 <div class="item-resume">
-                    <div class="item-resume__icone"><img class="icone-24" src="{{ url_for('static', filename='icones images/personnes_connues.png') }}"></div>
+                    <div class="item-resume__icone"><img class="icone-24" src="{{ url_for('static', filename='icones images/group.png') }}"></div>
                     <div><p class="item-resume__valeur">{{ stats.connus }}</p><p class="item-resume__label">Connus aujourd'hui</p></div>
                 </div>
                 <div class="item-resume">
@@ -174,19 +197,19 @@
             <div class="liste-resume">
                 <div class="item-resume">
                     <div class="item-resume__icone"><img class="icone-24" src="{{ url_for('static', filename='icones images/videocam.png') }}"></div>
-                    <div><p class="item-resume__valeur">4 / 4</p><p class="item-resume__label">Caméras en ligne</p></div>
+                    <div><p class="item-resume__valeur">{{ etat_systeme.cameras_en_ligne }} / {{ etat_systeme.cameras_total }}</p><p class="item-resume__label">Caméras en ligne</p></div>
                 </div>
                 <div class="item-resume">
                     <div class="item-resume__icone"><img class="icone-24" src="{{ url_for('static', filename='icones images/checkcircle.png') }}"></div>
-                    <div><p class="item-resume__valeur">1,2 To / 2 To</p><p class="item-resume__label">Stockage</p></div>
+                    <div><p class="item-resume__valeur">{{ etat_systeme.stockage_go_utilise }} Go / {{ etat_systeme.stockage_go_total }} Go</p><p class="item-resume__label">Stockage</p></div>
                 </div>
                 <div class="item-resume">
                     <div class="item-resume__icone"><img class="icone-24" src="{{ url_for('static', filename='icones images/analytics.png') }}"></div>
-                    <div><p class="item-resume__valeur">45 %</p><p class="item-resume__label">Utilisation CPU</p></div>
+                    <div><p class="item-resume__valeur">{{ etat_systeme.cpu_pourcent }} %</p><p class="item-resume__label">Utilisation CPU</p></div>
                 </div>
                 <div class="item-resume">
                     <div class="item-resume__icone"><img class="icone-24" src="{{ url_for('static', filename='icones images/analytics.png') }}"></div>
-                    <div><p class="item-resume__valeur">62 %</p><p class="item-resume__label">Utilisation mémoire</p></div>
+                    <div><p class="item-resume__valeur">{{ etat_systeme.memoire_pourcent }} %</p><p class="item-resume__label">Utilisation mémoire</p></div>
                 </div>
             </div>
         </div>

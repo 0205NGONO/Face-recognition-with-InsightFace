@@ -20,14 +20,17 @@
                         <tr>
                             <td>
                                 <div class="ligne-flex-sm">
-                                    <a class="profil-employe__avatar-wrapper" href="#hud-scan">
-                                        {% if p.photo %}
-                                        <img class="profil-employe__avatar" src="{{ url_for('static', filename='photos/' + p.photo) }}">
-                                        {% else %}
-                                        <div class="profil-employe__avatar profil-employe__avatar--initiale">{{ p.nom[0]|upper }}</div>
-                                        {% endif %}
+                                    {% if p.photo %}
+                                    <a class="profil-employe__avatar-wrapper" href="#img-{{ p.id }}">
+                                        <img class="profil-employe__avatar" src="{{ url_for('static', filename='succes/' + p.photo) }}">
                                         <span class="profil-employe__statut-point"></span>
                                     </a>
+                                    {% else %}
+                                    <div class="profil-employe__avatar-wrapper">
+                                        <div class="profil-employe__avatar profil-employe__avatar--initiale">{{ p.nom[0]|upper }}</div>
+                                        <span class="profil-employe__statut-point"></span>
+                                    </div>
+                                    {% endif %}
                                     <span class="profil-employe__nom">{{ p.nom }}</span>
                                 </div>
                             </td>
@@ -43,6 +46,7 @@
                             </td>
                             <td class="td--droite">
                                 <div class="actions-ligne">
+                                    <a class="bouton-principal" href="#modale-modifier-{{ p.id }}" style="display:inline-block;padding:0.35rem 0.75rem;font-size:12px;flex:none;">Modifier</a>
                                     <button class="bouton-supprimer" aria-label="Supprimer" type="button">
                                         <img class="icone-24" src="{{ url_for('static', filename='icones images/delete.png') }}">
                                     </button>
@@ -63,15 +67,40 @@
                 <p class="pied-pagination__texte">Affichage de {{ personnes|length }} employé(s)</p>
             </div>
 
-            <!-- Effet HUD au clic sur un avatar (CSS pur, via :target) -->
-            <div class="hud-scan" id="hud-scan">
-                <div class="hud-scan__cadre">
-                    <div class="hud-scan__coin hud-scan__coin--haut-gauche"></div>
-                    <div class="hud-scan__coin hud-scan__coin--haut-droit"></div>
-                    <div class="hud-scan__coin hud-scan__coin--bas-gauche"></div>
-                    <div class="hud-scan__coin hud-scan__coin--bas-droit"></div>
-                    <div class="hud-scan__lueur"></div>
-                    <div class="hud-scan__etiquette">Scanning Active Profile</div>
+            <!-- Une image en entier par personne (agrandissement au clic), ouverte/fermée en CSS pur avec :target -->
+            {% for p in personnes %}
+            {% if p.photo %}
+            <div class="plein-ecran" id="img-{{ p.id }}">
+                <img class="plein-ecran__image" src="{{ url_for('static', filename='succes/' + p.photo) }}">
+                <a class="plein-ecran__fermer" href="#" aria-label="Fermer">✕</a>
+            </div>
+            {% endif %}
+            {% endfor %}
+
+            <!-- Une modale d'édition par personne (ciblée via #modale-modifier-<id>, ouverte/fermée en CSS pur avec :target) -->
+            {% for p in personnes %}
+            <div class="modale-identification" id="modale-modifier-{{ p.id }}">
+                <div class="modale-identification__panneau">
+                    <div class="modale-identification__entete">
+                        <h3 class="modale-identification__titre">Modifier le profil de {{ p.nom }}</h3>
+                        <a class="modale-identification__fermer" href="#" aria-label="Fermer"></a>
+                    </div>
+                    <form class="modale-identification__formulaire" action="{{ url_for('modifier_personne') }}" method="post">
+                        <input type="hidden" name="nom" value="{{ p.nom }}">
+                        <div class="colonne-flex-sm">
+                            <label class="champ-formulaire__label">Rôle / Poste</label>
+                            <input class="champ-formulaire__input" name="role" value="{{ p.role or '' }}" placeholder="Entrer le rôle ou le poste" type="text">
+                        </div>
+                        <div class="colonne-flex-sm">
+                            <label class="champ-formulaire__label">Département</label>
+                            <input class="champ-formulaire__input" name="departement" value="{{ p.departement or '' }}" placeholder="Entrer le département" type="text">
+                        </div>
+                        <div class="modale-identification__actions">
+                            <a class="bouton-secondaire" href="#">Annuler</a>
+                            <button class="bouton-principal" type="submit">Enregistrer</button>
+                        </div>
+                    </form>
                 </div>
             </div>
+            {% endfor %}
 {% endblock %}

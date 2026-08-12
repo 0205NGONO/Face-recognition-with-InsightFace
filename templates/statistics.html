@@ -15,10 +15,6 @@
                 <h2 class="entete-page__titre" style="margin-bottom:0.25rem;">Intelligence Opérationnelle</h2>
                 <p class="entete-page__sous-titre">Débit biométrique et données de présence pour le {{ stats.date }}</p>
             </div>
-            <div class="ligne-flex">
-                <button class="bouton-filtre">Dernières 24 heures</button>
-                <button class="bouton-export">Exporter le log</button>
-            </div>
         </div>
     </div>
 
@@ -71,8 +67,7 @@
                     <th>Nom de la personne</th>
                     <th>Poste</th>
                     <th>Département</th>
-                    <th>Première détection</th>
-                    <th>Dernière détection</th>
+                    <th>Heures de passage</th>
                     <th class="th--droite">Détections</th>
                 </tr>
             </thead>
@@ -81,25 +76,48 @@
                 <tr>
                     <td>
                         <div class="ligne-flex">
-                            <div class="avatar-personne"></div>
+                            <div class="avatar-personne">
+                                {% if p.photo %}
+                                <a href="#img-stat-{{ loop.index }}" style="display:block;width:100%;height:100%;">
+                                    <img src="{{ url_for('static', filename='succes/' + p.photo) }}" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;">
+                                </a>
+                                {% else %}
+                                {{ p.nom[0]|upper }}
+                                {% endif %}
+                            </div>
                             <span class="personne-cellule__nom">{{ p.nom }}</span>
                         </div>
                     </td>
-                    <td>{{ p.poste or '—' }}</td>
+                    <td>{{ p.role or '—' }}</td>
                     <td>{{ p.departement or '—' }}</td>
-                    <td><span class="table-detections__heure">{{ p.premiere }}</span></td>
-                    <td><span class="table-detections__heure">{{ p.derniere }}</span></td>
+                    <td>
+                        <div style="display:flex;flex-wrap:wrap;gap:0.25rem;max-width:20rem;">
+                            {% for h in p.heures %}
+                            <span class="table-detections__heure">{{ h }}</span>
+                            {% endfor %}
+                        </div>
+                    </td>
                     <td class="td--droite">{{ p.detections }}</td>
                 </tr>
                 {% else %}
                 <tr>
-                    <td colspan="6" style="text-align:center;color:var(--on-surface-variant);">Aucune détection connue aujourd'hui.</td>
+                    <td colspan="5" style="text-align:center;color:var(--on-surface-variant);">Aucune détection connue aujourd'hui.</td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
     </div>
 </div>
+
+<!-- Une image en entier par personne (agrandissement au clic), ouverte/fermée en CSS pur avec :target -->
+{% for p in stats.personnes %}
+{% if p.photo %}
+<div class="plein-ecran" id="img-stat-{{ loop.index }}">
+    <img class="plein-ecran__image" src="{{ url_for('static', filename='succes/' + p.photo) }}">
+    <a class="plein-ecran__fermer" href="#" aria-label="Fermer">✕</a>
+</div>
+{% endif %}
+{% endfor %}
 
 <footer class="pied-systeme">
     <div class="pied-systeme__gauche">

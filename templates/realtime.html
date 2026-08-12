@@ -51,7 +51,7 @@
             <div class="carte-stat">
                 <p class="carte-stat__label">LATENCE DU FLUX</p>
                 <div class="carte-stat__valeur-wrapper">
-                    <img class="carte-stat__icone" src="{{ url_for('static', filename=' icones images/analytics.png') }}">
+                    <img class="carte-stat__icone" src="{{ url_for('static', filename=' icones images/speed.png') }}">
                     <span class="carte-stat__valeur">{{ stats_systeme.latence_ms if stats_systeme.latence_ms is not none else "—" }} ms</span>
                 </div>
                 <p class="carte-stat__pied">Depuis la dernière frame reçue</p>
@@ -111,4 +111,55 @@
     </aside>
 
 </div>
+
+<script>
+// Rafraîchit la liste "Dernières détections" toutes les 4 secondes en
+// interrogeant /api/dernieres_detections, sans recharger toute la page
+// (un rechargement complet couperait le flux vidéo MJPEG des caméras).
+(function () {
+    var conteneur = document.querySelector('.barre-detections__liste');
+    if (!conteneur) return;
+
+    function nomFichierImage(statut, image) {
+        return (statut === 'REFUSE' ? 'inconnus/' : 'succes/') + image;
+    }
+
+    function construireCarte(l) {
+        var classeInconnu = l.statut === 'REFUSE' ? ' carte-detection--inconnu' : '';
+        var badge = l.statut === 'SUCCES'
+            ? '<span class="badge-statut badge-statut--reconnu">Reconnu</span>'
+            : '<span class="badge-statut badge-statut--inconnu">Inconnu</span>';
+        var image = '';
+        if (l.image) {
+            var url = "{{ url_for('static', filename='') }}" + nomFichierImage(l.statut, l.image);
+            image = '<a class="lien-couverture" href="#img-' + l.id + '">' +
+                '<img class="image-couverture" src="' + url + '"></a>';
+        }
+        var confiance = Math.round(l.score_detection * 10000) / 100;
+        return '<div class="carte-detection' + classeInconnu + '">' +
+            '<div class="carte-detection__contenu">' +
+            '<div class="carte-detection__image">' + image + '</div>' +
+            '<div class="carte-detection__details">' + badge +
+            '<p class="carte-detection__nom">' + l.nom + '</p>' +
+            '<p class="carte-detection__horodatage">' + l.heure + ' • ' + l.camera + '</p>' +
+            '<p class="carte-detection__confiance">Confiance: ' + confiance + '%</p>' +
+            '</div></div></div>';
+    }
+
+    function actualiser() {
+        fetch("{{ url_for('api_dernieres_detections') }}")
+            .then(function (r) { return r.json(); })
+            .then(function (dernieres) {
+                if (!dernieres.length) {
+                    conteneur.innerHTML = '<p style="padding:1rem;color:var(--on-surface-variant);font-size:13px;">Aucune détection pour le moment.</p>';
+                    return;
+                }
+                conteneur.innerHTML = dernieres.map(construireCarte).join('');
+            })
+            .catch(function (err) { console.error('Actualisation des détections impossible :', err); });
+    }
+
+    setInterval(actualiser, 4000);
+})();
+</script>
 {% endblock %}

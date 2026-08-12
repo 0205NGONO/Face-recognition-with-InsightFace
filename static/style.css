@@ -561,7 +561,7 @@ a {
   flex-direction: column;
   min-width: 0;
   background-color: var(--background);
-  overflow: hidden;
+  overflow-y: auto;
 }
 
 .en-tete-principal {
