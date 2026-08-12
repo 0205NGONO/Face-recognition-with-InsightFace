@@ -11,7 +11,7 @@
 
         <nav class="barre-laterale__navigation">
             <a class="lien-navigation lien-navigation--actif" href="{{ url_for('vue_users') }}">
-                <img class="lien-navigation__icone" src="{{ url_for('static', filename='icones/videocam.svg') }}">
+                <img class="lien-navigation__icone" src="{{ url_for('static', filename='icones/videocam.png') }}">
                 <span>Vue en temps réel</span>
             </a>
         </nav>
@@ -71,7 +71,7 @@
                     <div class="carte-stat">
                         <p class="carte-stat__label">ETAT DU SYSTÈME</p>
                         <div class="carte-stat__valeur-wrapper">
-                            <img class="carte-stat__icone" src="{{ url_for('static', filename='icones/checkcircle.svg') }}">
+                            <img class="carte-stat__icone" src="{{ url_for('static', filename='icones images/checkcircle.png') }}">
                             <span class="carte-stat__valeur">{{ stats_systeme.etat }}</span>
                         </div>
                         <p class="carte-stat__pied">Dernière vérification : à l'instant</p>
@@ -79,7 +79,7 @@
                     <div class="carte-stat">
                         <p class="carte-stat__label">DÉTECTIONS/MIN</p>
                         <div class="carte-stat__valeur-wrapper">
-                            <img class="carte-stat__icone" src="{{ url_for('static', filename='icones/analytics.svg') }}">
+                            <img class="carte-stat__icone" src="{{ url_for('static', filename='icones images/analytics.png') }}">
                             <span class="carte-stat__valeur">{{ stats_systeme.detections_par_min }}</span>
                         </div>
                         <p class="carte-stat__pied">Sur les 60 dernières secondes</p>
@@ -90,7 +90,7 @@
             <aside class="barre-detections">
                 <div class="barre-detections__en-tete">
                     <h3 class="barre-detections__titre">DERNIÈRES DÉTECTIONS</h3>
-                    <img class="barre-detections__icone-filtre" src="{{ url_for('static', filename='icones/filter_list.svg') }}">
+                    <img class="barre-detections__icone-filtre" src="{{ url_for('static', filename='icones images/filter_list.png') }}">
                 </div>
 
                 <div class="barre-detections__liste">

@@ -27,21 +27,21 @@
                 <div class="carte-stat">
                     <p class="carte-stat__label">DÉTECTIONS AUJOURD'HUI</p>
                     <div class="ligne-flex-sm">
-                        <img class="icone-24" src="{{ url_for('static', filename='icones/analytics.svg') }}">
+                        <img class="icone-24" src="{{ url_for('static', filename='icones images/analytics.png') }}">
                         <span class="carte-stat__valeur">{{ stats.total }}</span>
                     </div>
                 </div>
                 <div class="carte-stat">
                     <p class="carte-stat__label">PERSONNES CONNUES</p>
                     <div class="ligne-flex-sm">
-                        <img class="icone-24" src="{{ url_for('static', filename='icones/personnes_connues.svg') }}">
+                        <img class="icone-24" src="{{ url_for('static', filename='icones images/personnes_connues.png') }}">
                         <span class="carte-stat__valeur">{{ stats.connus }}</span>
                     </div>
                 </div>
                 <div class="carte-stat">
                     <p class="carte-stat__label">PERSONNES INCONNUES</p>
                     <div class="ligne-flex-sm">
-                        <img class="icone-24" src="{{ url_for('static', filename='icones/inconnu.svg') }}">
+                        <img class="icone-24" src="{{ url_for('static', filename='icones images/inconnu.png') }}">
                         <span class="carte-stat__valeur">{{ stats.inconnus }}</span>
                     </div>
                 </div>
@@ -51,14 +51,14 @@
                 <div class="carte-stat">
                     <p class="carte-stat__label">PREMIÈRE DÉTECTION AUJOURD'HUI</p>
                     <div class="ligne-flex-sm">
-                        <img class="icone-24" src="{{ url_for('static', filename='icones/detection.svg') }}">
+                        <img class="icone-24" src="{{ url_for('static', filename='icones images/detection.png') }}">
                         <span class="carte-stat__valeur">{{ stats.premiere_detection or '—' }}</span>
                     </div>
                 </div>
                 <div class="carte-stat">
                     <p class="carte-stat__label">DERNIÈRE DÉTECTION AUJOURD'HUI</p>
                     <div class="ligne-flex-sm">
-                        <img class="icone-24" src="{{ url_for('static', filename='icones/detection.svg') }}">
+                        <img class="icone-24" src="{{ url_for('static', filename='icones images/detection.png') }}">
                         <span class="carte-stat__valeur">{{ stats.derniere_detection or '—' }}</span>
                     </div>
                 </div>
@@ -150,19 +150,19 @@
             <div class="carte__entete"><span class="carte__titre">RÉSUMÉ</span></div>
             <div class="liste-resume">
                 <div class="item-resume">
-                    <div class="item-resume__icone"><img class="icone-24" src="{{ url_for('static', filename='icones/personnes_connues.svg') }}"></div>
+                    <div class="item-resume__icone"><img class="icone-24" src="{{ url_for('static', filename='icones images/personnes_connues.png') }}"></div>
                     <div><p class="item-resume__valeur">{{ stats.connus }}</p><p class="item-resume__label">Connus aujourd'hui</p></div>
                 </div>
                 <div class="item-resume">
-                    <div class="item-resume__icone"><img class="icone-24" src="{{ url_for('static', filename='icones/inconnu.svg') }}"></div>
+                    <div class="item-resume__icone"><img class="icone-24" src="{{ url_for('static', filename='icones images/inconnu.png') }}"></div>
                     <div><p class="item-resume__valeur">{{ stats.inconnus }}</p><p class="item-resume__label">Inconnus aujourd'hui</p></div>
                 </div>
                 <div class="item-resume">
-                    <div class="item-resume__icone"><img class="icone-24" src="{{ url_for('static', filename='icones/checkcircle.svg') }}"></div>
+                    <div class="item-resume__icone"><img class="icone-24" src="{{ url_for('static', filename='icones images/checkcircle.png') }}"></div>
                     <div><p class="item-resume__valeur">{{ stats.total }}</p><p class="item-resume__label">Total détections</p></div>
                 </div>
                 <div class="item-resume">
-                    <div class="item-resume__icone"><img class="icone-24" src="{{ url_for('static', filename='icones/analytics.svg') }}"></div>
+                    <div class="item-resume__icone"><img class="icone-24" src="{{ url_for('static', filename='icones images/analytics.png') }}"></div>
                     <div><p class="item-resume__valeur">{{ ((stats.connus / stats.total * 100) | round(1)) if stats.total else 0 }} %</p><p class="item-resume__label">Taux de reconnaissance</p></div>
                 </div>
             </div>
@@ -173,19 +173,19 @@
             <div class="carte__entete"><span class="carte__titre">ÉTAT DU SYSTÈME</span></div>
             <div class="liste-resume">
                 <div class="item-resume">
-                    <div class="item-resume__icone"><img class="icone-24" src="{{ url_for('static', filename='icones/videocam.svg') }}"></div>
+                    <div class="item-resume__icone"><img class="icone-24" src="{{ url_for('static', filename='icones images/videocam.png') }}"></div>
                     <div><p class="item-resume__valeur">4 / 4</p><p class="item-resume__label">Caméras en ligne</p></div>
                 </div>
                 <div class="item-resume">
-                    <div class="item-resume__icone"><img class="icone-24" src="{{ url_for('static', filename='icones/checkcircle.svg') }}"></div>
+                    <div class="item-resume__icone"><img class="icone-24" src="{{ url_for('static', filename='icones images/checkcircle.png') }}"></div>
                     <div><p class="item-resume__valeur">1,2 To / 2 To</p><p class="item-resume__label">Stockage</p></div>
                 </div>
                 <div class="item-resume">
-                    <div class="item-resume__icone"><img class="icone-24" src="{{ url_for('static', filename='icones/analytics.svg') }}"></div>
+                    <div class="item-resume__icone"><img class="icone-24" src="{{ url_for('static', filename='icones images/analytics.png') }}"></div>
                     <div><p class="item-resume__valeur">45 %</p><p class="item-resume__label">Utilisation CPU</p></div>
                 </div>
                 <div class="item-resume">
-                    <div class="item-resume__icone"><img class="icone-24" src="{{ url_for('static', filename='icones/analytics.svg') }}"></div>
+                    <div class="item-resume__icone"><img class="icone-24" src="{{ url_for('static', filename='icones images/analytics.png') }}"></div>
                     <div><p class="item-resume__valeur">62 %</p><p class="item-resume__label">Utilisation mémoire</p></div>
                 </div>
             </div>
