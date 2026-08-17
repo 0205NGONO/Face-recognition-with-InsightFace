@@ -8,6 +8,39 @@
         <div>
             <h2 class="entete-page__titre">Journal des Détections</h2>
 
+            <div class="barre-filtres">
+                <form method="get" class="ligne-flex" style="flex-wrap: wrap; gap: 1rem; width: 100%; align-items: flex-end;">
+                    <div class="filtre">
+                        <label class="filtre__label" for="filtre_periode">Période</label>
+                        <select class="filtre__select" id="filtre_periode" name="periode">
+                            <option value="">Aujourd'hui</option>
+                            <option value="tout" {% if filtres.periode == "tout" %}selected{% endif %}>Tout</option>
+                            <option value="hier" {% if filtres.periode == "hier" %}selected{% endif %}>Hier</option>
+                            <option value="3j" {% if filtres.periode == "3j" %}selected{% endif %}>3 derniers jours</option>
+                            <option value="7j" {% if filtres.periode == "7j" %}selected{% endif %}>7 derniers jours</option>
+                            <option value="10j" {% if filtres.periode == "10j" %}selected{% endif %}>10 derniers jours</option>
+                            <option value="1mois" {% if filtres.periode == "1mois" %}selected{% endif %}>1 mois</option>
+                            <option value="2mois" {% if filtres.periode == "2mois" %}selected{% endif %}>2 derniers mois</option>
+                        </select>
+                    </div>
+
+                    <div class="filtre" style="flex: 1; min-width: 220px;">
+                        <label class="filtre__label" for="filtre_recherche">Recherche (nom, caméra ou date AAAA-MM-JJ)</label>
+                        <input class="filtre__select" type="text" id="filtre_recherche" name="recherche"
+                               value="{{ filtres.recherche }}" placeholder="Ex : NGONO, CAM-01 ou 2026-08-15" style="width: 100%;">
+                    </div>
+
+                    <div class="filtre">
+                        <button type="submit" class="bouton-export">Filtrer</button>
+                    </div>
+                    {% if filtres.periode or filtres.recherche %}
+                    <div class="filtre">
+                        <a class="bouton-filtre" href="{{ url_for('detections') }}">Réinitialiser</a>
+                    </div>
+                    {% endif %}
+                </form>
+            </div>
+
             <!-- Tableau des détections, même structure que la page "Inconnus" -->
             <div class="tableau-detections">
                 <table class="table-detections">
@@ -54,7 +87,7 @@
                         </tr>
                         {% else %}
                         <tr>
-                            <td colspan="5" style="text-align:center;color:var(--on-surface-variant);">Aucune détection aujourd'hui.</td>
+                            <td colspan="5" style="text-align:center;color:var(--on-surface-variant);">Aucune détection ne correspond à ce filtre.</td>
                         </tr>
                         {% endfor %}
                     </tbody>
