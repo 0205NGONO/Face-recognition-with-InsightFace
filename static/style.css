@@ -1707,3 +1707,30 @@ body.corps-connexion {
 .fond-primaire {
   background-color: var(--primary);
 }
+/* Menu d'export (Excel/PDF) — <details>/<summary> natif, sans JS */
+.menu-export { position: relative; }
+.menu-export__bouton {
+  list-style: none;
+  cursor: pointer;
+}
+.menu-export__bouton::-webkit-details-marker { display: none; }
+.menu-export__options {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 4px);
+  background: var(--white);
+  border: 1px solid var(--outline-variant);
+  border-radius: var(--radius-default);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  min-width: 160px;
+  z-index: 20;
+  overflow: hidden;
+}
+.menu-export__options a {
+  display: block;
+  padding: 0.6rem 1rem;
+  font-size: 13px;
+  color: var(--on-surface);
+  text-decoration: none;
+}
+.menu-export__options a:hover { background-color: var(--surface-container-low); }

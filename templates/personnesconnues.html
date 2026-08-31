@@ -3,6 +3,17 @@
 {% block page_title %}Personnes connues{% endblock %}
 {% block entete_titre %}Gestion des Personnes Connues{% endblock %}
 {% block content %}
+            <div class="entete-page__rangee" style="margin-bottom: 1rem;">
+                <div></div>
+                <details class="menu-export">
+                    <summary class="bouton-export menu-export__bouton">Exporter le log</summary>
+                    <div class="menu-export__options">
+                        <a href="{{ url_for('export_personnes_connues', periode=filtres.periode, recherche=filtres.recherche, format='xlsx') }}">Excel (.xlsx)</a>
+                        <a href="{{ url_for('export_personnes_connues', periode=filtres.periode, recherche=filtres.recherche, format='pdf') }}">PDF</a>
+                    </div>
+                </details>
+            </div>
+
             <div class="barre-filtres">
                 <form method="get" class="ligne-flex" style="flex-wrap: wrap; gap: 1rem; width: 100%; align-items: flex-end;">
                     <div class="filtre">

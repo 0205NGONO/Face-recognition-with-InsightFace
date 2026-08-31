@@ -6,7 +6,16 @@
 <div class="tableau-de-bord">
     <div class="entete-page">
         <div>
-            <h2 class="entete-page__titre">Journal des Détections</h2>
+            <div class="entete-page__rangee">
+                <h2 class="entete-page__titre">Journal des Détections</h2>
+                <details class="menu-export">
+                    <summary class="bouton-export menu-export__bouton">Exporter le log</summary>
+                    <div class="menu-export__options">
+                        <a href="{{ url_for('export_detections', periode=filtres.periode, recherche=filtres.recherche, format='xlsx') }}">Excel (.xlsx)</a>
+                        <a href="{{ url_for('export_detections', periode=filtres.periode, recherche=filtres.recherche, format='pdf') }}">PDF</a>
+                    </div>
+                </details>
+            </div>
 
             <div class="barre-filtres">
                 <form method="get" class="ligne-flex" style="flex-wrap: wrap; gap: 1rem; width: 100%; align-items: flex-end;">
