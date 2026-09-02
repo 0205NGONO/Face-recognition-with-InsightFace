@@ -222,6 +222,38 @@ button {
   letter-spacing: 0.15em;
 }
 
+/* Sélecteur de langue */
+.liens-langue {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.liens-langue a {
+    text-decoration: none;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--on-surface-variant);
+    padding: 0.25rem 0.5rem;
+    border: 1px solid var(--outline-variant);
+    border-radius: var(--radius-default);
+    transition: color 0.15s ease, border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.liens-langue a:hover {
+    color: var(--primary);
+    border-color: var(--primary);
+}
+
+.liens-langue a.actif {
+    color: var(--primary);
+    font-weight: 700;
+    border-color: var(--primary);
+    background-color: var(--surface-container-high);
+}
+
 .zone-contenu {
   flex: 1 1 0%;
   display: flex;

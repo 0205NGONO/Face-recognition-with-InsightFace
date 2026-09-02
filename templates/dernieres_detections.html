@@ -1,13 +1,13 @@
 {% extends 'layout.html' %}
 {% block page_id %}detections{% endblock %}
-{% block page_title %}Détections récentes{% endblock %}
-{% block entete_titre %}Détections récentes{% endblock %}
+{% block page_title %}{{ translate("dernieres_detections.html", "titre_page") }}{% endblock %}
+{% block entete_titre %}{{ translate("dernieres_detections.html", "entete_titre") }}{% endblock %}
 {% block content %}
 <div class="tableau-de-bord">
     <div class="entete-page">
         <div>
             <div class="entete-page__rangee">
-                <h2 class="entete-page__titre">Journal des Détections</h2>
+                <h2 class="entete-page__titre">{{ translate("dernieres_detections.html", "titre_journal") }}</h2>
                 <details class="menu-export">
                     <summary class="bouton-export menu-export__bouton">Exporter le log</summary>
                     <div class="menu-export__options">
@@ -20,31 +20,31 @@
             <div class="barre-filtres">
                 <form method="get" class="ligne-flex" style="flex-wrap: wrap; gap: 1rem; width: 100%; align-items: flex-end;">
                     <div class="filtre">
-                        <label class="filtre__label" for="filtre_periode">Période</label>
+                        <label class="filtre__label" for="filtre_periode">{{ translate("dernieres_detections.html", "label_periode") }}</label>
                         <select class="filtre__select" id="filtre_periode" name="periode">
-                            <option value="">Aujourd'hui</option>
-                            <option value="tout" {% if filtres.periode == "tout" %}selected{% endif %}>Tout</option>
-                            <option value="hier" {% if filtres.periode == "hier" %}selected{% endif %}>Hier</option>
-                            <option value="3j" {% if filtres.periode == "3j" %}selected{% endif %}>3 derniers jours</option>
-                            <option value="7j" {% if filtres.periode == "7j" %}selected{% endif %}>7 derniers jours</option>
-                            <option value="10j" {% if filtres.periode == "10j" %}selected{% endif %}>10 derniers jours</option>
-                            <option value="1mois" {% if filtres.periode == "1mois" %}selected{% endif %}>1 mois</option>
-                            <option value="2mois" {% if filtres.periode == "2mois" %}selected{% endif %}>2 derniers mois</option>
+                            <option value="">{{ translate("dernieres_detections.html", "option_periode_aujourdhui") }}</option>
+                            <option value="tout" {% if filtres.periode == "tout" %}selected{% endif %}>{{ translate("dernieres_detections.html", "option_periode_tout") }}</option>
+                            <option value="hier" {% if filtres.periode == "hier" %}selected{% endif %}>{{ translate("dernieres_detections.html", "option_periode_hier") }}</option>
+                            <option value="3j" {% if filtres.periode == "3j" %}selected{% endif %}>{{ translate("dernieres_detections.html", "option_periode_3j") }}</option>
+                            <option value="7j" {% if filtres.periode == "7j" %}selected{% endif %}>{{ translate("dernieres_detections.html", "option_periode_7j") }}</option>
+                            <option value="10j" {% if filtres.periode == "10j" %}selected{% endif %}>{{ translate("dernieres_detections.html", "option_periode_10j") }}</option>
+                            <option value="1mois" {% if filtres.periode == "1mois" %}selected{% endif %}>{{ translate("dernieres_detections.html", "option_periode_1mois") }}</option>
+                            <option value="2mois" {% if filtres.periode == "2mois" %}selected{% endif %}>{{ translate("dernieres_detections.html", "option_periode_2mois") }}</option>
                         </select>
                     </div>
 
                     <div class="filtre" style="flex: 1; min-width: 220px;">
-                        <label class="filtre__label" for="filtre_recherche">Recherche (nom, caméra ou date AAAA-MM-JJ)</label>
+                        <label class="filtre__label" for="filtre_recherche">{{ translate("dernieres_detections.html", "label_recherche") }}</label>
                         <input class="filtre__select" type="text" id="filtre_recherche" name="recherche"
-                               value="{{ filtres.recherche }}" placeholder="Ex : NGONO, CAM-01 ou 2026-08-15" style="width: 100%;">
+                               value="{{ filtres.recherche }}" placeholder="{{ translate("dernieres_detections.html", "placeholder_recherche") }}" style="width: 100%;">
                     </div>
 
                     <div class="filtre">
-                        <button type="submit" class="bouton-export">Filtrer</button>
+                        <button type="submit" class="bouton-export">{{ translate("dernieres_detections.html", "bouton_filtrer") }}</button>
                     </div>
                     {% if filtres.periode or filtres.recherche %}
                     <div class="filtre">
-                        <a class="bouton-filtre" href="{{ url_for('detections') }}">Réinitialiser</a>
+                        <a class="bouton-filtre" href="{{ url_for('detections') }}">{{ translate("dernieres_detections.html", "lien_reinitialiser") }}</a>
                     </div>
                     {% endif %}
                 </form>
@@ -55,11 +55,11 @@
                 <table class="table-detections">
                     <thead>
                         <tr>
-                            <th>Dernières détections</th>
-                            <th>Date et Heure</th>
-                            <th>Camera ID</th>
-                            <th class="th--droite">Niveau de confiance</th>
-                            <th class="th--droite">Statut</th>
+                            <th>{{ translate("dernieres_detections.html", "th_dernieres_detections") }}</th>
+                            <th>{{ translate("dernieres_detections.html", "th_date_heure") }}</th>
+                            <th>{{ translate("dernieres_detections.html", "th_camera_id") }}</th>
+                            <th class="th--droite">{{ translate("dernieres_detections.html", "th_confiance") }}</th>
+                            <th class="th--droite">{{ translate("dernieres_detections.html", "th_statut") }}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -88,7 +88,7 @@
                             </td>
                             <td class="td--droite">
                                 {% if l.statut == 'REFUSE' %}
-                                <span class="badge-statut badge-statut--inconnu">Inconnu</span>
+                                <span class="badge-statut badge-statut--inconnu">{{ translate("dernieres_detections.html", "badge_inconnu") }}</span>
                                 {% else %}
                                 <span class="badge-statut badge-statut--reconnu">{{ l.nom }}</span>
                                 {% endif %}
@@ -96,7 +96,7 @@
                         </tr>
                         {% else %}
                         <tr>
-                            <td colspan="5" style="text-align:center;color:var(--on-surface-variant);">Aucune détection ne correspond à ce filtre.</td>
+                            <td colspan="5" style="text-align:center;color:var(--on-surface-variant);">{{ translate("dernieres_detections.html", "vide_filtre") }}</td>
                         </tr>
                         {% endfor %}
                     </tbody>
@@ -112,7 +112,7 @@
 {% if l.image %}
 <div class="plein-ecran" id="img-{{ l.id }}">
     <img class="plein-ecran__image" src="{{ url_for('static', filename=('inconnus/' if l.statut == 'REFUSE' else 'succes/') + l.image) }}">
-    <a class="plein-ecran__fermer" href="#" aria-label="Fermer">✕</a>
+    <a class="plein-ecran__fermer" href="#" aria-label="{{ translate('dernieres_detections.html', 'fermer') }}">✕</a>
 </div>
 {% endif %}
 {% endfor %}

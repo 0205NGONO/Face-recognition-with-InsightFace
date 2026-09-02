@@ -1,74 +1,80 @@
-<!DOCTYPE html>
-<html lang="fr">
+<html lang="{{ session.get('lang', 'fr') }}">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Système de surveillance - Connexion</title>
+<title>{{ translate('login.html','titre_app') }} - {{ translate('login.html','titre_carte') }}</title>
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body class="corps-connexion">
-
+ 
 <main class="page">
-
+ 
   <header class="header">
     <img src="{{ url_for('static', filename='icones images/logo_inch.jpg') }}" alt="" class="logo-icon">
     <div class="header-text">
-      <h1>Système de surveillance</h1>
+      <h1>{{ translate('login.html','titre_app') }}</h1>
     </div>
   </header>
-
+ 
   <section class="card">
     <div class="card-body">
-      <h2 class="card-title">Connexion</h2>
-
+      <h2 class="card-title">{{ translate('login.html','titre_carte') }}</h2>
+ 
       <input type="radio" name="tab" id="tabAdmin" class="tab-radio" checked>
       <input type="radio" name="tab" id="tabEmploye" class="tab-radio">
-
+ 
       <div class="tabs">
-        <label for="tabAdmin" class="tab">Administrateur</label>
-        <label for="tabEmploye" class="tab">Employé</label>
+        <label for="tabAdmin" class="tab">{{ translate('login.html','onglet_admin') }}</label>
+        <label for="tabEmploye" class="tab">{{ translate('login.html','onglet_employe') }}</label>
       </div>
-
+ 
       <!-- Formulaire Administrateur : email + mot de passe -->
       <form id="formAdmin" class="role-form" action="{{ url_for('login_admin') }}" method="post">
         <div class="field">
-          <label for="nomAdmin">Nom</label>
-          <input type="text" id="nomAdmin" name="nom" placeholder="Nom de l'administrateur" required>
+          <label for="nomAdmin">{{ translate('login.html','label_nom_admin') }}</label>
+          <input type="text" id="nomAdmin" name="nom" placeholder="{{ translate('login.html','placeholder_nom_admin') }}" required>
         </div>
-
+ 
         <div class="field">
-          <label for="password">Mot de passe</label>
-          <input type="password" id="password" name="password" placeholder="••••••••••" required>
+          <label for="password">{{ translate('login.html','label_mot_de_passe') }}</label>
+          <input type="password" id="password" name="password" placeholder="{{ translate('login.html','placeholder_mot_de_passe') }}" required>
         </div>
-
-        <button type="submit" class="btn-submit">Se connecter</button>
-
+ 
+        <button type="submit" class="btn-submit">{{ translate('login.html','bouton_connexion') }}</button>
+ 
         {% if erreur_admin %}
         <p class="error-msg">{{ erreur_admin }}</p>
         {% endif %}
       </form>
-
+ 
       <!-- Formulaire Employé : nom complet seul -->
       <form id="formEmploye" class="role-form" action="{{ url_for('login_employe') }}" method="post">
         <div class="field">
-          <label for="name">Nom complet</label>
-          <input type="text" id="name" name="name" placeholder="Entrez votre nom" required>
+          <label for="name">{{ translate('login.html','label_nom_employe') }}</label>
+          <input type="text" id="name" name="name" placeholder="{{ translate('login.html','placeholder_nom_employe') }}" required>
         </div>
-
-        <button type="submit" class="btn-submit">Se connecter</button>
-
+ 
+        <button type="submit" class="btn-submit">{{ translate('login.html','bouton_connexion') }}</button>
+ 
         {% if erreur_employe %}
         <p class="error-msg">{{ erreur_employe }}</p>
         {% endif %}
       </form>
     </div>
+ 
+    <div class= "liens-langue">  
+         <a href="{{ url_for('choix_langue', lang='fr')}}" class="{% if session.get('lang', 'fr') == 'fr' %} lien-navigation--actif{% endif %}">FRANCAIS</a>
+         <a href="{{ url_for('choix_langue', lang='en')}}" class="{% if session.get('lang', 'fr') == 'en' %} lien-navigation--actif{% endif %}">ENGLISH</a>
+        </div>
 
+        
     <footer class="footer">
-      <p>Accès sécurisé au système de surveillance</p>
+      <p>{{ translate('login.html','pied_de_page') }}</p>
     </footer>
   </section>
-
+ 
 </main>
-
+ 
 </body>
 </html>
+ 

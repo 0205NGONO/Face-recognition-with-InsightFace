@@ -1,7 +1,7 @@
 {% extends 'layout.html' %}
 {% block page_id %}personnes_connues{% endblock %}
-{% block page_title %}Personnes connues{% endblock %}
-{% block entete_titre %}Gestion des Personnes Connues{% endblock %}
+{% block page_title %}{{ translate('personnesconnues.html','titre_page') }}{% endblock %}
+{% block entete_titre %}{{ translate('personnesconnues.html','entete_titre') }}{% endblock %}
 {% block content %}
             <div class="entete-page__rangee" style="margin-bottom: 1rem;">
                 <div></div>
@@ -13,48 +13,48 @@
                     </div>
                 </details>
             </div>
-
+ 
             <div class="barre-filtres">
                 <form method="get" class="ligne-flex" style="flex-wrap: wrap; gap: 1rem; width: 100%; align-items: flex-end;">
                     <div class="filtre">
-                        <label class="filtre__label" for="filtre_periode">Période</label>
+                        <label class="filtre__label" for="filtre_periode">{{ translate('personnesconnues.html','label_periode') }}</label>
                         <select class="filtre__select" id="filtre_periode" name="periode">
-                            <option value="">Toute la période</option>
-                            <option value="hier" {% if filtres.periode == "hier" %}selected{% endif %}>Hier</option>
-                            <option value="3j" {% if filtres.periode == "3j" %}selected{% endif %}>3 derniers jours</option>
-                            <option value="7j" {% if filtres.periode == "7j" %}selected{% endif %}>7 derniers jours</option>
-                            <option value="10j" {% if filtres.periode == "10j" %}selected{% endif %}>10 derniers jours</option>
-                            <option value="1mois" {% if filtres.periode == "1mois" %}selected{% endif %}>1 mois</option>
-                            <option value="2mois" {% if filtres.periode == "2mois" %}selected{% endif %}>2 derniers mois</option>
+                            <option value="">{{ translate('personnesconnues.html','option_periode_toute') }}</option>
+                            <option value="hier" {% if filtres.periode == "hier" %}selected{% endif %}>{{ translate('personnesconnues.html','option_periode_hier') }}</option>
+                            <option value="3j" {% if filtres.periode == "3j" %}selected{% endif %}>{{ translate('personnesconnues.html','option_periode_3j') }}</option>
+                            <option value="7j" {% if filtres.periode == "7j" %}selected{% endif %}>{{ translate('personnesconnues.html','option_periode_7j') }}</option>
+                            <option value="10j" {% if filtres.periode == "10j" %}selected{% endif %}>{{ translate('personnesconnues.html','option_periode_10j') }}</option>
+                            <option value="1mois" {% if filtres.periode == "1mois" %}selected{% endif %}>{{ translate('personnesconnues.html','option_periode_1mois') }}</option>
+                            <option value="2mois" {% if filtres.periode == "2mois" %}selected{% endif %}>{{ translate('personnesconnues.html','option_periode_2mois') }}</option>
                         </select>
                     </div>
-
+ 
                     <div class="filtre" style="flex: 1; min-width: 220px;">
-                        <label class="filtre__label" for="filtre_recherche">Recherche (nom ou date AAAA-MM-JJ)</label>
+                        <label class="filtre__label" for="filtre_recherche">{{ translate('personnesconnues.html','label_recherche') }}</label>
                         <input class="filtre__select" type="text" id="filtre_recherche" name="recherche"
-                               value="{{ filtres.recherche }}" placeholder="Ex : NGONO ou 2026-08-15" style="width: 100%;">
+                               value="{{ filtres.recherche }}" placeholder="{{ translate('personnesconnues.html','placeholder_recherche') }}" style="width: 100%;">
                     </div>
-
+ 
                     <div class="filtre">
-                        <button type="submit" class="bouton-export">Filtrer</button>
+                        <button type="submit" class="bouton-export">{{ translate('personnesconnues.html','bouton_filtrer') }}</button>
                     </div>
                     {% if filtres.periode or filtres.recherche %}
                     <div class="filtre">
-                        <a class="bouton-filtre" href="{{ url_for('personnes_connues') }}">Réinitialiser</a>
+                        <a class="bouton-filtre" href="{{ url_for('personnes_connues') }}">{{ translate('personnesconnues.html','lien_reinitialiser') }}</a>
                     </div>
                     {% endif %}
                 </form>
             </div>
-
+ 
             <div class="tableau-personnes">
                 <table class="table-personnes">
                     <thead>
                         <tr>
-                            <th>Visage/Nom</th>
-                            <th>Rôle</th>
-                            <th>Département</th>
-                            <th>Date et Heure</th>
-                            <th>Statut</th>
+                            <th>{{ translate('personnesconnues.html','th_visage_nom') }}</th>
+                            <th>{{ translate('personnesconnues.html','th_role') }}</th>
+                            <th>{{ translate('personnesconnues.html','th_departement') }}</th>
+                            <th>{{ translate('personnesconnues.html','th_date_heure') }}</th>
+                            <th>{{ translate('personnesconnues.html','th_statut') }}</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -79,9 +79,9 @@
                             <td class="table-personnes__date">{{ p.date_ajout or "—" }}</td>
                             <td>
                                 {% if p.statut == "Inactif" %}
-                                <span class="badge-statut badge-statut--inactif">Inactif</span>
+                                <span class="badge-statut badge-statut--inactif">{{ translate('personnesconnues.html','badge_inactif') }}</span>
                                 {% else %}
-                                <span class="badge-statut badge-vert">Actif</span>
+                                <span class="badge-statut badge-vert">{{ translate('personnesconnues.html','badge_actif') }}</span>
                                 {% endif %}
                             </td>
                             <td class="td--droite">
@@ -95,7 +95,7 @@
                         {% else %}
                         <tr>
                             <td colspan="6" style="text-align: center; color: var(--on-surface-variant); padding: var(--stack-lg);">
-                                Aucune personne enregistrée pour l'instant.
+                                {{ translate('personnesconnues.html','vide_personnes') }}
                             </td>
                         </tr>
                         {% endfor %}
@@ -103,9 +103,9 @@
                 </table>
             </div>
             <div class="pied-pagination">
-                <p class="pied-pagination__texte">Affichage de {{ personnes|length }} employé(s)</p>
+                <p class="pied-pagination__texte">{{ translate('personnesconnues.html','pied_affichage', n=personnes|length) }}</p>
             </div>
-
+ 
             <!-- Effet HUD au clic sur un avatar (CSS pur, via :target) -->
             <div class="hud-scan" id="hud-scan">
                 <div class="hud-scan__cadre">
@@ -114,7 +114,8 @@
                     <div class="hud-scan__coin hud-scan__coin--bas-gauche"></div>
                     <div class="hud-scan__coin hud-scan__coin--bas-droit"></div>
                     <div class="hud-scan__lueur"></div>
-                    <div class="hud-scan__etiquette">Scanning Active Profile</div>
+                    <div class="hud-scan__etiquette">{{ translate('personnesconnues.html','hud_scan') }}</div>
                 </div>
             </div>
 {% endblock %}
+ 

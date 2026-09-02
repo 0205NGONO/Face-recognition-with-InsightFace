@@ -1,10 +1,10 @@
 {% extends 'layout.html' %}
 {% block page_id %}realtime{% endblock %}
-{% block page_title %}Vue en Temps Réel{% endblock %}
-{% block entete_titre %}Vue en Temps Réel{% endblock %}
+{% block page_title %}{{ translate('realtime.html','titre_page') }}{% endblock %}
+{% block entete_titre %}{{ translate('realtime.html','entete_titre') }}{% endblock %}
 {% block content %}
 <div class="zone-contenu">
-
+ 
     <div class="panneau-flux">
         <div class="grille-cameras">
             {% for nom_cam, source in cameras.items() %}
@@ -15,58 +15,58 @@
                         <span class="indicateur-direct"></span>
                         <span class="indicateur-direct__texte">{{ nom_cam }}</span>
                     </div>
-                    <a class="bouton-plein-ecran" href="#plein-ecran-{{ nom_cam }}" aria-label="Plein écran">⛶</a>
+                    <a class="bouton-plein-ecran" href="#plein-ecran-{{ nom_cam }}" aria-label="Plein écran">{{ translate('realtime.html','plein_ecran') }}</a>
                 </div>
             </div>
             {% else %}
-            <p style="color: var(--on-surface-variant);">Aucune caméra configurée. Ajoutez-en une dans Paramètres.</p>
+            <p style="color: var(--on-surface-variant);">{{ translate('realtime.html','vide_cameras') }}</p>
             {% endfor %}
         </div>
-
+ 
         <!-- Overlays plein écran (un par caméra), ouverts/fermés en CSS pur avec :target -->
         {% for nom_cam, source in cameras.items() %}
         <div class="plein-ecran" id="plein-ecran-{{ nom_cam }}">
             <img class="plein-ecran__image" src="{{ url_for('video_feed', nom_camera=nom_cam) }}">
-            <a class="plein-ecran__fermer" href="#" aria-label="Quitter le plein écran">✕</a>
+            <a class="plein-ecran__fermer" href="#" aria-label="Quitter le plein écran">{{ translate('realtime.html','fermer') }}</a>
         </div>
         {% endfor %}
-
+ 
         <div class="cartes-stats">
             <div class="carte-stat">
-                <p class="carte-stat__label">ETAT DU SYSTÈME</p>
+                <p class="carte-stat__label">{{ translate('realtime.html','stat_etat_systeme') }}</p>
                 <div class="carte-stat__valeur-wrapper">
                     <img class="carte-stat__icone" src="{{ url_for('static', filename=' icones images/checkcircle.png') }}">
                     <span class="carte-stat__valeur">{{ stats_systeme.etat }}</span>
                 </div>
-                <p class="carte-stat__pied">Dernière vérification : à l'instant</p>
+                <p class="carte-stat__pied">{{ translate('realtime.html','pied_verification') }}</p>
             </div>
             <div class="carte-stat">
-                <p class="carte-stat__label">DÉTECTIONS/MIN</p>
+                <p class="carte-stat__label">{{ translate('realtime.html','stat_detections_min') }}</p>
                 <div class="carte-stat__valeur-wrapper">
                     <img class="carte-stat__icone" src="{{ url_for('static', filename=' icones images/analytics.png') }}">
                     <span class="carte-stat__valeur">{{ stats_systeme.detections_par_min }}</span>
                 </div>
-                <p class="carte-stat__pied">Sur les 60 dernières secondes</p>
+                <p class="carte-stat__pied">{{ translate('realtime.html','pied_detections_min') }}</p>
             </div>
             <div class="carte-stat">
-                <p class="carte-stat__label">LATENCE DU FLUX</p>
+                <p class="carte-stat__label">{{ translate('realtime.html','stat_latence') }}</p>
                 <div class="carte-stat__valeur-wrapper">
                     <img class="carte-stat__icone" src="{{ url_for('static', filename=' icones images/speed.png') }}">
                     <span class="carte-stat__valeur">{{ stats_systeme.latence_ms if stats_systeme.latence_ms is not none else "—" }} ms</span>
                 </div>
-                <p class="carte-stat__pied">Depuis la dernière frame reçue</p>
+                <p class="carte-stat__pied">{{ translate('realtime.html','pied_latence') }}</p>
             </div>
         </div>
     </div>
-
+ 
     <aside class="barre-detections">
         <div class="barre-detections__en-tete">
-            <h3 class="barre-detections__titre">DERNIÈRES DÉTECTIONS</h3>
+            <h3 class="barre-detections__titre">{{ translate('realtime.html','titre_dernieres_detections') }}</h3>
             <img class="barre-detections__icone-filtre" src="{{ url_for('static', filename=' icones images/filter_list.png') }}">
         </div>
-
+ 
         <div class="barre-detections__liste">
-
+ 
             {% for l in dernieres %}
             <div class="carte-detection{% if l.statut == 'REFUSE' %} carte-detection--inconnu{% endif %}">
                 <div class="carte-detection__contenu">
@@ -79,39 +79,39 @@
                     </div>
                     <div class="carte-detection__details">
                         {% if l.statut == 'SUCCES' %}
-                        <span class="badge-statut badge-statut--reconnu">Reconnu</span>
+                        <span class="badge-statut badge-statut--reconnu">{{ translate('realtime.html','badge_reconnu') }}</span>
                         {% else %}
-                        <span class="badge-statut badge-statut--inconnu">Inconnu</span>
+                        <span class="badge-statut badge-statut--inconnu">{{ translate('realtime.html','badge_inconnu') }}</span>
                         {% endif %}
                         <p class="carte-detection__nom">{{ l.nom }}</p>
                         <p class="carte-detection__horodatage">{{ l.heure }} • {{ l.camera }}</p>
-                        <p class="carte-detection__confiance">Confiance: {{ (l.score_detection * 100) | round(2) }}%</p>
+                        <p class="carte-detection__confiance">{{ translate('realtime.html','confiance', valeur=(l.score_detection * 100) | round(2)) }}</p>
                     </div>
                 </div>
             </div>
             {% else %}
-            <p style="padding:1rem;color:var(--on-surface-variant);font-size:13px;">Aucune détection pour le moment.</p>
+            <p style="padding:1rem;color:var(--on-surface-variant);font-size:13px;">{{ translate('realtime.html','vide_detections') }}</p>
             {% endfor %}
-
+ 
         </div>
-
+ 
         <!-- Overlays plein écran pour voir chaque vignette en entier -->
         {% for l in dernieres %}
         {% if l.image %}
         <div class="plein-ecran" id="img-{{ l.id }}">
             <img class="plein-ecran__image" src="{{ url_for('static', filename=('inconnus/' if l.statut == 'REFUSE' else 'succes/') + l.image) }}">
-            <a class="plein-ecran__fermer" href="#" aria-label="Fermer">✕</a>
+            <a class="plein-ecran__fermer" href="#" aria-label="Fermer">{{ translate('realtime.html','fermer') }}</a>
         </div>
         {% endif %}
         {% endfor %}
-
+ 
         <div class="barre-detections__pied">
-            <a class="bouton-voir-log" href="{{ url_for('unknowns') }}">VOIR TOUT LE LOG</a>
+            <a class="bouton-voir-log" href="{{ url_for('unknowns') }}">{{ translate('realtime.html','lien_voir_log') }}</a>
         </div>
     </aside>
-
+ 
 </div>
-
+ 
 <script>
 // Rafraîchit la liste "Dernières détections" toutes les 4 secondes en
 // interrogeant /api/dernieres_detections, sans recharger toute la page
@@ -119,16 +119,23 @@
 (function () {
     var conteneur = document.querySelector('.barre-detections__liste');
     if (!conteneur) return;
-
+ 
+    // Textes traduits préparés côté serveur (Jinja), réutilisés ici en JS
+    // pour que le rafraîchissement automatique reste dans la bonne langue.
+    var texteBadgeReconnu = "{{ translate('realtime.html','badge_reconnu') }}";
+    var texteBadgeInconnu = "{{ translate('realtime.html','badge_inconnu') }}";
+    var modeleConfiance = "{{ translate('realtime.html','confiance', valeur='__VALEUR__') }}";
+    var texteVide = "{{ translate('realtime.html','vide_detections') }}";
+ 
     function nomFichierImage(statut, image) {
         return (statut === 'REFUSE' ? 'inconnus/' : 'succes/') + image;
     }
-
+ 
     function construireCarte(l) {
         var classeInconnu = l.statut === 'REFUSE' ? ' carte-detection--inconnu' : '';
         var badge = l.statut === 'SUCCES'
-            ? '<span class="badge-statut badge-statut--reconnu">Reconnu</span>'
-            : '<span class="badge-statut badge-statut--inconnu">Inconnu</span>';
+            ? '<span class="badge-statut badge-statut--reconnu">' + texteBadgeReconnu + '</span>'
+            : '<span class="badge-statut badge-statut--inconnu">' + texteBadgeInconnu + '</span>';
         var image = '';
         if (l.image) {
             var url = "{{ url_for('static', filename='') }}" + nomFichierImage(l.statut, l.image);
@@ -136,30 +143,32 @@
                 '<img class="image-couverture" src="' + url + '"></a>';
         }
         var confiance = Math.round(l.score_detection * 10000) / 100;
+        var texteConfiance = modeleConfiance.replace('__VALEUR__', confiance);
         return '<div class="carte-detection' + classeInconnu + '">' +
             '<div class="carte-detection__contenu">' +
             '<div class="carte-detection__image">' + image + '</div>' +
             '<div class="carte-detection__details">' + badge +
             '<p class="carte-detection__nom">' + l.nom + '</p>' +
             '<p class="carte-detection__horodatage">' + l.heure + ' • ' + l.camera + '</p>' +
-            '<p class="carte-detection__confiance">Confiance: ' + confiance + '%</p>' +
+            '<p class="carte-detection__confiance">' + texteConfiance + '</p>' +
             '</div></div></div>';
     }
-
+ 
     function actualiser() {
         fetch("{{ url_for('api_dernieres_detections') }}")
             .then(function (r) { return r.json(); })
             .then(function (dernieres) {
                 if (!dernieres.length) {
-                    conteneur.innerHTML = '<p style="padding:1rem;color:var(--on-surface-variant);font-size:13px;">Aucune détection pour le moment.</p>';
+                    conteneur.innerHTML = '<p style="padding:1rem;color:var(--on-surface-variant);font-size:13px;">' + texteVide + '</p>';
                     return;
                 }
                 conteneur.innerHTML = dernieres.map(construireCarte).join('');
             })
             .catch(function (err) { console.error('Actualisation des détections impossible :', err); });
     }
-
+ 
     setInterval(actualiser, 4000);
 })();
 </script>
 {% endblock %}
+ 

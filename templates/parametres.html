@@ -1,9 +1,8 @@
-<!DOCTYPE html>
-<html class="light" lang="fr">
+<html class="light" lang="{{ session.get('lang', 'fr') }}">
 <head>
 <meta charset="utf-8">
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
-<title>Paramètres | Système de surveillance</title>
+<title>{{ translate('parametres.html','titre_page') }} | {{ translate('parametres.html','titre_app') }}</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
@@ -12,67 +11,71 @@
     <!-- Barre de Navigation Latérale (uniformisée sur toutes les pages admin) -->
     <aside class="barre-laterale">
         <div class="barre-laterale__en-tete">
-            <h1 class="barre-laterale__titre">Système de surveillance</h1>
-            <p class="barre-laterale__sous-titre">Enterprise Admin</p>
+            <h1 class="barre-laterale__titre">{{ translate('parametres.html','titre_app') }}</h1>
+            <p class="barre-laterale__sous-titre">{{ translate('parametres.html','sous_titre_app') }}</p>
         </div>
         <nav class="barre-laterale__navigation">
             <ul class="barre-laterale__liste">
                 <li>
                     <a class="lien-navigation" href="{{ url_for('login') }}">
                         <img class="lien-navigation__icone" src="{{ url_for('static', filename='icones images/home.png') }}">
-                        <span>Accueil</span>
+                        <span>{{ translate('layout.html','nav_accueil') }}</span>
                     </a>
                 </li>
                 <li>
                     <a class="lien-navigation" href="{{ url_for('realtime') }}">
                         <img class="lien-navigation__icone" src="{{ url_for('static', filename='icones images/videocam.png') }}">
-                        <span>Vue en temps réel</span>
+                        <span>{{ translate('layout.html','nav_realtime') }}</span>
                     </a>
                 </li>
                 <li>
                     <a class="lien-navigation" href="{{ url_for('unknowns') }}">
                         <img class="lien-navigation__icone" src="{{ url_for('static', filename='icones images/inconnu.png') }}">
-                        <span>Inconnus</span>
+                        <span>{{ translate('layout.html','nav_unknowns') }}</span>
                     </a>
                 </li>
                 <li>
                     <a class="lien-navigation" href="{{ url_for('personnes_connues') }}">
                         <img class="lien-navigation__icone" src="{{ url_for('static', filename='icones images/group.png') }}">
-                        <span>Personnes connues</span>
+                        <span>{{ translate('layout.html','nav_personnes_connues') }}</span>
                     </a>
                 </li>
                 <li>
                     <a class="lien-navigation" href="{{ url_for('detections') }}">
                         <img class="lien-navigation__icone" src="{{ url_for('static', filename='icones images/detection.png') }}">
-                        <span>Détections</span>
+                        <span>{{ translate('layout.html','nav_detections') }}</span>
                     </a>
                 </li>
                 <li>
                     <a class="lien-navigation" href="{{ url_for('dashboard') }}">
                         <img class="lien-navigation__icone" src="{{ url_for('static', filename='icones images/dashboard.png') }}">
-                        <span>Tableau de bord</span>
+                        <span>{{ translate('layout.html','nav_dashboard') }}</span>
                     </a>
                 </li>
                 <li>
                     <a class="lien-navigation" href="{{ url_for('statistics') }}">
                         <img class="lien-navigation__icone" src="{{ url_for('static', filename='icones images/bar_chart.png') }}">
-                        <span>Statistiques</span>
+                        <span>{{ translate('layout.html','nav_statistics') }}</span>
                     </a>
                 </li>
                 <li>
                     <a class="lien-navigation lien-navigation--actif" href="{{ url_for('parametres') }}">
                         <img class="lien-navigation__icone" src="{{ url_for('static', filename='icones images/settings.png') }}">
-                        <span>Paramètres</span>
+                        <span>{{ translate('layout.html','nav_parametres') }}</span>
                     </a>
                 </li>
             </ul>
         </nav>
+        <div class= "liens-langue">  
+         <a href="{{ url_for('choix_langue', lang='fr')}}" class="{% if session.get('lang', 'fr') == 'fr' %} lien-navigation--actif{% endif %}">FRANCAIS</a>
+         <a href="{{ url_for('choix_langue', lang='en')}}" class="{% if session.get('lang', 'fr') == 'en' %} lien-navigation--actif{% endif %}">ENGLISH</a>
+        </div>
         <div class="barre-laterale__profil">
             <div class="profil-utilisateur">
                 <div class="profil-utilisateur__avatar">A</div>
                 <div>
-                    <p class="profil-utilisateur__nom">Admin Profile</p>
-                    <p class="profil-utilisateur__email">admin@systemedesurveillance</p>
+                    <p class="profil-utilisateur__nom">{{ translate('parametres.html','profil_nom') }}</p>
+                    <p class="profil-utilisateur__email">{{ translate('parametres.html','profil_email') }}</p>
                 </div>
             </div>
         </div>
@@ -81,29 +84,29 @@
         <main class="contenu-tableau-de-bord">
             <div class="entete-contenu">
                 <div>
-                    <h2 class="entete-contenu__titre">Paramètres</h2>
+                    <h2 class="entete-contenu__titre">{{ translate('parametres.html','titre_entete') }}</h2>
                 </div>
             </div>
-
+ 
             <div class="grille-parametres">
-
+ 
                 <!-- Changer le mot de passe -->
                 <section class="carte-parametre">
-                    <h3 class="carte-parametre__titre">Changer le mot de passe</h3>
+                    <h3 class="carte-parametre__titre">{{ translate('parametres.html','carte_mot_de_passe') }}</h3>
                     <form action="{{ url_for('parametres_mot_de_passe') }}" method="post" class="formulaire-parametre">
                         <div class="field">
-                            <label for="ancien_mdp">Mot de passe actuel</label>
+                            <label for="ancien_mdp">{{ translate('parametres.html','label_ancien_mdp') }}</label>
                             <input type="password" id="ancien_mdp" name="ancien_mdp" required>
                         </div>
                         <div class="field">
-                            <label for="nouveau_mdp">Nouveau mot de passe</label>
+                            <label for="nouveau_mdp">{{ translate('parametres.html','label_nouveau_mdp') }}</label>
                             <input type="password" id="nouveau_mdp" name="nouveau_mdp" required minlength="8">
                         </div>
                         <div class="field">
-                            <label for="confirmation_mdp">Confirmer le nouveau mot de passe</label>
+                            <label for="confirmation_mdp">{{ translate('parametres.html','label_confirmation_mdp') }}</label>
                             <input type="password" id="confirmation_mdp" name="confirmation_mdp" required minlength="8">
                         </div>
-                        <button type="submit" class="btn-submit">Mettre à jour le mot de passe</button>
+                        <button type="submit" class="btn-submit">{{ translate('parametres.html','bouton_maj_mdp') }}</button>
                         {% if erreur_mdp %}
                         <p class="error-msg">{{ erreur_mdp }}</p>
                         {% endif %}
@@ -112,13 +115,12 @@
                         {% endif %}
                     </form>
                 </section>
-
+ 
                 <!-- Liste des caméras détectées automatiquement au démarrage -->
                 <section class="carte-parametre carte-parametre--pleine-largeur">
-                    <h3 class="carte-parametre__titre">Caméras détectées</h3>
+                    <h3 class="carte-parametre__titre">{{ translate('parametres.html','carte_cameras') }}</h3>
                     <p style="font-size: 12px; color: var(--on-surface-variant); margin-bottom: var(--stack-md);">
-                        Détectées automatiquement au démarrage du serveur — aucun ajout manuel nécessaire.
-                        Redémarre le serveur après avoir branché une nouvelle caméra pour qu'elle soit prise en compte.
+                        {{ translate('parametres.html','texte_cameras') }}
                     </p>
                     <div class="liste-cameras">
                         {% for nom_cam, source in cameras.items() %}
@@ -134,14 +136,15 @@
                             </form>
                         </div>
                         {% else %}
-                        <p style="color: var(--on-surface-variant); font-size: 13px;">Aucune caméra configurée.</p>
+                        <p style="color: var(--on-surface-variant); font-size: 13px;">{{ translate('parametres.html','vide_cameras') }}</p>
                         {% endfor %}
                     </div>
                 </section>
-
+ 
             </div>
         </main>
     </div>
 </div>
 </body>
 </html>
+ 

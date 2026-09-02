@@ -1,14 +1,14 @@
 {% extends 'layout.html' %}
 {% block page_id %}unknowns{% endblock %}
-{% block page_title %}Personnes inconnues{% endblock %}
-{% block entete_titre %}Personnes inconnues{% endblock %}
+{% block page_title %}{{ translate('unknowns.html','titre_page') }}{% endblock %}
+{% block entete_titre %}{{ translate('unknowns.html','entete_titre') }}{% endblock %}
 {% block content %}
 <div class="tableau-de-bord">
     <!-- En-tête de Page -->
     <div class="entete-page">
         <div>
             <div class="entete-page__rangee">
-                <h2 class="entete-page__titre">Gestion des Personnes Inconnues</h2>
+                <h2 class="entete-page__titre">{{ translate('unknowns.html','titre_gestion') }}</h2>
                 <details class="menu-export">
                     <summary class="bouton-export menu-export__bouton">Exporter le log</summary>
                     <div class="menu-export__options">
@@ -17,50 +17,50 @@
                     </div>
                 </details>
             </div>
-
+ 
             <div class="barre-filtres">
                 <form method="get" class="ligne-flex" style="flex-wrap: wrap; gap: 1rem; width: 100%; align-items: flex-end;">
                     <div class="filtre">
-                        <label class="filtre__label" for="filtre_periode">Période</label>
+                        <label class="filtre__label" for="filtre_periode">{{ translate('unknowns.html','label_periode') }}</label>
                         <select class="filtre__select" id="filtre_periode" name="periode">
-                            <option value="">Toute la période</option>
-                            <option value="hier" {% if filtres.periode == "hier" %}selected{% endif %}>Hier</option>
-                            <option value="3j" {% if filtres.periode == "3j" %}selected{% endif %}>3 derniers jours</option>
-                            <option value="7j" {% if filtres.periode == "7j" %}selected{% endif %}>7 derniers jours</option>
-                            <option value="10j" {% if filtres.periode == "10j" %}selected{% endif %}>10 derniers jours</option>
-                            <option value="1mois" {% if filtres.periode == "1mois" %}selected{% endif %}>1 mois</option>
-                            <option value="2mois" {% if filtres.periode == "2mois" %}selected{% endif %}>2 derniers mois</option>
+                            <option value="">{{ translate('unknowns.html','option_periode_toute') }}</option>
+                            <option value="hier" {% if filtres.periode == "hier" %}selected{% endif %}>{{ translate('unknowns.html','option_periode_hier') }}</option>
+                            <option value="3j" {% if filtres.periode == "3j" %}selected{% endif %}>{{ translate('unknowns.html','option_periode_3j') }}</option>
+                            <option value="7j" {% if filtres.periode == "7j" %}selected{% endif %}>{{ translate('unknowns.html','option_periode_7j') }}</option>
+                            <option value="10j" {% if filtres.periode == "10j" %}selected{% endif %}>{{ translate('unknowns.html','option_periode_10j') }}</option>
+                            <option value="1mois" {% if filtres.periode == "1mois" %}selected{% endif %}>{{ translate('unknowns.html','option_periode_1mois') }}</option>
+                            <option value="2mois" {% if filtres.periode == "2mois" %}selected{% endif %}>{{ translate('unknowns.html','option_periode_2mois') }}</option>
                         </select>
                     </div>
-
+ 
                     <div class="filtre" style="flex: 1; min-width: 220px;">
-                        <label class="filtre__label" for="filtre_recherche">Recherche (caméra ou date AAAA-MM-JJ)</label>
+                        <label class="filtre__label" for="filtre_recherche">{{ translate('unknowns.html','label_recherche') }}</label>
                         <input class="filtre__select" type="text" id="filtre_recherche" name="recherche"
-                               value="{{ filtres.recherche }}" placeholder="Ex : CAM-01 ou 2026-08-15" style="width: 100%;">
+                               value="{{ filtres.recherche }}" placeholder="{{ translate('unknowns.html','placeholder_recherche') }}" style="width: 100%;">
                     </div>
-
+ 
                     <div class="filtre">
-                        <button type="submit" class="bouton-export">Filtrer</button>
+                        <button type="submit" class="bouton-export">{{ translate('unknowns.html','bouton_filtrer') }}</button>
                     </div>
                     {% if filtres.periode or filtres.recherche %}
                     <div class="filtre">
-                        <a class="bouton-filtre" href="{{ url_for('unknowns') }}">Réinitialiser</a>
+                        <a class="bouton-filtre" href="{{ url_for('unknowns') }}">{{ translate('unknowns.html','lien_reinitialiser') }}</a>
                     </div>
                     {% endif %}
                 </form>
             </div>
-
+ 
             <!-- Tableau des Personnes Inconnues -->
             <div class="tableau-detections">
                 <table class="table-detections">
                     <thead>
                         <tr>
-                            <th>Dernières détections</th>
-                            <th>Date</th>
-                            <th>Heures de passage</th>
-                            <th>Camera ID</th>
-                            <th class="th--droite">Niveau de confiance</th>
-                            <th class="th--droite">Action</th>
+                            <th>{{ translate('unknowns.html','th_dernieres_detections') }}</th>
+                            <th>{{ translate('unknowns.html','th_date') }}</th>
+                            <th>{{ translate('unknowns.html','th_heures_passage') }}</th>
+                            <th>{{ translate('unknowns.html','th_camera_id') }}</th>
+                            <th class="th--droite">{{ translate('unknowns.html','th_confiance') }}</th>
+                            <th class="th--droite">{{ translate('unknowns.html','th_action') }}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -94,12 +94,12 @@
                                 <span class="table-detections__confiance">{{ (inconnu.score * 100) | round(2) }}%</span>
                             </td>
                             <td class="td--droite">
-                                <a class="bouton-identifier" href="#modale-{{ inconnu.id }}">Identifier</a>
+                                <a class="bouton-identifier" href="#modale-{{ inconnu.id }}">{{ translate('unknowns.html','lien_identifier') }}</a>
                             </td>
                         </tr>
                         {% else %}
                         <tr>
-                            <td colspan="6" style="text-align:center;color:var(--on-surface-variant);">Aucune personne inconnue en attente d'identification.</td>
+                            <td colspan="6" style="text-align:center;color:var(--on-surface-variant);">{{ translate('unknowns.html','vide_inconnus') }}</td>
                         </tr>
                         {% endfor %}
                     </tbody>
@@ -111,13 +111,13 @@
         </div>
     </div>
 </div>
-
+ 
 <!-- Une modale par inconnu (ciblée via #modale-<id>, ouverte/fermée en CSS pur avec :target) -->
 {% for inconnu in inconnus %}
 <div class="modale-identification" id="modale-{{ inconnu.id }}">
     <div class="modale-identification__panneau">
         <div class="modale-identification__entete">
-            <h3 class="modale-identification__titre">Identifier l'inconnu</h3>
+            <h3 class="modale-identification__titre">{{ translate('unknowns.html','modale_titre') }}</h3>
             <a class="modale-identification__fermer" href="#" aria-label="Fermer"></a>
         </div>
         <form class="modale-identification__formulaire" action="{{ url_for('identifier') }}" method="post">
@@ -127,37 +127,38 @@
                     <img class="image-couverture" src="{{ url_for('static', filename='inconnus/' + inconnu.image) }}">
                 </div>
                 <div>
-                    <p class="libelle-champ">Référence de détection</p>
+                    <p class="libelle-champ">{{ translate('unknowns.html','modale_reference') }}</p>
                     <p class="apercu-sujet__reference">{{ inconnu.id }}</p>
-                    <p class="apercu-sujet__confiance">Niveau de confiance: {{ (inconnu.score * 100) | round(2) }}%</p>
+                    <p class="apercu-sujet__confiance">{{ translate('unknowns.html','modale_confiance', n=(inconnu.score * 100) | round(2)) }}</p>
                 </div>
             </div>
             <div class="colonne-flex-sm">
-                <label class="champ-formulaire__label">Nom complet</label>
-                <input class="champ-formulaire__input" name="nom" placeholder="Entrer le nom complet" required type="text">
+                <label class="champ-formulaire__label">{{ translate('unknowns.html','label_nom_complet') }}</label>
+                <input class="champ-formulaire__input" name="nom" placeholder="{{ translate('unknowns.html','placeholder_nom_complet') }}" required type="text">
             </div>
             <div class="colonne-flex-sm">
-                <label class="champ-formulaire__label">Poste / ID </label>
-                <input class="champ-formulaire__input" name="poste" placeholder="Entrer le poste ou l'identifiant de l'employé" type="text">
+                <label class="champ-formulaire__label">{{ translate('unknowns.html','label_poste') }}</label>
+                <input class="champ-formulaire__input" name="poste" placeholder="{{ translate('unknowns.html','placeholder_poste') }}" type="text">
             </div>
             <div class="colonne-flex-sm">
-                <label class="champ-formulaire__label">Departement</label>
-                <input class="champ-formulaire__input" name="departement" placeholder="Entrer le departement de l'employé" type="text">
+                <label class="champ-formulaire__label">{{ translate('unknowns.html','label_departement') }}</label>
+                <input class="champ-formulaire__input" name="departement" placeholder="{{ translate('unknowns.html','placeholder_departement') }}" type="text">
             </div>
             <div class="modale-identification__actions">
-                <a class="bouton-secondaire" href="#">Annuler</a>
-                <button class="bouton-principal" type="submit">Confirmer l'identité</button>
+                <a class="bouton-secondaire" href="#">{{ translate('unknowns.html','bouton_annuler') }}</a>
+                <button class="bouton-principal" type="submit">{{ translate('unknowns.html','bouton_confirmer') }}</button>
             </div>
         </form>
     </div>
 </div>
 {% endfor %}
-
+ 
 <!-- Une image en entier par inconnu, ouverte/fermée en CSS pur avec :target -->
 {% for inconnu in inconnus %}
 <div class="plein-ecran" id="img-{{ inconnu.id }}">
     <img class="plein-ecran__image" src="{{ url_for('static', filename='inconnus/' + inconnu.image) }}">
-    <a class="plein-ecran__fermer" href="#" aria-label="Fermer">✕</a>
+    <a class="plein-ecran__fermer" href="#" aria-label="Fermer">{{ translate('unknowns.html','fermer') }}</a>
 </div>
 {% endfor %}
 {% endblock %}
+ 

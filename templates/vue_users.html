@@ -1,21 +1,24 @@
 {% extends 'base.html' %}
-{% block title %}Vue Utilisateur - Flux en Temps Réel | Système de surveillance{% endblock %}
+{% block title %}{{ translate('vue_users.html','titre_page') }} | {{ translate('vue_users.html','titre_app') }}{% endblock %}
 {% block body_attrs %} class="application"{% endblock %}
 {% block body -%}
-
+ 
     <aside class="barre-laterale">
         <div class="barre-laterale__en-tete">
-            <h1 class="barre-laterale__titre">Système de surveillance</h1>
-            <p class="barre-laterale__sous-titre">Vue Utilisateur</p>
+            <h1 class="barre-laterale__titre">{{ translate('vue_users.html','titre_app') }}</h1>
+            <p class="barre-laterale__sous-titre">{{ translate('vue_users.html','sous_titre_app') }}</p>
         </div>
-
+ 
         <nav class="barre-laterale__navigation">
             <a class="lien-navigation lien-navigation--actif" href="{{ url_for('vue_users') }}">
                 <img class="lien-navigation__icone" src="{{ url_for('static', filename='icones/videocam.png') }}">
-                <span>Vue en temps réel</span>
+                <span>{{ translate('vue_users.html','nav_realtime') }}</span>
             </a>
         </nav>
-
+        <div class= "liens-langue">  
+         <a href="{{ url_for('choix_langue', lang='fr')}}" class="{% if session.get('lang', 'fr') == 'fr' %} lien-navigation--actif{% endif %}">FRANCAIS</a>
+         <a href="{{ url_for('choix_langue', lang='en')}}" class="{% if session.get('lang', 'fr') == 'en' %} lien-navigation--actif{% endif %}">ENGLISH</a>
+        </div>
         <div class="barre-laterale__profil">
             <div class="profil-utilisateur">
                 <div class="profil-utilisateur__avatar">
@@ -24,23 +27,23 @@
                          src="https://lh3.googleusercontent.com/aida-public/AB6AXuDuGR_loMFtNgyQCAYzogseSI6thvaAqrbJX5oshsTte_pT5E6iDi9VZC-FuGdZv3i63P8LjPhlkDuSAC2lCyaeTm2Tgfm0GpbDiLmTIYjp1jhfL-QRjl8zYu-KHE_SzFzd6bmhK93mFZ8XX5vrGwOOypTlinpA0FJnFDtx3CnVWdia_SFoDLKI_JTf0dnC0n7zX0JT_ssOTM9MPLb-Aqu5HGlu4XBK-DEfb-XFPr-Xt9-UArSwAbI">
                 </div>
                 <div>
-                    <p class="profil-utilisateur__nom">AKABA</p>
-                    <p class="profil-utilisateur__statut">En Ligne</p>
+                    <p class="profil-utilisateur__nom">{{ translate('vue_users.html','profil_nom') }}</p>
+                    <p class="profil-utilisateur__statut">{{ translate('vue_users.html','profil_statut') }}</p>
                 </div>
             </div>
         </div>
     </aside>
-
+ 
     <main class="contenu-principal">
-
+ 
         <header class="en-tete-principal">
             <div class="en-tete-principal__groupe">
-                <h2 class="en-tete-principal__titre">Vue Utilisateur - Flux en Temps Réel</h2>
+                <h2 class="en-tete-principal__titre">{{ translate('vue_users.html','entete_titre') }}</h2>
             </div>
         </header>
-
+ 
         <div class="zone-contenu">
-
+ 
             <div class="panneau-flux">
                 <div class="grille-cameras">
                     {% for nom_cam, source in cameras.items() %}
@@ -51,25 +54,25 @@
                                 <span class="indicateur-direct"></span>
                                 <span class="indicateur-direct__texte">{{ nom_cam }}</span>
                             </div>
-                            <a class="bouton-plein-ecran" href="#plein-ecran-{{ nom_cam }}" aria-label="Plein écran">⛶</a>
+                            <a class="bouton-plein-ecran" href="#plein-ecran-{{ nom_cam }}" aria-label="Plein écran">{{ translate('vue_users.html','plein_ecran') }}</a>
                         </div>
                     </div>
                     {% else %}
-                    <p style="color: var(--on-surface-variant);">Aucune caméra disponible pour le moment.</p>
+                    <p style="color: var(--on-surface-variant);">{{ translate('vue_users.html','vide_cameras') }}</p>
                     {% endfor %}
                 </div>
-
+ 
                 <!-- Overlays plein écran (un par caméra), ouverts/fermés en CSS pur avec :target -->
                 {% for nom_cam, source in cameras.items() %}
                 <div class="plein-ecran" id="plein-ecran-{{ nom_cam }}">
                     <img class="plein-ecran__image" src="{{ url_for('video_feed', nom_camera=nom_cam) }}">
-                    <a class="plein-ecran__fermer" href="#" aria-label="Quitter le plein écran">✕</a>
+                    <a class="plein-ecran__fermer" href="#" aria-label="Quitter le plein écran">{{ translate('vue_users.html','fermer') }}</a>
                 </div>
                 {% endfor %}
-
+ 
                 <div class="cartes-stats">
                     <div class="carte-stat">
-                        <p class="carte-stat__label">ETAT DU SYSTÈME</p>
+                        <p class="carte-stat__label">{{ translate('vue_users.html','stat_etat_systeme') }}</p>
                         <div class="carte-stat__valeur-wrapper">
                             <img class="carte-stat__icone" src="{{ url_for('static', filename='icones images/checkcircle.png') }}">
                             <span class="carte-stat__valeur">{{ stats_systeme.etat }}</span>
@@ -77,24 +80,24 @@
                         <p class="carte-stat__pied">Dernière vérification : à l'instant</p>
                     </div>
                     <div class="carte-stat">
-                        <p class="carte-stat__label">DÉTECTIONS/MIN</p>
+                        <p class="carte-stat__label">{{ translate('vue_users.html','stat_detections_min') }}</p>
                         <div class="carte-stat__valeur-wrapper">
                             <img class="carte-stat__icone" src="{{ url_for('static', filename='icones images/analytics.png') }}">
                             <span class="carte-stat__valeur">{{ stats_systeme.detections_par_min }}</span>
                         </div>
-                        <p class="carte-stat__pied">Sur les 60 dernières secondes</p>
+                        <p class="carte-stat__pied">{{ translate('vue_users.html','pied_detections_min') }}</p>
                     </div>
                 </div>
             </div>
-
+ 
             <aside class="barre-detections">
                 <div class="barre-detections__en-tete">
-                    <h3 class="barre-detections__titre">DERNIÈRES DÉTECTIONS</h3>
+                    <h3 class="barre-detections__titre">{{ translate('vue_users.html','titre_dernieres_detections') }}</h3>
                     <img class="barre-detections__icone-filtre" src="{{ url_for('static', filename='icones images/filter_list.png') }}">
                 </div>
-
+ 
                 <div class="barre-detections__liste">
-
+ 
                 {% for l in dernieres %}
                 <div class="carte-detection{% if l.statut == 'REFUSE' %} carte-detection--inconnu{% endif %}">
                     <div class="carte-detection__contenu">
@@ -107,22 +110,22 @@
                         </div>
                         <div class="carte-detection__details">
                             {% if l.statut == 'SUCCES' %}
-                            <span class="badge-statut badge-statut--reconnu">Reconnu</span>
+                            <span class="badge-statut badge-statut--reconnu">{{ translate('vue_users.html','badge_reconnu') }}</span>
                             {% else %}
-                            <span class="badge-statut badge-statut--inconnu">Inconnu</span>
+                            <span class="badge-statut badge-statut--inconnu">{{ translate('vue_users.html','badge_inconnu') }}</span>
                             {% endif %}
                             <p class="carte-detection__nom">{{ l.nom }}</p>
                             <p class="carte-detection__horodatage">{{ l.heure }} • {{ l.camera }}</p>
-                            <p class="carte-detection__confiance">Confiance: {{ (l.score_detection * 100) | round(2) }}%</p>
+                            <p class="carte-detection__confiance">{{ translate('vue_users.html','confiance', n=(l.score_detection * 100) | round(2)) }}</p>
                         </div>
                     </div>
                 </div>
                 {% else %}
-                <p style="padding:1rem;color:var(--on-surface-variant);font-size:13px;">Aucune détection pour le moment.</p>
+                <p style="padding:1rem;color:var(--on-surface-variant);font-size:13px;">{{ translate('vue_users.html','vide_detections') }}</p>
                 {% endfor %}
-
+ 
                 </div>
-
+ 
                 <!-- Overlays plein écran pour voir chaque vignette en entier -->
                 {% for l in dernieres %}
                 {% if l.image %}
@@ -132,13 +135,14 @@
                 </div>
                 {% endif %}
                 {% endfor %}
-
+ 
                 <div class="barre-detections__pied">
-                    <a class="bouton-voir-log" href="{{ url_for('login') }}">VOIR TOUT LE LOG</a>
+                    <a class="bouton-voir-log" href="{{ url_for('login') }}">{{ translate('vue_users.html','lien_voir_log') }}</a>
                 </div>
             </aside>
-
+ 
         </div>
     </main>
-
+ 
 {%- endblock %}
+ 

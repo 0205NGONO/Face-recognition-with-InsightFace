@@ -1,10 +1,10 @@
 {% extends 'layout.html' %}
 {% block page_id %}statistics{% endblock %}
-{% block page_title %}Statistiques{% endblock %}
-{% block entete_titre %}Statistiques{% endblock %}
+{% block page_title %}{{ translate('statistics.html','titre_page') }}{% endblock %}
+{% block entete_titre %}{{ translate('statistics.html','entete_titre') }}{% endblock %}
 {% block entete_actions -%}
 <div class="ligne-flex">
-    <span class="badge-en-direct"><span class="indicateur-direct" style="background-color:var(--primary);"></span>EN DIRECT</span>
+    <span class="badge-en-direct"><span class="indicateur-direct" style="background-color:var(--primary);"></span>{{ translate('statistics.html','badge_en_direct') }}</span>
 </div>
 {%- endblock %}
 {% block content %}
@@ -12,17 +12,17 @@
     <div class="entete-page">
         <div class="entete-page__rangee">
             <div>
-                <h2 class="entete-page__titre" style="margin-bottom:0.25rem;">Intelligence Opérationnelle</h2>
-                <p class="entete-page__sous-titre">Débit biométrique et données de présence pour le {{ stats.date }}</p>
+                <h2 class="entete-page__titre" style="margin-bottom:0.25rem;">{{ translate('statistics.html','titre_principal') }}</h2>
+                <p class="entete-page__sous-titre">{{ translate('statistics.html','sous_titre', date=stats.date) }}</p>
             </div>
         </div>
     </div>
-
+ 
     <div class="tableau-de-bord__grille">
         <div class="carte">
             <div class="carte__entete">
-                <span class="carte__titre">PRÉSENCE PAR HEURE</span>
-                <span class="legende-graphique"><span class="legende-puce"></span>Pic de trafic</span>
+                <span class="carte__titre">{{ translate('statistics.html','carte_presence_heure') }}</span>
+                <span class="legende-graphique"><span class="legende-puce"></span>{{ translate('statistics.html','legende_pic') }}</span>
             </div>
             <div class="graphique-barres">
                 {% set max_heure = stats.presence_par_heure|max %}
@@ -36,39 +36,39 @@
                 {% endfor %}
             </div>
         </div>
-
+ 
         <div class="carte">
             <div class="carte__entete">
-                <span class="carte__titre">PRÉSENCE QUOTIDIENNE</span>
+                <span class="carte__titre">{{ translate('statistics.html','carte_presence_quotidienne') }}</span>
             </div>
             <div class="stat-geante">
                 <span class="stat-geante__valeur">{{ stats.taux_reconnaissance }} %</span>
-                <span class="stat-geante__label">de taux de reconnaissance</span>
+                <span class="stat-geante__label">{{ translate('statistics.html','label_taux_reconnaissance') }}</span>
             </div>
             <div class="barre-progression">
-                <div class="barre-progression__entete"><span>Reconnus</span><strong>{{ stats.connus }}</strong></div>
+                <div class="barre-progression__entete"><span>{{ translate('statistics.html','label_reconnus') }}</span><strong>{{ stats.connus }}</strong></div>
                 <div class="barre-progression__piste"><div class="barre-progression__remplissage fond-primaire" style="width:{{ (stats.connus / stats.total * 100) if stats.total else 0 }}%;"></div></div>
             </div>
             <div class="barre-progression">
-                <div class="barre-progression__entete"><span>Inconnus</span><strong>{{ stats.inconnus }}</strong></div>
+                <div class="barre-progression__entete"><span>{{ translate('statistics.html','label_inconnus') }}</span><strong>{{ stats.inconnus }}</strong></div>
                 <div class="barre-progression__piste"><div class="barre-progression__remplissage barre-progression__remplissage--erreur" style="width:{{ (stats.inconnus / stats.total * 100) if stats.total else 0 }}%;"></div></div>
             </div>
         </div>
     </div>
-
+ 
     <div class="tableau-detections" style="margin-top:0;">
         <div class="carte__entete" style="padding:1rem 1.5rem;margin-bottom:0;border-bottom:1px solid var(--outline-variant);">
-            <span class="carte__titre">STATISTIQUES INDIVIDUELLES</span>
-            <span style="font-size:12px;color:var(--on-surface-variant);">Total : {{ stats.total }} entrées</span>
+            <span class="carte__titre">{{ translate('statistics.html','carte_stats_individuelles') }}</span>
+            <span style="font-size:12px;color:var(--on-surface-variant);">{{ translate('statistics.html','total_entrees', n=stats.total) }}</span>
         </div>
         <table class="table-detections">
             <thead>
                 <tr>
-                    <th>Nom de la personne</th>
-                    <th>Poste</th>
-                    <th>Département</th>
-                    <th>Heures de passage</th>
-                    <th class="th--droite">Détections</th>
+                    <th>{{ translate('statistics.html','th_nom_personne') }}</th>
+                    <th>{{ translate('statistics.html','th_poste') }}</th>
+                    <th>{{ translate('statistics.html','th_departement') }}</th>
+                    <th>{{ translate('statistics.html','th_heures_passage') }}</th>
+                    <th class="th--droite">{{ translate('statistics.html','th_detections') }}</th>
                 </tr>
             </thead>
             <tbody>
@@ -101,14 +101,14 @@
                 </tr>
                 {% else %}
                 <tr>
-                    <td colspan="5" style="text-align:center;color:var(--on-surface-variant);">Aucune détection connue aujourd'hui.</td>
+                    <td colspan="5" style="text-align:center;color:var(--on-surface-variant);">{{ translate('statistics.html','vide_detections_connues') }}</td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
     </div>
 </div>
-
+ 
 <!-- Une image en entier par personne (agrandissement au clic), ouverte/fermée en CSS pur avec :target -->
 {% for p in stats.personnes %}
 {% if p.photo %}
@@ -118,13 +118,14 @@
 </div>
 {% endif %}
 {% endfor %}
-
+ 
 <footer class="pied-systeme">
     <div class="pied-systeme__gauche">
-        <span><span class="indicateur-etat-point"></span>ÉTAT DU MOTEUR : OPTIMAL</span>
-        <span>LATENCE BDD : 14 MS</span>
-        <span>CHARGE CPU : 22 %</span>
+        <span><span class="indicateur-etat-point"></span>{{ translate('statistics.html','pied_moteur') }}</span>
+        <span>{{ translate('statistics.html','pied_latence_bdd') }}</span>
+        <span>{{ translate('statistics.html','pied_charge_cpu') }}</span>
     </div>
-    <div>Système de surveillance</div>
+    <div>{{ translate('statistics.html','pied_systeme') }}</div>
 </footer>
 {% endblock %}
+ 

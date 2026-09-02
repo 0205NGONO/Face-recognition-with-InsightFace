@@ -1,12 +1,12 @@
 {% extends 'layout.html' %}
 {% block page_id %}dashboard{% endblock %}
-{% block page_title %}Tableau de bord{% endblock %}
-{% block entete_titre %}Tableau de bord{% endblock %}
+{% block page_title %}{{ translate("dashboard.html", "titre_page") }}{% endblock %}
+{% block entete_titre %}{{ translate("dashboard.html", "entete_titre") }}{% endblock %}
 {% block content %}
 <div class="tableau-de-bord">
     <div class="entete-page">
         <div>
-            <h2 class="entete-page__titre">Aperçu du système de reconnaissance faciale</h2>
+            <h2 class="entete-page__titre" >{{ translate("dashboard.html", "sous_titre") }}</h2>
         </div>
     </div>
 
@@ -18,28 +18,28 @@
                 <div class="lecteur-video__superposition" style="opacity:1;">
                     <div class="ligne-flex-sm">
                         <span class="indicateur-direct"></span>
-                        <span class="indicateur-direct__texte">Flux vidéo en direct</span>
+                        <span class="indicateur-direct__texte">{{ translate("dashboard.html", "flux_direct") }}</span>
                     </div>
                 </div>
             </div>
 
             <div class="grille-stats-principales" style="margin-top:0.75rem;">
                 <div class="carte-stat">
-                    <p class="carte-stat__label">DÉTECTIONS AUJOURD'HUI</p>
+                    <p class="carte-stat__label">{{ translate("dashboard.html", "stat_detections_aujourdhui") }}</p>
                     <div class="ligne-flex-sm">
                         <img class="icone-24" src="{{ url_for('static', filename='icones images/analytics.png') }}">
                         <span class="carte-stat__valeur">{{ stats.total }}</span>
                     </div>
                 </div>
                 <div class="carte-stat">
-                    <p class="carte-stat__label">PERSONNES CONNUES</p>
+                    <p class="carte-stat__label">{{ translate("dashboard.html", "stat_personnes_connues") }}</p>
                     <div class="ligne-flex-sm">
                         <img class="icone-24" src="{{ url_for('static', filename='icones images/group.png') }}">
                         <span class="carte-stat__valeur">{{ stats.connus }}</span>
                     </div>
                 </div>
                 <div class="carte-stat">
-                    <p class="carte-stat__label">PERSONNES INCONNUES</p>
+                    <p class="carte-stat__label">{{ translate("dashboard.html", "stat_personnes_inconnues") }}</p>
                     <div class="ligne-flex-sm">
                         <img class="icone-24" src="{{ url_for('static', filename='icones images/inconnu.png') }}">
                         <span class="carte-stat__valeur">{{ stats.inconnus }}</span>
@@ -49,14 +49,14 @@
 
             <div class="grille-stats-secondaires">
                 <div class="carte-stat">
-                    <p class="carte-stat__label">PREMIÈRE DÉTECTION AUJOURD'HUI</p>
+                    <p class="carte-stat__label">{{ translate("dashboard.html", "stat_premiere_detection") }}</p>
                     <div class="ligne-flex-sm">
                         <img class="icone-24" src="{{ url_for('static', filename='icones images/detection.png') }}">
                         <span class="carte-stat__valeur">{{ stats.premiere_detection or '—' }}</span>
                     </div>
                 </div>
                 <div class="carte-stat">
-                    <p class="carte-stat__label">DERNIÈRE DÉTECTION AUJOURD'HUI</p>
+                    <p class="carte-stat__label">{{ translate("dashboard.html", "stat_derniere_detection") }}</p>
                     <div class="ligne-flex-sm">
                         <img class="icone-24" src="{{ url_for('static', filename='icones images/detection.png') }}">
                         <span class="carte-stat__valeur">{{ stats.derniere_detection or '—' }}</span>
@@ -68,8 +68,8 @@
         <!-- Colonne droite : dernières détections -->
         <div class="carte">
             <div class="carte__entete">
-                <span class="carte__titre">DERNIÈRES DÉTECTIONS</span>
-                <a class="carte__lien" href="{{ url_for('unknowns') }}">Tout voir</a>
+                <span class="carte__titre">{{ translate("dashboard.html", "carte_dernieres_detections") }}</span>
+                <a class="carte__lien" href="{{ url_for('unknowns') }}">{{ translate("dashboard.html", "lien_tout_voir") }}</a>
             </div>
             <div class="liste-detections-compacte">
                 {% for l in stats.dernieres %}
@@ -84,9 +84,9 @@
                         </div>
                         <div class="carte-detection__details">
                             {% if l.statut == 'SUCCES' %}
-                            <span class="badge-statut badge-vert">Reconnu</span>
+                            <span class="badge-statut badge-vert">{{ translate("dashboard.html", "badge_reconnu") }}</span>
                             {% else %}
-                            <span class="badge-statut badge-statut--inconnu">Inconnu</span>
+                            <span class="badge-statut badge-statut--inconnu">{{ translate("dashboard.html", "badge_inconnu") }}</span>
                             {% endif %}
                             <p class="carte-detection__nom">{{ l.nom }}</p>
                             <p class="carte-detection__horodatage">{{ l.heure }}</p>
@@ -94,7 +94,7 @@
                     </div>
                 </div>
                 {% else %}
-                <p style="padding:1rem;color:var(--on-surface-variant);font-size:13px;">Aucune détection aujourd'hui.</p>
+                <p style="padding:1rem;color:var(--on-surface-variant);font-size:13px;">{{ translate("dashboard.html", "vide_detections_jour") }}</p>
                 {% endfor %}
             </div>
         </div>
@@ -105,7 +105,7 @@
     {% if l.image %}
     <div class="plein-ecran" id="img-{{ l.id }}">
         <img class="plein-ecran__image" src="{{ url_for('static', filename=('inconnus/' if l.statut == 'REFUSE' else 'succes/') + l.image) }}">
-        <a class="plein-ecran__fermer" href="#" aria-label="Fermer">✕</a>
+        <a class="plein-ecran__fermer" href="#" aria-label="{{ translate('dashboard.html', 'fermer') }}">✕</a>
     </div>
     {% endif %}
     {% endfor %}
@@ -115,7 +115,7 @@
     <div class="rangee-cartes">
         <div class="carte">
             <div class="carte__entete">
-                <span class="carte__titre">DÉTECTIONS PAR JOUR (7 DERNIERS JOURS)</span>
+                <span class="carte__titre">{{ translate("dashboard.html", "graphique_par_jour") }}</span>
             </div>
             <div class="graphique-barres">
                 {% set max_jour = (detections_semaine|map(attribute='total')|list)|max %}
@@ -131,7 +131,7 @@
 
         <div class="carte">
             <div class="carte__entete">
-                <span class="carte__titre">DÉTECTIONS PAR HEURE (AUJOURD'HUI)</span>
+                <span class="carte__titre">{{ translate("dashboard.html", "graphique_par_heure") }}</span>
             </div>
             <div class="graphique-barres">
                 {% set max_heure = presence_par_heure|max %}
@@ -149,7 +149,7 @@
 
         <div class="carte">
             <div class="carte__entete">
-                <span class="carte__titre">DÉTECTIONS PAR PERSONNE (AUJOURD'HUI)</span>
+                <span class="carte__titre">{{ translate("dashboard.html", "graphique_par_personne") }}</span>
             </div>
             <div class="liste-barres-horizontales">
                 {% set max_personne = (personnes[:5]|map(attribute='detections')|list)|max if personnes else 0 %}
@@ -158,10 +158,10 @@
                 {% endfor %}
                 {% if personnes|length > 5 %}
                 {% set total_autres = personnes[5:]|sum(attribute='detections') %}
-                <div class="barre-horizontale"><span class="barre-horizontale__nom">Autres</span><div class="barre-horizontale__piste"><div class="barre-horizontale__remplissage" style="width:{{ (total_autres / max_personne * 100) if max_personne else 0 }}%;"></div></div><span class="barre-horizontale__valeur">{{ total_autres }}</span></div>
+                <div class="barre-horizontale"><span class="barre-horizontale__nom">{{ translate("dashboard.html", "label_autres") }}</span><div class="barre-horizontale__piste"><div class="barre-horizontale__remplissage" style="width:{{ (total_autres / max_personne * 100) if max_personne else 0 }}%;"></div></div><span class="barre-horizontale__valeur">{{ total_autres }}</span></div>
                 {% endif %}
                 {% if not personnes %}
-                <p style="padding:1rem;color:var(--on-surface-variant);font-size:13px;">Aucune détection connue aujourd'hui.</p>
+                <p style="padding:1rem;color:var(--on-surface-variant);font-size:13px;">{{ translate("dashboard.html", "vide_detections_connues") }}</p>
                 {% endif %}
             </div>
         </div>
@@ -170,46 +170,46 @@
     <!-- Résumé + état du système -->
     <div class="rangee-cartes">
         <div class="carte">
-            <div class="carte__entete"><span class="carte__titre">RÉSUMÉ</span></div>
+            <div class="carte__entete"><span class="carte__titre">{{ translate("dashboard.html", "carte_resume") }}</span></div>
             <div class="liste-resume">
                 <div class="item-resume">
                     <div class="item-resume__icone"><img class="icone-24" src="{{ url_for('static', filename='icones images/group.png') }}"></div>
-                    <div><p class="item-resume__valeur">{{ stats.connus }}</p><p class="item-resume__label">Connus aujourd'hui</p></div>
+                    <div><p class="item-resume__valeur">{{ stats.connus }}</p><p class="item-resume__label">{{ translate("dashboard.html", "resume_connus") }}</p></div>
                 </div>
                 <div class="item-resume">
                     <div class="item-resume__icone"><img class="icone-24" src="{{ url_for('static', filename='icones images/inconnu.png') }}"></div>
-                    <div><p class="item-resume__valeur">{{ stats.inconnus }}</p><p class="item-resume__label">Inconnus aujourd'hui</p></div>
+                    <div><p class="item-resume__valeur">{{ stats.inconnus }}</p><p class="item-resume__label">{{ translate("dashboard.html", "resume_inconnus") }}</p></div>
                 </div>
                 <div class="item-resume">
                     <div class="item-resume__icone"><img class="icone-24" src="{{ url_for('static', filename='icones images/checkcircle.png') }}"></div>
-                    <div><p class="item-resume__valeur">{{ stats.total }}</p><p class="item-resume__label">Total détections</p></div>
+                    <div><p class="item-resume__valeur">{{ stats.total }}</p><p class="item-resume__label">{{ translate("dashboard.html", "resume_total") }}</p></div>
                 </div>
                 <div class="item-resume">
                     <div class="item-resume__icone"><img class="icone-24" src="{{ url_for('static', filename='icones images/analytics.png') }}"></div>
-                    <div><p class="item-resume__valeur">{{ ((stats.connus / stats.total * 100) | round(1)) if stats.total else 0 }} %</p><p class="item-resume__label">Taux de reconnaissance</p></div>
+                    <div><p class="item-resume__valeur">{{ ((stats.connus / stats.total * 100) | round(1)) if stats.total else 0 }} %</p><p class="item-resume__label">{{ translate("dashboard.html", "resume_taux") }}</p></div>
                 </div>
             </div>
         </div>
 
         <!-- État du système : pas encore remonté depuis le backend, valeurs d'exemple -->
         <div class="carte">
-            <div class="carte__entete"><span class="carte__titre">ÉTAT DU SYSTÈME</span></div>
+            <div class="carte__entete"><span class="carte__titre">{{ translate("dashboard.html", "carte_etat_systeme") }}</span></div>
             <div class="liste-resume">
                 <div class="item-resume">
                     <div class="item-resume__icone"><img class="icone-24" src="{{ url_for('static', filename='icones images/videocam.png') }}"></div>
-                    <div><p class="item-resume__valeur">{{ etat_systeme.cameras_en_ligne }} / {{ etat_systeme.cameras_total }}</p><p class="item-resume__label">Caméras en ligne</p></div>
+                    <div><p class="item-resume__valeur">{{ etat_systeme.cameras_en_ligne }} / {{ etat_systeme.cameras_total }}</p><p class="item-resume__label">{{ translate("dashboard.html", "etat_cameras_en_ligne") }}</p></div>
                 </div>
                 <div class="item-resume">
                     <div class="item-resume__icone"><img class="icone-24" src="{{ url_for('static', filename='icones images/checkcircle.png') }}"></div>
-                    <div><p class="item-resume__valeur">{{ etat_systeme.stockage_go_utilise }} Go / {{ etat_systeme.stockage_go_total }} Go</p><p class="item-resume__label">Stockage</p></div>
+                    <div><p class="item-resume__valeur">{{ etat_systeme.stockage_go_utilise }} Go / {{ etat_systeme.stockage_go_total }} Go</p><p class="item-resume__label">{{ translate("dashboard.html", "etat_stockage") }}</p></div>
                 </div>
                 <div class="item-resume">
                     <div class="item-resume__icone"><img class="icone-24" src="{{ url_for('static', filename='icones images/analytics.png') }}"></div>
-                    <div><p class="item-resume__valeur">{{ etat_systeme.cpu_pourcent }} %</p><p class="item-resume__label">Utilisation CPU</p></div>
+                    <div><p class="item-resume__valeur">{{ etat_systeme.cpu_pourcent }} %</p><p class="item-resume__label">{{ translate("dashboard.html", "etat_cpu") }}</p></div>
                 </div>
                 <div class="item-resume">
                     <div class="item-resume__icone"><img class="icone-24" src="{{ url_for('static', filename='icones images/analytics.png') }}"></div>
-                    <div><p class="item-resume__valeur">{{ etat_systeme.memoire_pourcent }} %</p><p class="item-resume__label">Utilisation mémoire</p></div>
+                    <div><p class="item-resume__valeur">{{ etat_systeme.memoire_pourcent }} %</p><p class="item-resume__label">{{ translate("dashboard.html", "etat_memoire") }}</p></div>
                 </div>
             </div>
         </div>

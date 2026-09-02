@@ -64,7 +64,7 @@ textes = {
             'etat_cpu': "Utilisation CPU",
             'etat_memoire': "Utilisation mémoire",
         },
-        'denieres_detections.html': {
+        'dernieres_detections.html': {
             'titre_page': "Détections récentes",
             'entete_titre': "Détections récentes",
             'titre_journal': "Journal des Détections",
@@ -301,7 +301,7 @@ textes = {
             'etat_cpu': "CPU usage",
             'etat_memoire': "Memory usage",
         },
-        'denieres_detections.html': {
+        'dernieres_detections.html': {
             'titre_page': "Recent Detections",
             'entete_titre': "Recent Detections",
             'titre_journal': "Detection Log",
